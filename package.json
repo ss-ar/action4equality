@@ -1,0 +1,19 @@
+{
+  "name": "action4equality-hugo",
+  "private": true,
+  "scripts": {
+    "css:build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify",
+    "css:watch": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch",
+    "dev": "npm run css:build && concurrently --kill-others-on-fail \"npm:css:watch\" \"hugo server\"",
+    "build": "npm run css:build && hugo --gc --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6"
+  }
+}

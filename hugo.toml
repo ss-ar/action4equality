@@ -1,0 +1,13 @@
+baseURL = "/"
+locale = "en"
+title = "Action for Equality Foundation"
+disableKinds = ["taxonomy", "term"]
+enableRobotsTXT = true
+
+[params]
+  description = "Action for Equality Foundation works to promote equality, protection, and opportunity in South Sudan."
+
+[permalinks]
+  blog = "/blog/:slug/"
+  about = "/:slug/"
+  activities = "/:slug/"

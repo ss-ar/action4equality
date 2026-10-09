@@ -1,0 +1,12 @@
+{{ define "main" }}
+{{ partial "components/page-hero.html" (dict "eyebrow" "News & field updates" "title" .Title "description" "Stories from our programs, partnerships, and the communities leading change across South Sudan.") }}
+<section class="py-20 sm:py-28">
+  <div class="site-container">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {{ range .RegularPages.ByDate.Reverse }}
+        {{ partial "components/blog-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

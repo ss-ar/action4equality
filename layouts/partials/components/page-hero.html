@@ -1,0 +1,8 @@
+<section class="relative isolate overflow-hidden bg-primary-900 py-20 text-white sm:py-28">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,rgba(170,234,241,0.24),transparent_35%),radial-gradient(circle_at_10%_90%,rgba(201,107,255,0.24),transparent_40%)]"></div>
+  <div class="site-container">
+    <p class="text-sm font-bold uppercase tracking-[0.2em] text-secondary-300">{{ .eyebrow }}</p>
+    <h1 class="mt-4 max-w-4xl text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">{{ .title }}</h1>
+    {{ with .description }}<p class="mt-6 max-w-2xl text-lg leading-8 text-white/75">{{ . }}</p>{{ end }}
+  </div>
+</section>

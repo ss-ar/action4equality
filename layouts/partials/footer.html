@@ -1,0 +1,34 @@
+<footer class="bg-ink text-white">
+  <div class="site-container grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <div class="flex items-center gap-4">
+        <img class="h-16 w-16 rounded-full bg-white object-contain p-1" src="{{ "assets/images/rsz-logo-color-121x119.png" | relURL }}" alt="Action for Equality Foundation logo" width="64" height="64">
+        <p class="font-heading text-lg font-extrabold">Action for Equality Foundation</p>
+      </div>
+      <p class="mt-5 max-w-xl text-base leading-7 text-white/70">A women-led national organization advancing equality, protection, education, and opportunity with communities across South Sudan.</p>
+      <a class="mt-6 inline-flex font-bold text-secondary-300 hover:text-white" href="mailto:info@action4equality.org">info@action4equality.org</a>
+    </div>
+    <div>
+      <h2 class="font-heading text-sm font-bold uppercase tracking-[0.16em] text-secondary-300">Explore</h2>
+      <ul class="mt-5 space-y-3 text-white/75">
+        <li><a class="hover:text-white" href="{{ "/background/" | relURL }}">About AFEF</a></li>
+        <li><a class="hover:text-white" href="{{ "/protection/" | relURL }}">Our programs</a></li>
+        <li><a class="hover:text-white" href="{{ "/blog/" | relURL }}">Field stories</a></li>
+        <li><a class="hover:text-white" href="{{ "/partnerships/" | relURL }}">Partner with us</a></li>
+        <li><a class="hover:text-white" href="{{ "/donate/" | relURL }}">Donate</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-heading text-sm font-bold uppercase tracking-[0.16em] text-secondary-300">Find us</h2>
+      <address class="mt-5 not-italic leading-7 text-white/75">Rock City, along Toyota Road<br>Juba, South Sudan</address>
+      <p class="mt-3 text-white/75"><a class="hover:text-white" href="tel:+211928758761">+211 928 758 761</a><br><a class="hover:text-white" href="tel:+256778110127">+256 778 110 127</a></p>
+      <a class="mt-4 inline-flex font-bold text-secondary-300 hover:text-white" href="https://www.google.com/maps/d/u/1/viewer?mid=1ndYmzqfoKKlmikeKj6KwMBjxkqTLeXA" target="_blank" rel="noreferrer">View map <span class="ml-1" aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="site-container flex flex-col gap-2 py-6 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {{ now.Year }} Action for Equality Foundation.</p>
+      <p>Women-led. Community-rooted. Equality-focused.</p>
+    </div>
+  </div>
+</footer>

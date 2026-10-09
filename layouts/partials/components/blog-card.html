@@ -1,0 +1,11 @@
+<article class="group flex h-full flex-col overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-soft">
+  <a class="overflow-hidden" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">
+    {{ with .Params.featured_image }}<img class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105" src="{{ . | relURL }}" alt="" loading="lazy">{{ end }}
+  </a>
+  <div class="flex flex-1 flex-col p-6">
+    {{ if not .Date.IsZero }}<time class="text-sm font-semibold text-primary-700" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+    <h2 class="mt-3 font-heading text-xl font-extrabold leading-snug text-ink"><a class="transition hover:text-primary-700" href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="mt-3 line-clamp-3 text-base leading-7 text-muted">{{ .Description }}</p>
+    <a class="mt-6 inline-flex items-center font-heading text-sm font-extrabold text-primary-700 hover:text-primary-900" href="{{ .RelPermalink }}">Read story <span class="ml-2 transition group-hover:translate-x-1" aria-hidden="true">→</span></a>
+  </div>
+</article>

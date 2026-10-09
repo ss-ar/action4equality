@@ -1,0 +1,31 @@
+{{ define "main" }}
+<section class="relative isolate overflow-hidden bg-primary-900 py-24 text-white sm:py-32">
+  <img class="absolute inset-0 -z-20 h-full w-full object-cover opacity-35" src="{{ "assets/images/img3.webp" | relURL }}" alt="Women participating in an AFEF training">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary-900 via-primary-900/90 to-primary-800/60"></div>
+  <div class="site-container"><p class="text-sm font-bold uppercase tracking-[0.2em] text-secondary-300">Give with purpose</p><h1 class="mt-5 max-w-4xl text-5xl font-extrabold leading-tight sm:text-6xl">Your support powers equality.</h1><p class="mt-6 max-w-2xl text-xl leading-8 text-white/80">Your contribution supports training, advocacy, and protection for women and girls in South Sudan.</p><a class="button-accent mt-9" href="#bank-details">View donation details</a></div>
+</section>
+
+<section class="py-20 sm:py-28">
+  <div class="site-container"><div class="text-center"><p class="eyebrow">Why give</p><h2 class="mt-4 text-4xl font-extrabold sm:text-5xl">Turn support into practical action.</h2></div>
+    <div class="mt-12 grid gap-7 md:grid-cols-3">
+      {{ $reasons := slice (dict "title" "Awareness" "text" "We conduct GBV prevention workshops in rural payams." "image" "assets/images/img3.webp") (dict "title" "Support" "text" "We provide resources and guidance for survivors of violence." "image" "assets/images/bbw.webp") (dict "title" "Equality" "text" "We advocate for women's leadership and equal rights." "image" "assets/images/img-1.webp") }}
+      {{ range $reasons }}<article class="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-soft"><img class="aspect-[4/3] w-full object-cover" src="{{ .image | relURL }}" alt="" loading="lazy"><div class="p-7"><h3 class="text-2xl font-extrabold">{{ .title }}</h3><p class="mt-3 leading-7 text-muted">{{ .text }}</p></div></article>{{ end }}
+    </div>
+  </div>
+</section>
+
+<section id="bank-details" class="bg-primary-50 py-20 sm:py-28">
+  <div class="site-container grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+    <div><p class="eyebrow">Official donation details</p><h2 class="mt-4 text-4xl font-extrabold sm:text-5xl">Give by bank transfer.</h2><p class="mt-5 text-lg leading-8 text-muted">Please use the verified account details shown here. After your transfer, email the team with your confirmation so we can acknowledge your gift.</p><a class="button-primary mt-8" href="mailto:info@action4equality.org?subject=Donation%20confirmation">Send confirmation</a></div>
+    <dl class="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-soft">
+      <div class="grid gap-2 border-b border-primary-100 p-6 sm:grid-cols-[10rem_1fr]"><dt class="font-bold text-muted">Bank name</dt><dd class="font-heading text-lg font-extrabold">Cooperative Bank, South Sudan</dd></div>
+      <div class="grid gap-2 border-b border-primary-100 p-6 sm:grid-cols-[10rem_1fr]"><dt class="font-bold text-muted">Account name</dt><dd class="font-heading text-lg font-extrabold">Action For Equality Foundation</dd></div>
+      <div class="grid gap-2 border-b border-primary-100 p-6 sm:grid-cols-[10rem_1fr]"><dt class="font-bold text-muted">Branch</dt><dd class="font-heading text-lg font-extrabold">Juba Branch</dd></div>
+      <div class="grid gap-2 border-b border-primary-100 p-6 sm:grid-cols-[10rem_1fr]"><dt class="font-bold text-muted">SWIFT code</dt><dd class="font-mono text-lg font-bold">COBLSSJB</dd></div>
+      <div class="grid gap-2 p-6 sm:grid-cols-[10rem_1fr]"><dt class="font-bold text-muted">Account number</dt><dd class="font-mono text-lg font-bold">02200035448001</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20"><div class="site-container text-center"><h2 class="text-3xl font-extrabold">Want to donate supplies or ask a question?</h2><p class="mt-4 text-lg text-muted">Our Juba team can help you choose the best way to support the work.</p><a class="button-secondary mt-7" href="{{ "/contact/" | relURL }}">Contact us</a></div></section>
+{{ end }}

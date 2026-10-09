@@ -1,0 +1,14 @@
+{{ define "main" }}
+{{ $eyebrow := "About AFEF" }}{{ if eq .Section "activities" }}{{ $eyebrow = "Our programs" }}{{ end }}
+{{ partial "components/page-hero.html" (dict "eyebrow" $eyebrow "title" .Title "description" .Description) }}
+<article class="py-16 sm:py-24">
+  <div class="site-container">
+    <div class="prose prose-lg mx-auto max-w-4xl prose-headings:font-heading prose-headings:font-extrabold prose-headings:text-ink prose-h2:mt-12 prose-h2:text-3xl prose-h3:text-2xl prose-p:leading-8 prose-p:text-muted prose-a:font-bold prose-a:text-primary-700 prose-strong:text-ink prose-li:text-muted prose-img:mx-auto prose-img:max-h-[36rem] prose-img:w-auto prose-img:max-w-full prose-img:rounded-3xl prose-img:object-contain prose-img:shadow-soft">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+<section class="pb-16 sm:pb-24">
+  <div class="site-container"><div class="grid items-center gap-6 rounded-3xl bg-secondary-700 p-8 text-white sm:p-12 lg:grid-cols-[1fr_auto]"><div><h2 class="text-3xl font-extrabold">Work with a local, community-rooted partner.</h2><p class="mt-3 max-w-2xl text-lg text-white/75">Talk to our team about partnerships, referrals, or supporting this work.</p></div><a class="button-accent" href="{{ "/contact/" | relURL }}">Contact our team</a></div></div>
+</section>
+{{ end }}

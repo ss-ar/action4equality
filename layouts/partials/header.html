@@ -1,0 +1,60 @@
+<header class="sticky top-0 z-50 border-b border-primary-100/80 bg-white/95 backdrop-blur">
+  <div class="site-container flex min-h-20 items-center justify-between gap-6">
+    <a class="flex min-w-0 items-center gap-3" href="{{ "/" | relURL }}" aria-label="Action for Equality Foundation home">
+      <img class="h-14 w-14 shrink-0 rounded-full object-contain" src="{{ "assets/images/rsz-logo-color-121x119.png" | relURL }}" alt="Action for Equality Foundation logo" width="56" height="56">
+      <span class="hidden font-heading text-sm font-extrabold leading-tight text-primary-900 sm:block">Action for Equality<br><span class="font-semibold text-muted">Foundation</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+      <a class="rounded-full px-4 py-2 font-heading text-sm font-bold text-ink transition hover:bg-primary-50 hover:text-primary-800" href="{{ "/" | relURL }}">Home</a>
+      <details class="group relative">
+        <summary class="cursor-pointer list-none rounded-full px-4 py-2 font-heading text-sm font-bold text-ink transition hover:bg-primary-50 hover:text-primary-800">About <span aria-hidden="true">⌄</span></summary>
+        <div class="absolute left-0 top-full mt-2 w-64 rounded-2xl border border-primary-100 bg-white p-2 shadow-soft">
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/background/" | relURL }}">Our background</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/mission-vision/" | relURL }}">Mission &amp; vision</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/objectives/" | relURL }}">Objectives</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/core-values/" | relURL }}">Core values</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/target-group/" | relURL }}">Who we serve</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/partnerships/" | relURL }}">Partnerships</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/strategies/" | relURL }}">Our strategies</a>
+        </div>
+      </details>
+      <details class="group relative">
+        <summary class="cursor-pointer list-none rounded-full px-4 py-2 font-heading text-sm font-bold text-ink transition hover:bg-primary-50 hover:text-primary-800">Programs <span aria-hidden="true">⌄</span></summary>
+        <div class="absolute left-0 top-full mt-2 w-64 rounded-2xl border border-primary-100 bg-white p-2 shadow-soft">
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/protection/" | relURL }}">Protection</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/education/" | relURL }}">Education</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/food-security/" | relURL }}">Food security</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/sanitation-hygiene/" | relURL }}">WASH</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/community-engagement/" | relURL }}">Community engagement</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/youth-women-enterprises/" | relURL }}">Youth &amp; women</a>
+          <a class="block rounded-xl px-4 py-2.5 text-sm font-semibold hover:bg-primary-50" href="{{ "/anti-bias/" | relURL }}">Anti-bias</a>
+        </div>
+      </details>
+      <a class="rounded-full px-4 py-2 font-heading text-sm font-bold text-ink transition hover:bg-primary-50 hover:text-primary-800" href="{{ "/blog/" | relURL }}">Stories</a>
+      <a class="rounded-full px-4 py-2 font-heading text-sm font-bold text-ink transition hover:bg-primary-50 hover:text-primary-800" href="{{ "/contact/" | relURL }}">Contact</a>
+      <a class="button-accent ml-2" href="{{ "/donate/" | relURL }}">Donate</a>
+    </nav>
+
+    <details class="relative lg:hidden">
+      <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-primary-200 text-primary-800" aria-label="Open navigation menu">
+        <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </summary>
+      <nav class="absolute right-0 top-14 max-h-[calc(100vh-6rem)] w-[min(88vw,22rem)] overflow-y-auto rounded-2xl border border-primary-100 bg-white p-4 shadow-soft" aria-label="Mobile navigation">
+        <a class="block rounded-xl px-4 py-3 font-heading font-bold hover:bg-primary-50" href="{{ "/" | relURL }}">Home</a>
+        <p class="px-4 pb-1 pt-4 text-xs font-bold uppercase tracking-widest text-primary-700">About</p>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/background/" | relURL }}">Background</a>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/mission-vision/" | relURL }}">Mission &amp; vision</a>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/partnerships/" | relURL }}">Partnerships</a>
+        <p class="px-4 pb-1 pt-4 text-xs font-bold uppercase tracking-widest text-primary-700">Programs</p>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/protection/" | relURL }}">Protection</a>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/education/" | relURL }}">Education</a>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/food-security/" | relURL }}">Food security</a>
+        <a class="block rounded-xl px-4 py-2 hover:bg-primary-50" href="{{ "/sanitation-hygiene/" | relURL }}">WASH</a>
+        <a class="block rounded-xl px-4 py-3 font-heading font-bold hover:bg-primary-50" href="{{ "/blog/" | relURL }}">Stories</a>
+        <a class="block rounded-xl px-4 py-3 font-heading font-bold hover:bg-primary-50" href="{{ "/contact/" | relURL }}">Contact</a>
+        <a class="button-accent mt-3 w-full" href="{{ "/donate/" | relURL }}">Donate</a>
+      </nav>
+    </details>
+  </div>
+</header>

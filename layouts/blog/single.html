@@ -1,0 +1,38 @@
+{{ define "main" }}
+<article>
+  <header class="bg-primary-50 py-16 sm:py-24">
+    <div class="site-container">
+      <a class="inline-flex items-center font-heading text-sm font-extrabold text-primary-700 hover:text-primary-900" href="{{ "/blog/" | relURL }}"><span class="mr-2" aria-hidden="true">←</span> All stories</a>
+      <div class="mt-8 grid items-end gap-10 lg:grid-cols-[1fr_0.8fr]">
+        <div>
+          <p class="eyebrow">Field story</p>
+          <h1 class="mt-4 text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">{{ .Title }}</h1>
+          {{ if not .Date.IsZero }}<time class="mt-6 block text-base font-semibold text-muted" datetime="{{ .Date.Format "2006-01-02" }}">Published {{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+        </div>
+        {{ with .Params.featured_image }}<img class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $.Title }}">{{ end }}
+      </div>
+    </div>
+  </header>
+
+  <div class="site-container py-16 sm:py-24">
+    <div class="prose prose-lg mx-auto max-w-3xl prose-headings:font-heading prose-headings:font-extrabold prose-headings:text-ink prose-h2:mt-14 prose-h2:text-3xl prose-h3:text-2xl prose-p:leading-8 prose-p:text-muted prose-a:font-bold prose-a:text-primary-700 prose-strong:text-ink prose-li:text-muted prose-img:mx-auto prose-img:max-h-[34rem] prose-img:w-auto prose-img:max-w-full prose-img:rounded-3xl prose-img:object-contain prose-img:shadow-soft">
+      {{ .Content }}
+    </div>
+  </div>
+
+  {{ with .Params.gallery }}
+  <section class="bg-primary-50 py-16 sm:py-20">
+    <div class="site-container">
+      <h2 class="text-3xl font-extrabold sm:text-4xl">Activity gallery</h2>
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {{ range . }}<img class="aspect-[4/3] w-full rounded-2xl object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">{{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+</article>
+
+<section class="py-16 sm:py-20">
+  <div class="site-container"><div class="rounded-3xl bg-primary-800 p-8 text-center text-white sm:p-12"><h2 class="text-3xl font-extrabold">Help make the next story possible.</h2><p class="mx-auto mt-4 max-w-2xl text-lg text-white/75">Support community-led work for protection, education, and equal opportunity.</p><a class="button-accent mt-7" href="{{ "/donate/" | relURL }}">Support our work</a></div></div>
+</section>
+{{ end }}

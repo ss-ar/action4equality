@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "../../layouts";
+@source "../../content";
+
+@theme {
+  --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary-50: #fcf7ff;
+  --color-primary-100: #f5e8ff;
+  --color-primary-200: #e7c9ff;
+  --color-primary-300: #d792ff;
+  --color-primary-400: #c96bff;
+  --color-primary-500: #b22dff;
+  --color-primary-600: #961ed6;
+  --color-primary-700: #7a1faa;
+  --color-primary-800: #611a87;
+  --color-primary-900: #43155c;
+
+  --color-secondary-50: #f1fbfd;
+  --color-secondary-100: #dcf6fa;
+  --color-secondary-300: #aaeaf1;
+  --color-secondary-500: #70add9;
+  --color-secondary-600: #3e86b4;
+  --color-secondary-700: #2e668b;
+
+  --color-accent-50: #fffcf2;
+  --color-accent-100: #fcf3d7;
+  --color-accent-300: #e9cc80;
+  --color-accent-500: #c99a34;
+  --color-accent-700: #8a651f;
+
+  --color-ink: #172033;
+  --color-muted: #5b6475;
+  --color-surface: #ffffff;
+  --color-background: #fcfaff;
+  --shadow-soft: 0 18px 45px -24px rgb(67 21 92 / 28%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-body text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    @apply bg-primary-200 text-primary-900;
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply font-heading text-sm font-bold uppercase tracking-[0.18em] text-primary-700;
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-primary-700 px-6 py-3 font-heading text-sm font-bold text-white shadow-soft transition hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-primary-200 bg-white px-6 py-3 font-heading text-sm font-bold text-primary-800 transition hover:border-primary-400 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .button-accent {
+    @apply inline-flex items-center justify-center rounded-full bg-accent-500 px-6 py-3 font-heading text-sm font-extrabold text-white shadow-soft transition hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
