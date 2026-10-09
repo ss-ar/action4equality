@@ -27,4 +27,4 @@ WASH underpin many of children’s fundamental human rights, and ultimately nati
 
 Limited access to water and sanitation contributed to poor child health – a third of children under the age of five suffer from diarrhea. Water has also been a source of much of the internal conflict between communities due to the limited number of water points.
 
-WASH projects may prove to be an uphill task and inadequate without having the appropriate tools and instruments. AFEF is lobbying to try and contribute in facilitate the process to ensure provision of water, sanitation and hygiene components.
+WASH projects may prove to be an uphill task and inadequate without having the appropriate tools and instruments. AEF is lobbying to try and contribute in facilitate the process to ensure provision of water, sanitation and hygiene components.

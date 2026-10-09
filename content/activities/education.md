@@ -17,4 +17,4 @@ It is estimated that more than one million primary school aged children, mostly 
 
 Low rates of primary school completion and high gender, geographic and wealth disparities pose enormous challenges to the development of South Sudan education system. 70 per cent of children aged 6–17 years have never set foot in a classroom.
 
-The completion rate in primary schools is less than 10 per cent, one of the lowest in the world. AFEF and its partners are trying to respond to this by using innovative approaches to enhance school enrollment and retention.
+The completion rate in primary schools is less than 10 per cent, one of the lowest in the world. AEF and its partners are trying to respond to this by using innovative approaches to enhance school enrollment and retention.

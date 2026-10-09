@@ -5,9 +5,9 @@ aliases:
   - "/objectives.html"
 ---
 
-## What is AFEF?
+## What is AEF?
 
-Action for equality foundation (AFEF) is a Non-Profit and Non-Governmental, National Community Based Organization initiated in 2022. Fully dedicated and committed in all circumstances to women’s participation, gender equality and human rights, building capacities of people and empowering service providers working with vulnerable communities in South Sudan.
+Action for Equality Foundation (AEF) is a Non-Profit and Non-Governmental, National Community Based Organization initiated in 2022. Fully dedicated and committed in all circumstances to women’s participation, gender equality and human rights, building capacities of people and empowering service providers working with vulnerable communities in South Sudan.
 
 The overall objective of the project is to contribute to attain an increase in community resilience to protection, supporting individuals, families, and communities meet their basic human needs in aftermath of crises. Providing timely protection, response and prevention services to conflict affected population through strengthening community mechanisms and structures established to prevent and respond to Violence cases.
 
@@ -17,7 +17,7 @@ To promote equality action plans, evidenced by people from diverse backgrounds, 
 
 ## Overall Goal
 
-![Children participating in an AFEF program](/assets/images/class2-366x366.webp)
+![Children participating in an AEF program](/assets/images/class2-366x366.webp)
 
 Contribute to attain an increase in community resilience to protection of individuals, families, and communities meet their basic human needs in an aftermath of crises.
 

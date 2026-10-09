@@ -7,4 +7,4 @@ aliases:
 
 ## Our Commitment to Anti-Bias
 
-AFEF has built a culture of truly anti-bias, intersectional, and feminist organization, actively challenging bias in our work and all forms of discrimination in our communities. It has established an Anti-Bias Task Force, to facilitate, reflect and analyze the organization policies, practices, and make recommendations to ensure no discrimination against women is linked to gender identity and to recommend measures to address discrimination, with a specific focus on gender.
+AEF has built a culture of truly anti-bias, intersectional, and feminist organization, actively challenging bias in our work and all forms of discrimination in our communities. It has established an Anti-Bias Task Force, to facilitate, reflect and analyze the organization policies, practices, and make recommendations to ensure no discrimination against women is linked to gender identity and to recommend measures to address discrimination, with a specific focus on gender.

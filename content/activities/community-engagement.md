@@ -13,7 +13,7 @@ Everything we do is rooted in the community. By working side-by-side with local 
 
 Our strength lies in the community. Together, we navigate the challenges of a changing environment to build a safer future for all.
 
-AFEF’s community engagement and participatory development support the engagement of citizens in the planning, implementation and oversight of local development activities at various levels of groups, cooperatives, villages, Boma, Payam and county levels to attract:
+AEF’s community engagement and participatory development support the engagement of citizens in the planning, implementation and oversight of local development activities at various levels of groups, cooperatives, villages, Boma, Payam and county levels to attract:
 
 - More inclusive and participatory local planning, implementation and accountability processes that also address local drivers of conflict.
 - Improved community structures functionality and capacities through “learning by doing.”

@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $eyebrow := "About AFEF" }}{{ if eq .Section "activities" }}{{ $eyebrow = "Our programs" }}{{ end }}
+{{ $eyebrow := "About AEF" }}{{ if eq .Section "activities" }}{{ $eyebrow = "Our programs" }}{{ end }}
 {{ partial "components/page-hero.html" (dict "eyebrow" $eyebrow "title" .Title "description" .Description) }}
 <article class="py-16 sm:py-24">
   <div class="site-container">

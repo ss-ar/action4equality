@@ -27,4 +27,4 @@ South Sudan had a number of livelihood and food security projects implemented by
 4. Community management of storage facilities and mills.
 5. Production of seeds by farmer groups.
 
-AFEF would like to sustain these initiatives by identifying by and up scaled these local managed projects, as international organizations focus on other more pressing issues.
+AEF would like to sustain these initiatives by identifying by and up scaled these local managed projects, as international organizations focus on other more pressing issues.

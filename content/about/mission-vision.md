@@ -23,7 +23,7 @@ Our vision is a world in which women and men have equal rights under the law, an
 
 ## Mission
 
-![AFEF community meeting](/assets/images/img-20211104-142212-563x422.webp)
+![AEF community meeting](/assets/images/img-20211104-142212-563x422.webp)
 
 Our mission is gender equality to achieve legal and systemic change to addresses violence and discrimination against women and girls in South Sudan.
 
