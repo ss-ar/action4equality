@@ -4,6 +4,8 @@ slug: empowering-children-through-child-rights-club
 date: 2026-06-28
 description: Action for Equality Foundation carried out education activities at Nyarjua Primary School in Kapuri Payam, Juba County, Central Equatoria State.
 featured_image: assets/images/hero-1448x1086.png
+social_image: assets/images/empowering-children-through-child-rights-club-meta.png
+social_image_alt: "Children participating in Action for Equality Foundation child rights and menstrual hygiene education in Juba County"
 images:
   - assets/images/whatsapp-image-2026-06-29-at-20.33.58-2.webp
   - assets/images/whatsapp-image-2026-06-29-at-20.33.57.webp

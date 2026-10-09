@@ -3,6 +3,8 @@ title: Strengthening Child Protection Systems through Strategic Training
 slug: strengthening-child-protection-systems-through-strategic-training
 description: Action for Equality Foundation staff attended a UNICEF and Plan International training on Child Protection in Action.
 featured_image: assets/images/unicef-plan3.webp
+social_image: assets/images/strengthening-child-protection-systems-through-strategic-training-meta.webp
+social_image_alt: "Action for Equality Foundation staff participating in child protection training"
 images:
   - assets/images/unicef-plan2.webp
   - assets/images/unicef-plan3.webp

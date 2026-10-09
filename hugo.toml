@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://action4equality.org/"
 locale = "en"
 title = "Action for Equality Foundation"
 disableKinds = ["taxonomy", "term"]
@@ -6,6 +6,8 @@ enableRobotsTXT = true
 
 [params]
   description = "Action for Equality Foundation works to promote equality, protection, and opportunity in South Sudan."
+  default_social_image = "assets/images/hero-1448x1086.png"
+  default_social_image_alt = "Action for Equality Foundation community activity in South Sudan"
 
 [permalinks]
   blog = "/blog/:slug/"
