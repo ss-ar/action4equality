@@ -14,6 +14,8 @@
   var localUiPreview = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   var canPublish = false;
   var lastAutoSlug = "";
+  var savedPostSnapshot = null;
+  var isPublishing = false;
   var viewNames = {
     overview: "Overview",
     posts: "Posts",
@@ -75,11 +77,38 @@
     return postForm ? postForm.elements.namedItem(name) : null;
   }
 
+  function postPayload() {
+    return {
+      title: formControl("title").value,
+      slug: formControl("slug").value,
+      date: formControl("date").value,
+      description: formControl("description").value,
+      featuredImage: formControl("featuredImage").value,
+      socialImage: formControl("socialImage").value,
+      socialImageAlt: formControl("socialImageAlt").value,
+      gallery: formControl("gallery").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
+      body: formControl("body").value,
+      sha: formControl("sha").value || null
+    };
+  }
+
+  function hasUnsavedPostChanges() {
+    return postForm && savedPostSnapshot !== null && savedPostSnapshot !== JSON.stringify(postPayload());
+  }
+
+  function updatePublishButton() {
+    if (!publishButton || !postForm) return;
+    var hasChanges = hasUnsavedPostChanges();
+    publishButton.disabled = !canPublish || !hasChanges || isPublishing;
+    if (isPublishing) publishButton.textContent = "Publishing...";
+    else if (!canPublish) publishButton.textContent = "Publishing unavailable";
+    else if (!hasChanges) publishButton.textContent = "No changes to publish";
+    else publishButton.textContent = formControl("id").value ? "Publish changes" : "Publish post";
+  }
+
   function setPublishPermission(allowed) {
     canPublish = Boolean(allowed);
-    if (!publishButton) return;
-    publishButton.disabled = !canPublish;
-    publishButton.textContent = canPublish ? "Publish post" : "Publishing not configured";
+    updatePublishButton();
   }
 
   function setEditorStatus(state, title, message, commitUrl) {
@@ -137,6 +166,8 @@
     formControl("slug").disabled = false;
     formControl("date").value = new Date().toISOString().slice(0, 10);
     lastAutoSlug = "";
+    savedPostSnapshot = JSON.stringify(postPayload());
+    updatePublishButton();
     var count = document.querySelector("[data-description-count]");
     if (count) count.textContent = "0";
   }
@@ -163,6 +194,8 @@
     });
     formControl("gallery").value = Array.isArray(post.gallery) ? post.gallery.join("\n") : "";
     formControl("slug").disabled = true;
+    savedPostSnapshot = JSON.stringify(postPayload());
+    updatePublishButton();
     var count = document.querySelector("[data-description-count]");
     if (count) count.textContent = String((post.description || "").length);
   }
@@ -356,7 +389,15 @@
       displayUser(payload.user);
       setPublishPermission(Boolean(payload.permissions && payload.permissions.publish));
       setSessionState("ready", "Secure session");
-      await loadContent();
+      try {
+        await loadContent();
+      } catch (error) {
+        if (accessNotice && accessTitle && accessMessage) {
+          accessTitle.textContent = "Content list unavailable";
+          accessMessage.textContent = error instanceof Error ? error.message : "Try again in a moment.";
+          accessNotice.hidden = false;
+        }
+      }
     } catch (error) {
       setSessionState("error", "Content unavailable");
       if (accessNotice && accessTitle && accessMessage) {
@@ -390,6 +431,8 @@
       var count = document.querySelector("[data-description-count]");
       if (count) count.textContent = String(event.target.value.length);
     });
+    postForm.addEventListener("input", updatePublishButton);
+    postForm.addEventListener("change", updatePublishButton);
     postForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       clearFormErrors();
@@ -398,25 +441,15 @@
         setEditorStatus("error", "Publishing is unavailable", "Use the Access-protected deployment after the GitHub secret is configured.");
         return;
       }
+      if (!hasUnsavedPostChanges()) return;
 
       var id = formControl("id").value;
-      var payload = {
-        title: formControl("title").value,
-        slug: formControl("slug").value,
-        date: formControl("date").value,
-        description: formControl("description").value,
-        featuredImage: formControl("featuredImage").value,
-        socialImage: formControl("socialImage").value,
-        socialImageAlt: formControl("socialImageAlt").value,
-        gallery: formControl("gallery").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
-        body: formControl("body").value,
-        sha: formControl("sha").value || null
-      };
+      var payload = postPayload();
       var endpoint = id ? "/api/admin/posts/" + encodeURIComponent(id) : "/api/admin/posts";
       var method = id ? "PUT" : "POST";
 
-      publishButton.disabled = true;
-      publishButton.textContent = "Publishing...";
+      isPublishing = true;
+      updatePublishButton();
       setEditorStatus("pending", "Publishing post", "Creating a Git commit and starting the Pages rebuild.");
 
       try {
@@ -435,14 +468,15 @@
         formControl("id").value = result.post.id;
         formControl("sha").value = result.post.sha;
         formControl("slug").disabled = true;
+        savedPostSnapshot = JSON.stringify(postPayload());
         var editorTitle = document.querySelector("[data-editor-title]");
         if (editorTitle) editorTitle.textContent = "Edit post";
         setEditorStatus("success", "Post committed successfully", result.message, result.commit && result.commit.url);
       } catch (error) {
         setEditorStatus("error", "Post was not published", error instanceof Error ? error.message : "Try again later.");
       } finally {
-        publishButton.disabled = !canPublish;
-        publishButton.textContent = formControl("id").value ? "Publish changes" : "Publish post";
+        isPublishing = false;
+        updatePublishButton();
       }
     });
   }
