@@ -1,24 +1,24 @@
 ---
+images:
+  - assets/images/whatsapp-image-2026-06-29-at-20.33.58-2.webp
+  - assets/images/whatsapp-image-2026-06-29-at-20.33.57.webp
+  - assets/images/whatsapp-image-2026-06-29-at-20.33.59-1.webp
+aliases:
+  - /empowering-children-through-child-rights-club.html
+  - /page20.html
 title: Empowering Children Through Child Rights Clubs and Menstrual Hygiene Education in Juba County
 slug: empowering-children-through-child-rights-club
 date: 2026-06-28
 description: Action for Equality Foundation carried out education activities at Nyarjua Primary School in Kapuri Payam, Juba County, Central Equatoria State.
 featured_image: assets/images/hero-1448x1086.png
 social_image: assets/images/empowering-children-through-child-rights-club-meta.png
-social_image_alt: "Children participating in Action for Equality Foundation child rights and menstrual hygiene education in Juba County"
-images:
-  - assets/images/whatsapp-image-2026-06-29-at-20.33.58-2.webp
-  - assets/images/whatsapp-image-2026-06-29-at-20.33.57.webp
-  - assets/images/whatsapp-image-2026-06-29-at-20.33.59-1.webp
+social_image_alt: Children participating in Action for Equality Foundation child rights and menstrual hygiene education in Juba County
 gallery:
   - assets/images/5.webp
   - assets/images/4.webp
   - assets/images/3.webp
   - assets/images/2.webp
   - assets/images/1.webp
-aliases:
-  - /empowering-children-through-child-rights-club.html
-  - /page20.html
 ---
 
 ![Children at Nyarjua Primary School](/assets/images/whatsapp-image-2026-06-29-at-20.33.58-2.webp)
@@ -39,4 +39,4 @@ The activity included menstrual hygiene management sessions for adolescent girls
 
 In addition to the MHM sessions, pupils were sensitized on key child rights messages, including the rights to education, protection, participation, and development. The discussions encouraged children to speak up against abuse, respect one another, and contribute to creating a safe and supportive learning environment.
 
-Action for Equality Foundation remains committed to empowering children through education, child protection, and community engagement. By establishing Child Rights Clubs and promoting menstrual hygiene awareness, the Foundation continues to create opportunities for children to learn, grow, and thrive in safe and inclusive school environments.
+Action for Equality Foundation remains committed to empowering children through education, child protection, and community engagement. By establishing Child Rights Clubs and promoting menstrual hygiene awareness, the Foundation continues to create opportunities for children to learn, grow, and thrive in safe and inclusive school environments. Just an edit to test
