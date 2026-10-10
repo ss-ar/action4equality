@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{ partial "components/page-hero.html" (dict "eyebrow" "Publications" "title" .Title "description" .Description) }}
+<section class="py-16 sm:py-24">
+  <div class="site-container">
+    <div class="max-w-3xl">
+      <p class="eyebrow">Reports and publications</p>
+      <h2 class="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">Learn more about our work and accountability.</h2>
+      <p class="mt-5 text-lg leading-8 text-muted">Explore AFEF's annual reporting, independently audited financial statements, and programme achievements.</p>
+    </div>
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {{ $documents := slice
+        (dict "title" "Annual Report 2025" "description" "An overview of AFEF's work, activities, and progress during 2025." "url" "documents/aef-annual-report-2025.pdf")
+        (dict "title" "Audit Report 2025" "description" "Independent auditors' report and financial statements for the year ended 31 December 2025." "url" "documents/aef-audit-report-2025.pdf")
+        (dict "title" "Key Achievements" "description" "Highlights of AFEF's work in women's leadership, youth participation, and protection." "url" "documents/aef-key-achievements.pdf")
+      }}
+      {{ range $documents }}
+      <article class="flex flex-col rounded-3xl border border-primary-100 bg-white p-7 shadow-soft">
+        <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-100 text-primary-700">
+          <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5V6.375A3.375 3.375 0 0011.25 3H6.375A3.375 3.375 0 003 6.375v11.25A3.375 3.375 0 006.375 21h9.75a3.375 3.375 0 003.375-3.375v-1.5m-6-7.875H18m0 0V3.75m0 4.5l-5.25 5.25"/></svg>
+        </div>
+        <h3 class="mt-6 text-2xl font-extrabold text-ink">{{ .title }}</h3>
+        <p class="mt-3 leading-7 text-muted">{{ .description }}</p>
+        <a class="button-secondary mt-7 w-full" href="{{ .url | relURL }}" target="_blank" rel="noopener">View PDF <span class="ml-2" aria-hidden="true">↗</span></a>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

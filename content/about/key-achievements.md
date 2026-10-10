@@ -30,11 +30,3 @@ AEF supported youth-led grassroots coalitions in Central Equatoria and Jonglei S
 | --- | --- |
 | Women's leadership and peacebuilding | Four functional community peace committees established across Central and Western Equatoria States |
 | Youth civic engagement | Youth-led coalitions participated in county-level budget planning and local governance |
-
-## Reports and transparency
-
-Read AEF's independently audited financial statements for the year ended 31 December 2025.
-
-[View the 2025 Independent Audit Report and Financial Statements (PDF)](/documents/aef-audit-report-2025.pdf)
-
-[Download the full Key Achievements document (PDF)](/documents/aef-key-achievements.pdf)
