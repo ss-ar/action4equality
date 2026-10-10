@@ -165,3 +165,24 @@ export async function putRepositoryFile(
     commitUrl: commit && typeof commit.html_url === "string" ? commit.html_url : null,
   };
 }
+
+export async function deleteRepositoryFile(
+  env: Env,
+  options: { path: string; sha: string; message: string },
+): Promise<RepositoryWriteResult> {
+  const config = getConfig(env);
+  const response = await fetch(repositoryUrl(config, options.path), {
+    method: "DELETE",
+    headers: requestHeaders(config),
+    body: JSON.stringify({ message: options.message, sha: options.sha, branch: config.branch }),
+  });
+  if (!response.ok) throw await githubError(response, "delete");
+
+  const payload: unknown = await response.json();
+  const commit = isRecord(payload) && isRecord(payload.commit) ? payload.commit : null;
+  return {
+    fileSha: options.sha,
+    commitSha: commit && typeof commit.sha === "string" ? commit.sha : null,
+    commitUrl: commit && typeof commit.html_url === "string" ? commit.html_url : null,
+  };
+}

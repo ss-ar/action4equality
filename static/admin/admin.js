@@ -438,6 +438,21 @@
     return value.replace(/-/g, " ").replace(/\b\w/g, function (letter) { return letter.toUpperCase(); });
   }
 
+  async function deleteContentItem(kind, id, title) {
+    var action = kind === "posts" ? "unpublish" : "delete";
+    if (!window.confirm("Are you sure you want to " + action + " “" + title + "”? This change will go live after the next Pages rebuild.")) return false;
+    try {
+      var response = await fetch("/api/admin/" + kind + "/" + encodeURIComponent(id), { method: "DELETE", credentials: "same-origin", headers: { Accept: "application/json" } });
+      var result = await response.json();
+      if (!response.ok) throw new Error(result.error || "The item could not be removed.");
+      window.alert(result.message);
+      return true;
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "The item could not be removed.");
+      return false;
+    }
+  }
+
   function createRecordRow(item, kind) {
     var row = document.createElement("div");
     row.className = "record-row";
@@ -466,12 +481,20 @@
       edit.textContent = "Edit";
       edit.addEventListener("click", function () { openExistingPost(item.id); });
       row.append(edit);
+      var unpublish = document.createElement("button");
+      unpublish.className = "record-action"; unpublish.type = "button"; unpublish.textContent = "Unpublish";
+      unpublish.addEventListener("click", async function () { if (await deleteContentItem("posts", item.id, title.textContent || "this post")) row.remove(); });
+      row.append(unpublish);
     }
     if (kind === "resources" && typeof item.id === "string") {
       var resourceEdit = document.createElement("button");
       resourceEdit.className = "record-action"; resourceEdit.type = "button"; resourceEdit.textContent = "Edit";
       resourceEdit.addEventListener("click", function () { openExistingResource(item.id); });
       row.append(resourceEdit);
+      var resourceDelete = document.createElement("button");
+      resourceDelete.className = "record-action"; resourceDelete.type = "button"; resourceDelete.textContent = "Delete";
+      resourceDelete.addEventListener("click", async function () { if (await deleteContentItem("resources", item.id, title.textContent || "this resource")) row.remove(); });
+      row.append(resourceDelete);
     }
     return row;
   }

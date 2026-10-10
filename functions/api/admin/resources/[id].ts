@@ -1,5 +1,5 @@
 import type { AdminData } from "../../../_lib/admin-auth";
-import { getRepositoryFile, GitHubApiError, putRepositoryFile } from "../../../_lib/github";
+import { deleteRepositoryFile, getRepositoryFile, GitHubApiError, putRepositoryFile } from "../../../_lib/github";
 import { canPublishPosts } from "../../../_lib/permissions";
 import { JsonBodyError, readJsonBody } from "../../../_lib/request";
 import { isValidPostId } from "../../../_lib/posts";
@@ -26,4 +26,14 @@ export const onRequestPut: PagesFunction<Env, "id", AdminData> = async (context)
     const result = await putRepositoryFile(context.env, { path, content: serializeResource(validation.data), message: `Update resource: ${validation.data.title}`, sha: current.sha });
     return Response.json({ message: "Resource committed. Cloudflare Pages is rebuilding the website.", resource: { id: resourceId, sha: result.fileSha }, commit: { sha: result.commitSha, url: result.commitUrl } }, { headers: headers() });
   } catch (cause) { if (cause instanceof JsonBodyError || cause instanceof GitHubApiError) return error(cause.message, cause.status); return error("The resource could not be published", 500); }
+};
+
+export const onRequestDelete: PagesFunction<Env, "id", AdminData> = async (context) => {
+  const resourceId = id(context.params.id); if (!resourceId) return error("Invalid resource identifier", 400);
+  if (!canPublishPosts(context.request, context.data.user, context.env)) return error("You do not have permission to delete resources", 403);
+  try {
+    const path = `content/resources/${resourceId}.md`; const current = await getRepositoryFile(context.env, path);
+    const result = await deleteRepositoryFile(context.env, { path, sha: current.sha, message: `Delete resource: ${resourceId}` });
+    return Response.json({ message: "Resource deleted. Cloudflare Pages is rebuilding the website.", commit: { sha: result.commitSha, url: result.commitUrl } }, { headers: headers() });
+  } catch (cause) { if (cause instanceof GitHubApiError) return error(cause.message, cause.status); return error("The resource could not be deleted", 500); }
 };

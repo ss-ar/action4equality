@@ -1,5 +1,5 @@
 import type { AdminData } from "../../../_lib/admin-auth";
-import { getRepositoryFile, GitHubApiError, putRepositoryFile } from "../../../_lib/github";
+import { deleteRepositoryFile, getRepositoryFile, GitHubApiError, putRepositoryFile } from "../../../_lib/github";
 import { isValidPostId, parsePostSource, serializePost, validatePostInput } from "../../../_lib/posts";
 import { canPublishPosts } from "../../../_lib/permissions";
 import { JsonBodyError, readJsonBody } from "../../../_lib/request";
@@ -109,5 +109,21 @@ export const onRequestPut: PagesFunction<Env, "id", AdminData> = async (context)
       }),
     );
     return errorResponse("The post could not be published", 500);
+  }
+};
+
+export const onRequestDelete: PagesFunction<Env, "id", AdminData> = async (context) => {
+  const id = getPostId(context.params.id);
+  if (!id) return errorResponse("Invalid post identifier", 400);
+  if (!canPublishPosts(context.request, context.data.user, context.env)) return errorResponse("You do not have permission to unpublish posts", 403);
+  try {
+    const path = `content/blog/${id}.md`;
+    const currentFile = await getRepositoryFile(context.env, path);
+    const result = await deleteRepositoryFile(context.env, { path, sha: currentFile.sha, message: `Unpublish post: ${id}` });
+    console.log(JSON.stringify({ message: "post unpublished", editor: context.data.user.email, path, commitSha: result.commitSha }));
+    return Response.json({ message: "Post unpublished. Cloudflare Pages is rebuilding the website.", commit: { sha: result.commitSha, url: result.commitUrl } }, { headers: responseHeaders() });
+  } catch (error) {
+    if (error instanceof GitHubApiError) return errorResponse(error.message, error.status);
+    return errorResponse("The post could not be unpublished", 500);
   }
 };
