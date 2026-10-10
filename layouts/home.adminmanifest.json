@@ -1,0 +1,73 @@
+{{- $posts := slice -}}
+{{- with site.GetPage "section" "blog" -}}
+  {{- range .RegularPages.ByDate.Reverse -}}
+    {{- $date := "" -}}
+    {{- if not .Date.IsZero -}}{{- $date = .Date.Format "2006-01-02" -}}{{- end -}}
+    {{- $posts = $posts | append (dict
+      "id" .File.ContentBaseName
+      "title" .Title
+      "slug" (.Params.slug | default .File.ContentBaseName)
+      "description" .Description
+      "date" $date
+      "featuredImage" (.Params.featured_image | default "")
+      "sourcePath" (printf "content/%s" .File.Path)
+      "url" .RelPermalink
+      "status" "published"
+    ) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $resources := slice -}}
+{{- with site.GetPage "section" "resources" -}}
+  {{- range .Pages.ByWeight -}}
+    {{- $publicationDate := "" -}}
+    {{- with .Params.publication_date -}}{{- $publicationDate = time.Format "2006-01-02" . -}}{{- end -}}
+    {{- $resources = $resources | append (dict
+      "id" .File.ContentBaseName
+      "title" .Title
+      "description" .Description
+      "resourceType" (.Params.resource_type | default "publication")
+      "publicationDate" $publicationDate
+      "file" (.Params.file | default "")
+      "sourcePath" (printf "content/%s" .File.Path)
+      "weight" .Weight
+      "status" "published"
+    ) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $pages := slice
+  (dict "id" "homepage" "title" "Homepage" "description" "Hero, introduction, programmes, audience, and support callout." "sourceType" "Structured data" "path" "data/homepage.yaml" "url" "/")
+-}}
+{{- $pageDefinitions := slice
+  (dict "path" "/about/background" "sourceType" "Markdown page")
+  (dict "path" "/about/mission-vision" "sourceType" "Markdown page")
+  (dict "path" "/about/objectives" "sourceType" "Markdown page")
+  (dict "path" "/about/partnerships" "sourceType" "Markdown page")
+  (dict "path" "/contact" "sourceType" "Markdown page")
+-}}
+{{- range $pageDefinitions -}}
+  {{- with site.GetPage .path -}}
+    {{- $description := .Description -}}
+    {{- if not $description -}}{{- $description = printf "Edit the %s website content." .Title -}}{{- end -}}
+    {{- $pages = $pages | append (dict
+      "id" .File.ContentBaseName
+      "title" .Title
+      "description" $description
+      "sourceType" "Markdown page"
+      "path" (printf "content/%s" .File.Path)
+      "url" .RelPermalink
+    ) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- dict
+  "version" 1
+  "generatedAt" (now.UTC.Format "2006-01-02T15:04:05Z")
+  "environment" hugo.Environment
+  "summary" (dict "posts" (len $posts) "resources" (len $resources) "pages" (len $pages))
+  "posts" $posts
+  "resources" $resources
+  "pages" $pages
+  | jsonify
+-}}

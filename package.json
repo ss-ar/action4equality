@@ -5,15 +5,27 @@
     "css:build": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify",
     "css:watch": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch",
     "dev": "npm run css:build && concurrently --kill-others-on-fail \"npm:css:watch\" \"hugo server\"",
-    "build": "npm run css:build && hugo --gc --minify"
+    "build": "npm run css:build && hugo --gc --minify",
+    "pages:dev": "npm run build && wrangler pages dev public",
+    "cf:types": "wrangler types --path=./functions/types.d.ts",
+    "typecheck": "tsc --project functions/tsconfig.json --noEmit",
+    "test:posts": "tsx tests/posts.test.ts"
   },
   "devDependencies": {
     "@tailwindcss/cli": "4.3.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^26.6.5",
     "concurrently": "^9.2.1",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.149.0"
   },
   "overrides": {
     "postcss-selector-parser": "^7.1.6"
+  },
+  "dependencies": {
+    "jose": "^6.2.12",
+    "yaml": "^2.9.1"
   }
 }

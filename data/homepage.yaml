@@ -1,0 +1,89 @@
+hero:
+  eyebrow: "Women-led. Community-rooted."
+  title: "Equality becomes real when communities lead."
+  description: "Action for Equality Foundation advances protection, education, livelihoods, and equal opportunity with women, children, and communities across South Sudan."
+  image: "assets/images/hero-1448x1086.webp"
+  image_alt: "Action for Equality Foundation working with community members in South Sudan"
+  primary_action:
+    label: "Support our work"
+    url: "/donate/"
+  secondary_action:
+    label: "Discover our story"
+    url: "/background/"
+  highlights:
+    - "Women-led NNGO"
+    - "Registered in 2022"
+    - "Based in Juba"
+
+introduction:
+  eyebrow: "Who we are"
+  title: "Built by South Sudanese professionals to serve communities."
+  paragraphs:
+    - "AEF was formed by professionals who came together in response to the suffering of vulnerable and underserved people. We advocate with survivors of gender-based violence, women and girls, children, youth, and people living with HIV/AIDS."
+    - "Our work connects immediate protection and essential services with the knowledge, participation, and opportunity communities need to shape their future."
+  image: "assets/images/img-20220308-133320-997-877x658.webp"
+  image_alt: "Community members participating in an Action for Equality activity"
+  image_note: "Local knowledge. Lasting change."
+  action:
+    label: "Learn about AEF"
+    url: "/background/"
+
+programmes:
+  eyebrow: "Our programs"
+  title: "Connected solutions for safer, stronger communities."
+  description: "We work across the issues communities identify as most urgent, from protection and learning to water, livelihoods, and participation."
+  items:
+    - title: "Protection"
+      description: "GBV prevention and response, child protection, case management, and psychosocial support."
+      image: "assets/images/chil.webp"
+      url: "/protection/"
+    - title: "Education"
+      description: "Safe and inclusive learning, school retention, child rights, and support for girls."
+      image: "assets/images/unicef-plan2.webp"
+      url: "/education/"
+    - title: "Food security"
+      description: "Livelihoods, farming, income generation, and resilience in flood-affected communities."
+      image: "assets/images/elder3.webp"
+      url: "/food-security/"
+    - title: "Water & hygiene"
+      description: "Clean water, sanitation, and practical hygiene action in underserved communities."
+      image: "assets/images/hut2.webp"
+      url: "/sanitation-hygiene/"
+    - title: "Community engagement"
+      description: "Participatory planning, accountability, and local leadership for sustainable development."
+      image: "assets/images/comm.webp"
+      url: "/community-engagement/"
+    - title: "Youth & women"
+      description: "Business skills, startup support, advocacy, and pathways to economic independence."
+      image: "assets/images/img-20211026-102647-1504x1128.webp"
+      url: "/youth-women-enterprises/"
+
+audience:
+  eyebrow: "Who we serve"
+  title: "People too often left out of decisions."
+  description: "Our primary focus is women and girls, vulnerable and out-of-school children, people with disabilities, widows, youth, and young women."
+  action:
+    label: "See our approach"
+    url: "/target-group/"
+  images:
+    - src: "assets/images/bbw.webp"
+      alt: "AEF field activity"
+    - src: "assets/images/uicef1.webp"
+      alt: "AEF staff and partners"
+    - src: "assets/images/whatsapp-image-2026-06-29-at-20.33.59-1.webp"
+      alt: "Children participating in an AEF education activity"
+
+stories:
+  eyebrow: "From the field"
+  title: "Recent stories"
+  action_label: "View all stories"
+
+support:
+  eyebrow: "Stand with communities"
+  title: "Your support powers protection, learning, and equality."
+  primary_action:
+    label: "Donate today"
+    url: "/donate/"
+  secondary_action:
+    label: "Partner with us"
+    url: "/partnerships/"

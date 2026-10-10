@@ -2,6 +2,9 @@
 @plugin "@tailwindcss/typography";
 @source "../../layouts";
 @source "../../content";
+@source not "../../static/admin";
+@source not "../../functions";
+@source not "../../docs";
 
 @theme {
   --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;

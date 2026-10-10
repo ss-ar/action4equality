@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#43155c">
+  <title>Content Desk | Action for Equality Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <a class="skip-link" href="#dashboard-content">Skip to dashboard content</a>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="dashboard-sidebar" aria-label="Dashboard navigation">
+      <a class="brand" href="/admin/" aria-label="Action for Equality content desk">
+        <img src="/assets/images/rsz-logo-color-121x119.png" alt="" width="48" height="48">
+        <span>
+          <strong>Action for Equality</strong>
+          <small>Content desk</small>
+        </span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Content areas">
+        <p class="nav-label">Workspace</p>
+        <button class="nav-item is-active" type="button" data-view="overview" aria-current="page">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-4H4v4Zm10 0h6v-9h-6v9Zm0-16v4h6V4h-6Z"/></svg>
+          Overview
+        </button>
+        <button class="nav-item" type="button" data-view="posts">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5V3Zm9 1.5V8h3.5L14 4.5ZM8 12h8v-2H8v2Zm0 4h8v-2H8v2Z"/></svg>
+          Posts
+          <span class="nav-count" data-count="posts">...</span>
+        </button>
+        <button class="nav-item" type="button" data-view="resources">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v10.2l3.6-3.6L17 11l-5 5-5-5 1.4-1.4 2.6 2.6V3h2ZM5 19h14v2H5v-2Z"/></svg>
+          Resources
+          <span class="nav-count" data-count="resources">...</span>
+        </button>
+        <button class="nav-item" type="button" data-view="pages">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h7v16H4V4Zm9 0h7v7h-7V4Zm0 9h7v7h-7v-7Z"/></svg>
+          Pages
+          <span class="nav-count" data-count="pages">...</span>
+        </button>
+        <button class="nav-item" type="button" data-view="media">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm2 2v8.2l3.5-3.5 2.5 2.5 2.5-2.5 3.5 3.5V7H6Zm2.5 3A1.5 1.5 0 1 0 8.5 7a1.5 1.5 0 0 0 0 3Z"/></svg>
+          Media
+          <span class="nav-badge">Soon</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="identity-card">
+          <span class="avatar" data-user-initials>...</span>
+          <span class="identity-copy">
+            <strong data-user-name>Checking access</strong>
+            <small data-user-email>Please wait</small>
+          </span>
+        </div>
+        <a class="logout-link" href="/cdn-cgi/access/logout">Sign out</a>
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="topbar">
+        <button class="menu-button" type="button" data-menu-toggle aria-controls="dashboard-sidebar" aria-expanded="false">
+          <span class="sr-only">Open dashboard menu</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z"/></svg>
+        </button>
+        <div class="topbar-title">
+          <span>Website management</span>
+          <strong data-current-view>Overview</strong>
+        </div>
+        <div class="topbar-actions">
+          <span class="connection-status" data-session-status aria-live="polite">
+            <span class="status-dot"></span>
+            Checking access
+          </span>
+          <a class="view-site" href="/" target="_blank" rel="noopener">View website <span aria-hidden="true">&nearr;</span></a>
+        </div>
+      </header>
+
+      <main id="dashboard-content" class="content-area">
+        <div class="access-notice" data-access-notice hidden role="alert">
+          <div>
+            <strong data-access-title>Dashboard connection unavailable</strong>
+            <p data-access-message>The secure session API could not be reached.</p>
+          </div>
+          <button type="button" data-session-retry>Try again</button>
+        </div>
+
+        <section class="view-panel is-active" data-panel="overview" aria-labelledby="overview-title">
+          <div class="welcome-panel">
+            <div class="welcome-copy">
+              <p class="eyebrow">Content workspace</p>
+              <h1 id="overview-title">Welcome back<span data-greeting-name></span>.</h1>
+              <p>Manage stories, reports, and key website pages from one protected workspace.</p>
+              <div class="welcome-actions">
+                <button class="primary-button" type="button" data-new-post>New post</button>
+                <button class="secondary-button" type="button" data-view="resources">Review resources</button>
+              </div>
+            </div>
+            <div class="welcome-mark" aria-hidden="true">
+              <span>AEF</span>
+              <svg viewBox="0 0 160 160"><path d="M22 101c26-11 32-47 61-54 23-6 39 10 55 6-7 42-31 72-70 72-20 0-36-8-46-24Z"/><path d="M39 112c31-30 57-40 91-52"/></svg>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Initial inventory</p>
+              <h2>Content prepared for the dashboard</h2>
+            </div>
+            <span class="quiet-label" data-content-freshness>Connecting to deployed content</span>
+          </div>
+
+          <div class="content-cards">
+            <button class="content-card card-posts" type="button" data-view="posts">
+              <span class="card-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5V3Zm3 9h8v-2H8v2Zm0 4h8v-2H8v2Z"/></svg></span>
+              <span class="card-copy"><small>Field stories</small><strong data-summary="posts">Loading posts</strong><span>News and programme updates</span></span>
+              <span class="card-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <button class="content-card card-resources" type="button" data-view="resources">
+              <span class="card-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v10.2l3.6-3.6L17 11l-5 5-5-5 1.4-1.4 2.6 2.6V3h2ZM5 19h14v2H5v-2Z"/></svg></span>
+              <span class="card-copy"><small>Publications</small><strong data-summary="resources">Loading resources</strong><span>Reports and PDF documents</span></span>
+              <span class="card-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <button class="content-card card-pages" type="button" data-view="pages">
+              <span class="card-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h7v16H4V4Zm9 0h7v7h-7V4Zm0 9h7v7h-7v-7Z"/></svg></span>
+              <span class="card-copy"><small>Core content</small><strong data-summary="pages">Loading pages</strong><span>Homepage and organization details</span></span>
+              <span class="card-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+
+          <div class="overview-grid">
+            <section class="surface-card roadmap-card" aria-labelledby="roadmap-title">
+              <div class="surface-heading">
+                <div><p class="eyebrow">Build progress</p><h2 id="roadmap-title">Dashboard roadmap</h2></div>
+                <span class="phase-badge">Phase 4</span>
+              </div>
+              <ol class="roadmap-list">
+                <li class="is-complete"><span>1</span><div><strong>Content foundation</strong><small>Structured posts, resources, and homepage data</small></div></li>
+                <li class="is-complete"><span>2</span><div><strong>Secure dashboard shell</strong><small>Cloudflare Access identity and responsive workspace</small></div></li>
+                <li class="is-complete"><span>3</span><div><strong>Live content connection</strong><small>Read deployed posts, resources, and key pages</small></div></li>
+                <li class="is-current"><span>4</span><div><strong>Post editor</strong><small>Create, validate, and publish stories through Git</small></div></li>
+                <li><span>5</span><div><strong>Remaining editors and media</strong><small>Resources, key pages, R2 uploads, and deployment status</small></div></li>
+              </ol>
+            </section>
+
+            <aside class="surface-card safety-card">
+              <div class="safety-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.1 3.4 9.8 8 11 4.6-1.2 8-5.9 8-11V5l-8-3Zm-1 14-3-3 1.4-1.4 1.6 1.6 3.6-3.6L16 11l-5 5Z"/></svg></div>
+              <p class="eyebrow">Publishing safety</p>
+              <h2>Every post update has a history.</h2>
+              <p>Publishing creates a Git commit and triggers a fresh Cloudflare Pages deployment. Stale edits are rejected instead of overwritten.</p>
+              <a href="/" target="_blank" rel="noopener">Open the live website <span aria-hidden="true">&rarr;</span></a>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="posts" aria-labelledby="posts-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Stories</p><h1 id="posts-title">Posts</h1><p>Field updates currently published on the website.</p></div><button class="primary-button" type="button" data-new-post>New post</button></div>
+          <div class="surface-card content-table-card">
+            <div class="table-note"><span>Deployed content</span><p>Loaded from the current Cloudflare Pages deployment.</p></div>
+            <div class="record-list" data-record-list="posts"><p class="loading-row">Loading posts...</p></div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="post-editor" aria-labelledby="post-editor-title" hidden>
+          <div class="editor-heading">
+            <button class="back-button" type="button" data-cancel-post aria-label="Return to posts">&larr;</button>
+            <div>
+              <p class="eyebrow">Story editor</p>
+              <h1 id="post-editor-title" data-editor-title>Create a new post</h1>
+              <p data-editor-description>Complete the required fields, then publish the post to the website repository.</p>
+            </div>
+          </div>
+
+          <form class="post-editor surface-card" data-post-form novalidate>
+            <input type="hidden" name="id">
+            <input type="hidden" name="sha">
+
+            <div class="editor-status" data-editor-status hidden role="status">
+              <div><strong data-editor-status-title></strong><p data-editor-status-message></p></div>
+              <a href="#" data-commit-link target="_blank" rel="noopener" hidden>View Git commit <span aria-hidden="true">&nearr;</span></a>
+            </div>
+
+            <div class="form-grid">
+              <label class="form-field form-field-wide">
+                <span>Post title <b aria-hidden="true">*</b></span>
+                <input type="text" name="title" maxlength="140" autocomplete="off" required>
+                <small data-error="title">Use a clear title between 3 and 140 characters.</small>
+              </label>
+
+              <label class="form-field">
+                <span>URL slug <b aria-hidden="true">*</b></span>
+                <div class="slug-input"><span>/blog/</span><input type="text" name="slug" maxlength="100" autocomplete="off" spellcheck="false" required><span>/</span></div>
+                <small data-error="slug">Generated from the title. It is locked after publishing.</small>
+              </label>
+
+              <label class="form-field">
+                <span>Publication date <b aria-hidden="true">*</b></span>
+                <input type="date" name="date" required>
+                <small data-error="date">The date shown on the website.</small>
+              </label>
+
+              <label class="form-field form-field-wide">
+                <span>Summary <b aria-hidden="true">*</b></span>
+                <textarea name="description" rows="3" maxlength="300" required></textarea>
+                <small><span data-description-count>0</span>/300 characters</small>
+                <small class="field-error" data-error="description"></small>
+              </label>
+
+              <label class="form-field form-field-wide">
+                <span>Featured image <b aria-hidden="true">*</b></span>
+                <input type="text" name="featuredImage" placeholder="assets/images/example.webp" required>
+                <small data-error="featuredImage">Use an existing image path. Uploads arrive with the media library stage.</small>
+              </label>
+
+              <label class="form-field">
+                <span>Social sharing image</span>
+                <input type="text" name="socialImage" placeholder="assets/images/example-meta.webp">
+                <small data-error="socialImage">Optional image used when the post is shared.</small>
+              </label>
+
+              <label class="form-field">
+                <span>Social image description</span>
+                <input type="text" name="socialImageAlt" maxlength="200">
+                <small data-error="socialImageAlt">Required when a social image is provided.</small>
+              </label>
+
+              <label class="form-field form-field-wide">
+                <span>Gallery images</span>
+                <textarea name="gallery" rows="4" placeholder="One image path per line"></textarea>
+                <small data-error="gallery">Optional. Add no more than 20 image paths.</small>
+              </label>
+
+              <label class="form-field form-field-wide">
+                <span>Post content <b aria-hidden="true">*</b></span>
+                <textarea class="body-editor" name="body" rows="18" placeholder="Write the story here. Use ## for section headings." required></textarea>
+                <small data-error="body">Markdown formatting is supported. Use ## Heading for new sections.</small>
+              </label>
+            </div>
+
+            <div class="editor-actions">
+              <p>Publishing commits directly to the configured content branch and starts a Pages rebuild.</p>
+              <div>
+                <button class="cancel-button" type="button" data-cancel-post>Cancel</button>
+                <button class="publish-button" type="submit" data-publish-post>Publish post</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="view-panel" data-panel="resources" aria-labelledby="resources-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Publications</p><h1 id="resources-title">Resources</h1><p>Reports and documents available to website visitors.</p></div><button class="primary-button" type="button" disabled>Upload resource <span class="button-tag">Next stage</span></button></div>
+          <div class="surface-card content-table-card">
+            <div class="table-note"><span>Structured and ready</span><p>Each resource is now an independent content record.</p></div>
+            <div class="record-list" data-record-list="resources"><p class="loading-row">Loading resources...</p></div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="pages" aria-labelledby="pages-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Core content</p><h1 id="pages-title">Key pages</h1><p>Only approved page content will be editable. Layouts and navigation stay protected.</p></div></div>
+          <div class="page-grid" data-page-grid><p class="loading-row">Loading key pages...</p></div>
+        </section>
+
+        <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p>Images and documents will be stored in Cloudflare R2.</p></div></div>
+          <div class="empty-state surface-card">
+            <div class="empty-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm2 2v8.2l3.5-3.5 2.5 2.5 2.5-2.5 3.5 3.5V7H6Z"/></svg></div>
+            <p class="eyebrow">Planned for phase 4</p>
+            <h2>R2 media storage is not connected yet.</h2>
+            <p>The upload interface will appear only after file validation, safe naming, size limits, and reference checks are implemented.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="sidebar-backdrop" data-menu-backdrop hidden></div>
+  <script src="/admin/admin.js" defer></script>
+</body>
+</html>
