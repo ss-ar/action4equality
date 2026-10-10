@@ -39,4 +39,4 @@ The activity included menstrual hygiene management sessions for adolescent girls
 
 In addition to the MHM sessions, pupils were sensitized on key child rights messages, including the rights to education, protection, participation, and development. The discussions encouraged children to speak up against abuse, respect one another, and contribute to creating a safe and supportive learning environment.
 
-Action for Equality Foundation remains committed to empowering children through education, child protection, and community engagement. By establishing Child Rights Clubs and promoting menstrual hygiene awareness, the Foundation continues to create opportunities for children to learn, grow, and thrive in safe and inclusive school environments. Testing
+Action for Equality Foundation remains committed to empowering children through education, child protection, and community engagement. By establishing Child Rights Clubs and promoting menstrual hygiene awareness, the Foundation continues to create opportunities for children to learn, grow, and thrive in safe and inclusive school environments.
