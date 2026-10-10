@@ -291,6 +291,7 @@
   function setPublishPermission(allowed) {
     canPublish = Boolean(allowed);
     updatePublishButton();
+    updateResourceButton();
   }
 
   function setEditorStatus(state, title, message, commitUrl) {
@@ -526,6 +527,9 @@
     if (!grid) return;
     grid.replaceChildren();
 
+    if (!items.length) {
+      var empty = document.createElement("p"); empty.className = "loading-row"; empty.textContent = "No key pages are available."; grid.append(empty); return;
+    }
     items.forEach(function (item, index) {
       var card = document.createElement("article");
       card.className = "page-card";
@@ -582,6 +586,17 @@
     displayContent(payload);
   }
 
+  function showContentUnavailable(message) {
+    ["posts", "resources"].forEach(function (kind) {
+      var list = document.querySelector('[data-record-list="' + kind + '"]');
+      if (list) { list.replaceChildren(); var notice = document.createElement("p"); notice.className = "loading-row"; notice.textContent = message; list.append(notice); }
+    });
+    var pages = document.querySelector("[data-page-grid]");
+    if (pages) { pages.replaceChildren(); var pageNotice = document.createElement("p"); pageNotice.className = "loading-row"; pageNotice.textContent = message; pages.append(pageNotice); }
+    ["posts", "resources", "pages"].forEach(function (kind) { setCount(kind, "-"); });
+    var freshness = document.querySelector("[data-content-freshness]"); if (freshness) freshness.textContent = "Content could not be loaded";
+  }
+
   async function loadSession() {
     setSessionState("loading", "Checking access");
     if (accessNotice) accessNotice.hidden = true;
@@ -614,6 +629,7 @@
         await loadContent();
         await loadDrafts();
       } catch (error) {
+        showContentUnavailable("Content could not be loaded. Try again.");
         if (accessNotice && accessTitle && accessMessage) {
           accessTitle.textContent = "Content list unavailable";
           accessMessage.textContent = error instanceof Error ? error.message : "Try again in a moment.";
@@ -812,6 +828,7 @@
   window.addEventListener("keydown", function (event) { if (event.key === "Escape") setMenu(false); });
   window.addEventListener("resize", function () { if (window.innerWidth > 820) setMenu(false); });
 
-  showView(window.location.hash.slice(1) || "overview");
+  var initialView = window.location.hash.slice(1) || "overview";
+  showView(initialView === "post-editor" ? "posts" : initialView === "resource-editor" ? "resources" : initialView);
   loadSession();
 })();

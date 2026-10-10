@@ -327,6 +327,7 @@ button:focus-visible, a:focus-visible {
 .publish-button { border: 1px solid var(--purple-800); background: var(--purple-800); color: white; }
 .publish-button:disabled { cursor: wait; opacity: 0.65; }
 .sidebar-backdrop { position: fixed; inset: 0; z-index: 25; background: rgba(23, 32, 51, 0.55); backdrop-filter: blur(3px); }
+.sidebar-backdrop[hidden], input[type="file"][hidden] { display: none; }
 
 @media (max-width: 1050px) {
   .content-cards { grid-template-columns: 1fr; }

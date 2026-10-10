@@ -134,35 +134,12 @@
             </button>
           </div>
 
-          <div class="overview-grid">
-            <section class="surface-card roadmap-card" aria-labelledby="roadmap-title">
-              <div class="surface-heading">
-                <div><p class="eyebrow">Build progress</p><h2 id="roadmap-title">Dashboard roadmap</h2></div>
-                <span class="phase-badge">Phase 4</span>
-              </div>
-              <ol class="roadmap-list">
-                <li class="is-complete"><span>1</span><div><strong>Content foundation</strong><small>Structured posts, resources, and homepage data</small></div></li>
-                <li class="is-complete"><span>2</span><div><strong>Secure dashboard shell</strong><small>Cloudflare Access identity and responsive workspace</small></div></li>
-                <li class="is-complete"><span>3</span><div><strong>Live content connection</strong><small>Read deployed posts, resources, and key pages</small></div></li>
-                <li class="is-current"><span>4</span><div><strong>Post editor</strong><small>Create, validate, and publish stories through Git</small></div></li>
-                <li><span>5</span><div><strong>Remaining editors and media</strong><small>Resources, key pages, R2 uploads, and deployment status</small></div></li>
-              </ol>
-            </section>
-
-            <aside class="surface-card safety-card">
-              <div class="safety-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.1 3.4 9.8 8 11 4.6-1.2 8-5.9 8-11V5l-8-3Zm-1 14-3-3 1.4-1.4 1.6 1.6 3.6-3.6L16 11l-5 5Z"/></svg></div>
-              <p class="eyebrow">Publishing safety</p>
-              <h2>Every post update has a history.</h2>
-              <p>Publishing creates a Git commit and triggers a fresh Cloudflare Pages deployment. Stale edits are rejected instead of overwritten.</p>
-              <a href="/" target="_blank" rel="noopener">Open the live website <span aria-hidden="true">&rarr;</span></a>
-            </aside>
-          </div>
         </section>
 
         <section class="view-panel" data-panel="posts" aria-labelledby="posts-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Stories</p><h1 id="posts-title">Posts</h1><p>Field updates currently published on the website.</p></div><button class="primary-button" type="button" data-new-post>New post</button></div>
+          <div class="page-heading"><div><p class="eyebrow">Stories</p><h1 id="posts-title">Posts</h1><p>Published stories and private drafts.</p></div><button class="primary-button" type="button" data-new-post>New post</button></div>
           <div class="surface-card content-table-card">
-            <div class="table-note"><span>Deployed content</span><p>Loaded from the current Cloudflare Pages deployment.</p></div>
+            <div class="table-note"><span>Content records</span><p>Published stories come from the current deployment; drafts remain private.</p></div>
             <div class="record-list" data-record-list="posts"><p class="loading-row">Loading posts...</p></div>
           </div>
         </section>
@@ -289,7 +266,7 @@
         </section>
 
         <section class="view-panel" data-panel="pages" aria-labelledby="pages-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Core content</p><h1 id="pages-title">Key pages</h1><p>Only approved page content will be editable. Layouts and navigation stay protected.</p></div></div>
+          <div class="page-heading"><div><p class="eyebrow">Core content</p><h1 id="pages-title">Key-page inventory</h1><p>Approved pages planned for future editing. Layouts and navigation remain protected.</p></div></div>
           <div class="page-grid" data-page-grid><p class="loading-row">Loading key pages...</p></div>
         </section>
 
