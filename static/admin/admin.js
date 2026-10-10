@@ -11,6 +11,7 @@
   var viewTitle = document.querySelector("[data-current-view]");
   var postForm = document.querySelector("[data-post-form]");
   var publishButton = document.querySelector("[data-publish-post]");
+  var saveDraftButton = document.querySelector("[data-save-draft]");
   var uploadFeaturedImageButton = document.querySelector("[data-upload-featured-image]");
   var selectFeaturedImageButton = document.querySelector("[data-select-featured-image]");
   var selectGalleryImageButton = document.querySelector("[data-select-gallery-image]");
@@ -36,6 +37,7 @@
   var resourceSavedSnapshot = null;
   var isPublishingResource = false;
   var sessionRetryAttempted = false;
+  var publishedPosts = [];
   var viewNames = {
     overview: "Overview",
     posts: "Posts",
@@ -109,6 +111,7 @@
       socialImageAlt: formControl("socialImageAlt").value,
       gallery: formControl("gallery").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
       body: formControl("body").value,
+      draft: formControl("draft").value === "true",
       sha: formControl("sha").value || null
     };
   }
@@ -124,7 +127,8 @@
     if (isPublishing) publishButton.textContent = "Publishing...";
     else if (!canPublish) publishButton.textContent = "Publishing unavailable";
     else if (!hasChanges) publishButton.textContent = "No changes to publish";
-    else publishButton.textContent = formControl("id").value ? "Publish changes" : "Publish post";
+    else publishButton.textContent = formControl("draft").value === "true" ? "Publish post" : (formControl("id").value ? "Publish changes" : "Publish post");
+    if (saveDraftButton) { saveDraftButton.disabled = !canPublish || !hasChanges || isPublishing; saveDraftButton.hidden = false; }
   }
 
   function setFeaturedImageStatus(message) {
@@ -340,6 +344,7 @@
     hideEditorStatus();
     formControl("id").value = "";
     formControl("sha").value = "";
+    formControl("draft").value = "true";
     formControl("slug").disabled = false;
     formControl("date").value = new Date().toISOString().slice(0, 10);
     lastAutoSlug = "";
@@ -366,7 +371,7 @@
 
   function fillPostForm(post) {
     resetPostForm();
-    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "socialImage", "socialImageAlt", "body"].forEach(function (name) {
+    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "socialImage", "socialImageAlt", "body", "draft"].forEach(function (name) {
       var control = formControl(name);
       if (control) control.value = post[name] || "";
     });
@@ -472,7 +477,7 @@
 
     var status = document.createElement("span");
     status.className = "published-label";
-    status.textContent = "Published";
+    status.textContent = item.status === "draft" ? "Draft" : "Published";
     row.append(type, copy, status);
     if (kind === "posts" && typeof item.id === "string") {
       var edit = document.createElement("button");
@@ -537,6 +542,7 @@
   }
 
   function displayContent(manifest) {
+    publishedPosts = manifest.posts;
     setCount("posts", manifest.summary.posts);
     setCount("resources", manifest.summary.resources);
     setCount("pages", manifest.summary.pages);
@@ -551,6 +557,13 @@
         ? "Loaded from this deployment"
         : "Deployment content generated " + generated.toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
     }
+  }
+
+  async function loadDrafts() {
+    var response = await fetch("/api/admin/drafts", { credentials: "same-origin", headers: { Accept: "application/json" } });
+    var result = await response.json();
+    if (!response.ok || !Array.isArray(result.posts)) return;
+    renderRecords("posts", result.posts.concat(publishedPosts));
   }
 
   async function loadContent(endpoint) {
@@ -598,6 +611,7 @@
       setSessionState("ready", "Secure session");
       try {
         await loadContent();
+        await loadDrafts();
       } catch (error) {
         if (accessNotice && accessTitle && accessMessage) {
           accessTitle.textContent = "Content list unavailable";
@@ -648,6 +662,8 @@
     });
     postForm.addEventListener("input", updatePublishButton);
     postForm.addEventListener("change", updatePublishButton);
+    if (saveDraftButton) saveDraftButton.addEventListener("click", function () { formControl("draft").value = "true"; postForm.requestSubmit(); });
+    if (publishButton) publishButton.addEventListener("click", function () { formControl("draft").value = "false"; });
     postForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       clearFormErrors();

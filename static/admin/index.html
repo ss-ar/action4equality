@@ -180,6 +180,7 @@
           <form class="post-editor surface-card" data-post-form novalidate>
             <input type="hidden" name="id">
             <input type="hidden" name="sha">
+            <input type="hidden" name="draft" value="true">
 
             <div class="editor-status" data-editor-status hidden role="status">
               <div><strong data-editor-status-title></strong><p data-editor-status-message></p></div>
@@ -251,9 +252,10 @@
             </div>
 
             <div class="editor-actions">
-              <p>Publishing commits directly to the configured content branch and starts a Pages rebuild.</p>
+              <p data-post-mode-help>Drafts are saved privately until you choose to publish.</p>
               <div>
                 <button class="cancel-button" type="button" data-cancel-post>Cancel</button>
+                <button class="cancel-button" type="button" data-save-draft>Save draft</button>
                 <button class="publish-button" type="submit" data-publish-post>Publish post</button>
               </div>
             </div>

@@ -10,6 +10,8 @@ export type RepositoryWriteResult = {
   commitUrl: string | null;
 };
 
+export type RepositoryDirectoryEntry = { path: string; type: string };
+
 export class GitHubApiError extends Error {
   readonly status: number;
   readonly code: "configuration" | "not_found" | "conflict" | "upstream";
@@ -128,6 +130,17 @@ export async function getRepositoryFile(env: Env, path: string): Promise<Reposit
     sha: payload.sha,
     content: decodeBase64(payload.content),
   };
+}
+
+export async function listRepositoryFiles(env: Env, path: string): Promise<RepositoryDirectoryEntry[]> {
+  const config = getConfig(env); const url = repositoryUrl(config, path); url.searchParams.set("ref", config.branch);
+  const response = await fetch(url, { headers: requestHeaders(config) }); if (!response.ok) throw await githubError(response, "list");
+  const payload: unknown = await response.json();
+  if (!Array.isArray(payload) || payload.some((item) => !isRecord(item) || typeof item.path !== "string" || typeof item.type !== "string")) throw new GitHubApiError("GitHub returned an invalid directory response", 502, "upstream");
+  return payload.map((item) => {
+    const entry = item as { path: string; type: string };
+    return { path: entry.path, type: entry.type };
+  });
 }
 
 export async function putRepositoryFile(

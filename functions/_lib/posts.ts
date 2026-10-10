@@ -10,6 +10,7 @@ export type PostInput = {
   socialImageAlt: string;
   gallery: string[];
   body: string;
+  draft: boolean;
   sha: string | null;
 };
 
@@ -79,6 +80,7 @@ export function validatePostInput(
   const socialImage = stringValue(input.socialImage);
   const socialImageAlt = stringValue(input.socialImageAlt);
   const body = typeof input.body === "string" ? input.body.trim() : "";
+  const draft = input.draft === true;
   const sha = input.sha === null || input.sha === undefined ? null : stringValue(input.sha);
   const gallery = Array.isArray(input.gallery) ? input.gallery.map(stringValue).filter(Boolean) : null;
   const errors: Record<string, string> = {};
@@ -114,6 +116,7 @@ export function validatePostInput(
       socialImageAlt,
       gallery: gallery ?? [],
       body,
+      draft,
       sha,
     },
   };
@@ -141,6 +144,7 @@ export function parsePostSource(source: string, sha: string): ParsedPost {
       socialImageAlt: frontmatterString(frontmatter, "social_image_alt"),
       gallery: frontmatterStringArray(frontmatter, "gallery"),
       body: match[2]?.trim() ?? "",
+      draft: frontmatter.draft === true,
       sha,
     },
   };
@@ -157,6 +161,7 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
     "social_image",
     "social_image_alt",
     "gallery",
+    "draft",
   ];
   for (const key of editableKeys) delete frontmatter[key];
 
@@ -168,6 +173,7 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
   if (post.socialImage) frontmatter.social_image = post.socialImage;
   if (post.socialImageAlt) frontmatter.social_image_alt = post.socialImageAlt;
   if (post.gallery.length > 0) frontmatter.gallery = post.gallery;
+  if (post.draft) frontmatter.draft = true;
 
   const yaml = stringifyYaml(frontmatter, { lineWidth: 0 }).trimEnd();
   return `---\n${yaml}\n---\n\n${post.body.trim()}\n`;
