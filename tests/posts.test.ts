@@ -6,6 +6,7 @@ import {
   validatePostInput,
 } from "../functions/_lib/posts";
 import { canPublishPosts } from "../functions/_lib/permissions";
+import { serializeResource, validateResourceInput } from "../functions/_lib/resources";
 
 async function main(): Promise<void> {
   const sha = "a".repeat(40);
@@ -57,6 +58,22 @@ async function main(): Promise<void> {
   );
   assert.equal(omittedGallery.ok, false);
   if (!omittedGallery.ok) assert.ok(omittedGallery.errors.gallery);
+
+  const resource = validateResourceInput({
+    title: "Community report 2026",
+    slug: "community-report-2026",
+    description: "A public report covering the organisation's community work during 2026.",
+    resourceType: "programme-report",
+    publicationDate: "2026-10-11",
+    file: "/media/documents/2026/10/00000000-0000-0000-0000-000000000000.pdf",
+    weight: 20,
+  });
+  assert.equal(resource.ok, true);
+  if (resource.ok) assert.match(serializeResource(resource.data), /build:\n  render: never/);
+
+  const invalidResource = validateResourceInput({ file: "/media/documents/not-a-pdf.docx" });
+  assert.equal(invalidResource.ok, false);
+  if (!invalidResource.ok) assert.ok(invalidResource.errors.file);
 
   const publishingEnv = {
     GITHUB_REPOSITORY: "ss-ar/action4equality",

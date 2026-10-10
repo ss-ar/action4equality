@@ -1,6 +1,6 @@
 function getKey(value: string | string[]): string | null {
   const key = (Array.isArray(value) ? value : [value]).join("/");
-  return /^images\/\d{4}\/\d{2}\/[a-f0-9-]+\.(?:avif|gif|jpe?g|png|webp)$/.test(key) ? key : null;
+  return /^(?:images\/\d{4}\/\d{2}\/[a-f0-9-]+\.(?:avif|gif|jpe?g|png|webp)|documents\/\d{4}\/\d{2}\/[a-f0-9-]+\.pdf)$/.test(key) ? key : null;
 }
 
 function notFound(): Response {

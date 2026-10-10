@@ -16,6 +16,10 @@
   var selectGalleryImageButton = document.querySelector("[data-select-gallery-image]");
   var featuredImageFile = document.querySelector("[data-featured-image-file]");
   var featuredImageStatus = document.querySelector("[data-featured-image-status]");
+  var uploadMediaImageButton = document.querySelector("[data-upload-media-image]");
+  var mediaImageFile = document.querySelector("[data-media-image-file]");
+  var mediaUploadStatus = document.querySelector("[data-media-upload-status]");
+  var cancelMediaButton = document.querySelector("[data-cancel-media]");
   var mediaLibraryGrid = document.querySelector("[data-media-library-grid]");
   var mediaLibraryStatus = document.querySelector("[data-media-library-status]");
   var mediaLibraryDescription = document.querySelector("[data-media-library-description]");
@@ -25,13 +29,18 @@
   var savedPostSnapshot = null;
   var isPublishing = false;
   var mediaTarget = null;
+  var resourceForm = document.querySelector("[data-resource-form]");
+  var uploadDocumentButton = document.querySelector("[data-upload-document]");
+  var documentFile = document.querySelector("[data-document-file]");
+  var documentStatus = document.querySelector("[data-document-status]");
   var viewNames = {
     overview: "Overview",
     posts: "Posts",
     resources: "Resources",
     pages: "Key pages",
     media: "Media library",
-    "post-editor": "Post editor"
+    "post-editor": "Post editor",
+    "resource-editor": "Resource editor"
   };
 
   function setMenu(open) {
@@ -119,6 +128,17 @@
     if (featuredImageStatus) featuredImageStatus.textContent = message;
   }
 
+  function setMediaUploadStatus(message) { if (mediaUploadStatus) mediaUploadStatus.textContent = message; }
+
+  async function uploadImage(file) {
+    var data = new FormData();
+    data.append("file", file);
+    var response = await fetch("/api/admin/media", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json" }, body: data });
+    var result = await response.json();
+    if (!response.ok || !result.media || typeof result.media.url !== "string") throw new Error(result.error || "The image could not be uploaded.");
+    return result.media.url;
+  }
+
   function formatFileSize(bytes) {
     if (typeof bytes !== "number" || bytes < 1024) return "Image";
     return (bytes / (1024 * 1024)).toFixed(bytes >= 10 * 1024 * 1024 ? 0 : 1) + " MB";
@@ -176,6 +196,7 @@
   async function openMediaLibrary(target) {
     mediaTarget = target;
     showView("media");
+    if (cancelMediaButton) cancelMediaButton.hidden = !target;
     if (mediaLibraryDescription) {
       mediaLibraryDescription.textContent = target === "gallery"
         ? "Choose an uploaded image to add to this post's gallery."
@@ -197,6 +218,34 @@
       mediaLibraryStatus.hidden = false;
       mediaLibraryStatus.textContent = error instanceof Error ? error.message : "The media library could not be loaded.";
     }
+  }
+
+  function resourceControl(name) { return resourceForm ? resourceForm.elements.namedItem(name) : null; }
+
+  function setResourceStatus(state, title, message, commitUrl) {
+    var box = document.querySelector("[data-resource-status]");
+    var heading = document.querySelector("[data-resource-status-title]");
+    var copy = document.querySelector("[data-resource-status-message]");
+    var link = document.querySelector("[data-resource-commit-link]");
+    if (!box || !heading || !copy || !link) return;
+    box.hidden = false;
+    box.classList.toggle("is-error", state === "error");
+    box.classList.toggle("is-pending", state === "pending");
+    heading.textContent = title;
+    copy.textContent = message;
+    link.hidden = !commitUrl;
+    if (commitUrl) link.href = commitUrl;
+  }
+
+  function openNewResource() {
+    if (!resourceForm) return;
+    resourceForm.reset();
+    resourceControl("weight").value = "100";
+    document.querySelectorAll("[data-resource-error]").forEach(function (item) { item.textContent = item.dataset.defaultText || ""; });
+    var status = document.querySelector("[data-resource-status]");
+    if (status) status.hidden = true;
+    if (documentStatus) documentStatus.textContent = "PDF only, up to 8 MB.";
+    showView("resource-editor");
   }
 
   function setPublishPermission(allowed) {
@@ -512,6 +561,8 @@
 
   document.querySelectorAll("[data-new-post]").forEach(function (button) { button.addEventListener("click", openNewPost); });
   document.querySelectorAll("[data-cancel-post]").forEach(function (button) { button.addEventListener("click", function () { showView("posts"); }); });
+  document.querySelectorAll("[data-new-resource]").forEach(function (button) { button.addEventListener("click", openNewResource); });
+  document.querySelectorAll("[data-cancel-resource]").forEach(function (button) { button.addEventListener("click", function () { showView("resources"); }); });
 
   if (postForm) {
     postForm.querySelectorAll("[data-error]").forEach(function (element) { element.dataset.defaultText = element.textContent; });
@@ -592,20 +643,8 @@
       uploadFeaturedImageButton.disabled = true;
       setFeaturedImageStatus("Uploading image...");
       try {
-        var data = new FormData();
-        data.append("file", file);
-        var response = await fetch("/api/admin/media", {
-          method: "POST",
-          credentials: "same-origin",
-          headers: { Accept: "application/json" },
-          body: data
-        });
-        var result = await response.json();
-        if (!response.ok || !result.media || typeof result.media.url !== "string") {
-          throw new Error(result.error || "The image could not be uploaded.");
-        }
-
-        formControl("featuredImage").value = result.media.url;
+        var imageUrl = await uploadImage(file);
+        formControl("featuredImage").value = imageUrl;
         formControl("featuredImage").dispatchEvent(new Event("input", { bubbles: true }));
         setFeaturedImageStatus("Image uploaded. It is ready to use in this post.");
       } catch (error) {
@@ -619,6 +658,61 @@
 
   if (selectFeaturedImageButton) selectFeaturedImageButton.addEventListener("click", function () { openMediaLibrary("featuredImage"); });
   if (selectGalleryImageButton) selectGalleryImageButton.addEventListener("click", function () { openMediaLibrary("gallery"); });
+  if (cancelMediaButton) cancelMediaButton.addEventListener("click", function () { mediaTarget = null; showView("post-editor"); });
+  if (uploadMediaImageButton && mediaImageFile) {
+    uploadMediaImageButton.addEventListener("click", function () {
+      if (!canPublish || localUiPreview) return setMediaUploadStatus("Image uploads are available on the production dashboard.");
+      mediaImageFile.click();
+    });
+    mediaImageFile.addEventListener("change", async function () {
+      var file = mediaImageFile.files && mediaImageFile.files[0];
+      if (!file) return;
+      uploadMediaImageButton.disabled = true;
+      setMediaUploadStatus("Uploading image...");
+      try {
+        await uploadImage(file);
+        setMediaUploadStatus("Image uploaded. Choose it below to use it in the post.");
+        await openMediaLibrary(mediaTarget);
+      } catch (error) { setMediaUploadStatus(error instanceof Error ? error.message : "The image could not be uploaded."); }
+      finally { mediaImageFile.value = ""; uploadMediaImageButton.disabled = false; }
+    });
+  }
+
+  if (resourceForm) {
+    resourceForm.querySelectorAll("[data-resource-error]").forEach(function (item) { item.dataset.defaultText = item.textContent; });
+    resourceControl("title").addEventListener("input", function (event) {
+      var slug = resourceControl("slug");
+      if (!slug.value || slug.value === slugify(resourceControl("title").dataset.lastTitle || "")) slug.value = slugify(event.target.value);
+      resourceControl("title").dataset.lastTitle = event.target.value;
+    });
+    resourceForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      if (!canPublish || localUiPreview) return setResourceStatus("error", "Publishing is unavailable", "Use the Access-protected production dashboard.");
+      resourceForm.querySelectorAll(".form-field").forEach(function (field) { field.classList.remove("has-error"); });
+      setResourceStatus("pending", "Publishing resource", "Creating a Git commit and starting the Pages rebuild.");
+      var payload = { title: resourceControl("title").value, slug: resourceControl("slug").value, description: resourceControl("description").value, resourceType: resourceControl("resourceType").value, publicationDate: resourceControl("publicationDate").value, file: resourceControl("file").value, weight: Number(resourceControl("weight").value) };
+      try {
+        var response = await fetch("/api/admin/resources", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        var result = await response.json();
+        if (!response.ok) {
+          Object.keys(result.errors || {}).forEach(function (name) { var control = resourceControl(name); var message = resourceForm.querySelector('[data-resource-error="' + name + '"]'); if (control && control.closest) control.closest(".form-field").classList.add("has-error"); if (message) message.textContent = result.errors[name]; });
+          throw new Error(result.error || "The resource could not be published.");
+        }
+        setResourceStatus("success", "Resource committed successfully", result.message, result.commit && result.commit.url);
+      } catch (error) { setResourceStatus("error", "Resource was not published", error instanceof Error ? error.message : "Try again later."); }
+    });
+  }
+
+  if (uploadDocumentButton && documentFile && resourceForm) {
+    uploadDocumentButton.addEventListener("click", function () { if (!canPublish || localUiPreview) return setResourceStatus("error", "Upload is unavailable", "Use the production dashboard."); documentFile.click(); });
+    documentFile.addEventListener("change", async function () {
+      var file = documentFile.files && documentFile.files[0]; if (!file) return;
+      uploadDocumentButton.disabled = true; if (documentStatus) documentStatus.textContent = "Uploading PDF...";
+      try { var data = new FormData(); data.append("file", file); var response = await fetch("/api/admin/documents", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json" }, body: data }); var result = await response.json(); if (!response.ok || !result.document) throw new Error(result.error || "The PDF could not be uploaded."); resourceControl("file").value = result.document.url; if (documentStatus) documentStatus.textContent = "PDF uploaded. It is ready to publish."; }
+      catch (error) { if (documentStatus) documentStatus.textContent = error instanceof Error ? error.message : "The PDF could not be uploaded."; }
+      finally { documentFile.value = ""; uploadDocumentButton.disabled = false; }
+    });
+  }
 
   if (menuToggle) menuToggle.addEventListener("click", function () { setMenu(!sidebar.classList.contains("is-open")); });
   if (menuBackdrop) menuBackdrop.addEventListener("click", function () { setMenu(false); });

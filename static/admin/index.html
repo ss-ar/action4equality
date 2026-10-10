@@ -261,11 +261,28 @@
         </section>
 
         <section class="view-panel" data-panel="resources" aria-labelledby="resources-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Publications</p><h1 id="resources-title">Resources</h1><p>Reports and documents available to website visitors.</p></div><button class="primary-button" type="button" disabled>Upload resource <span class="button-tag">Next stage</span></button></div>
+          <div class="page-heading"><div><p class="eyebrow">Publications</p><h1 id="resources-title">Resources</h1><p>Reports and PDF documents available to website visitors.</p></div><button class="primary-button" type="button" data-new-resource>Upload PDF resource</button></div>
           <div class="surface-card content-table-card">
             <div class="table-note"><span>Structured and ready</span><p>Each resource is now an independent content record.</p></div>
             <div class="record-list" data-record-list="resources"><p class="loading-row">Loading resources...</p></div>
           </div>
+        </section>
+
+        <section class="view-panel" data-panel="resource-editor" aria-labelledby="resource-editor-title" hidden>
+          <div class="editor-heading"><button class="back-button" type="button" data-cancel-resource aria-label="Return to resources">&larr;</button><div><p class="eyebrow">Publication editor</p><h1 id="resource-editor-title">Upload a PDF resource</h1><p>Only PDF files up to 8 MB can be published for public download.</p></div></div>
+          <form class="post-editor surface-card" data-resource-form novalidate>
+            <div class="editor-status" data-resource-status hidden role="status"><div><strong data-resource-status-title></strong><p data-resource-status-message></p></div><a href="#" data-resource-commit-link target="_blank" rel="noopener" hidden>View Git commit <span aria-hidden="true">&nearr;</span></a></div>
+            <div class="form-grid">
+              <label class="form-field form-field-wide"><span>Resource title <b aria-hidden="true">*</b></span><input type="text" name="title" maxlength="140" required><small data-resource-error="title">Use a clear title between 3 and 140 characters.</small></label>
+              <label class="form-field"><span>URL slug <b aria-hidden="true">*</b></span><div class="slug-input"><span>/resources/</span><input type="text" name="slug" maxlength="100" required><span>/</span></div><small data-resource-error="slug">Generated from the title.</small></label>
+              <label class="form-field"><span>Resource type <b aria-hidden="true">*</b></span><select name="resourceType" required><option value="publication">Publication</option><option value="annual-report">Annual report</option><option value="audit-report">Audit report</option><option value="programme-report">Programme report</option></select><small data-resource-error="resourceType"></small></label>
+              <label class="form-field form-field-wide"><span>Summary <b aria-hidden="true">*</b></span><textarea name="description" rows="3" maxlength="300" required></textarea><small data-resource-error="description">Use between 20 and 300 characters.</small></label>
+              <label class="form-field"><span>Publication date</span><input type="date" name="publicationDate"><small data-resource-error="publicationDate">Optional.</small></label>
+              <label class="form-field"><span>Display order <b aria-hidden="true">*</b></span><input type="number" name="weight" min="1" max="10000" value="100" required><small data-resource-error="weight">Lower numbers appear first.</small></label>
+              <label class="form-field form-field-wide"><span>PDF file <b aria-hidden="true">*</b></span><input type="text" name="file" readonly required><div class="media-upload-actions"><button class="media-upload-button" type="button" data-upload-document>Choose PDF from computer</button><input type="file" data-document-file accept="application/pdf,.pdf" hidden><small data-document-status aria-live="polite">PDF only, up to 8 MB.</small></div><small data-resource-error="file">Choose a PDF to upload.</small></label>
+            </div>
+            <div class="editor-actions"><p>Publishing creates a Git commit and makes the PDF available after the next Pages rebuild.</p><div><button class="cancel-button" type="button" data-cancel-resource>Cancel</button><button class="publish-button" type="submit" data-publish-resource>Publish resource</button></div></div>
+          </form>
         </section>
 
         <section class="view-panel" data-panel="pages" aria-labelledby="pages-title" hidden>
@@ -274,8 +291,9 @@
         </section>
 
         <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div></div>
+          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div><div class="media-upload-actions"><button class="secondary-button" type="button" data-cancel-media hidden>Cancel and return to post</button><button class="primary-button" type="button" data-upload-media-image>Upload image</button><input type="file" data-media-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden></div></div>
           <div class="surface-card media-library-card">
+            <p class="media-upload-notice" data-media-upload-status aria-live="polite">JPEG, PNG, GIF, WebP, or AVIF up to 8 MB.</p>
             <p class="loading-row" data-media-library-status>Loading uploaded images...</p>
             <div class="media-library-grid" data-media-library-grid></div>
           </div>

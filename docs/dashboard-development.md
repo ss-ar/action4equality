@@ -67,13 +67,14 @@ unprotected Pages hostname fail closed instead of exposing the dashboard.
 - Posts, resources, and key-page lists are loaded from the deployed manifest.
 - Authorized editors can create and update posts through validated GitHub
   commits once `GITHUB_TOKEN` is configured.
-- Resource editing, key-page editing, deletion, and document uploads remain disabled.
+- Resource editing, key-page editing, and deletion remain disabled.
 - Featured images can be uploaded from the post editor. The private
   `action4equality-media` R2 bucket is delivered publicly through versioned
   `/media/images/...` URLs on the website domain.
 - Uploads accept JPEG, PNG, GIF, WebP, and AVIF images up to 8 MB. The media
-  library lets editors reuse uploaded images for featured images and galleries.
-  Document uploads remain future work.
+  library lets editors upload or reuse images for featured images and galleries.
+- Editors can upload PDF-only public resources up to 8 MB. Each upload must be
+  published with a title, summary, resource type, and display order.
 
 The generated manifest remains the read model for each deployment. A successful
 post commit becomes visible there after Cloudflare Pages finishes rebuilding.

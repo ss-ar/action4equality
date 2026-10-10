@@ -40,7 +40,7 @@ Location: `content/resources/<slug>.md`
 | `description` | text | Required, maximum 300 characters |
 | `resource_type` | choice | `annual-report`, `audit-report`, `programme-report`, or `publication` |
 | `publication_date` | date | Optional when the source has no stated date |
-| `file` | document URL | Required; PDF only in the first dashboard release |
+| `file` | document URL | Required; dashboard uploads accept PDF only, up to 8 MB |
 | `weight` | integer | Controls display order |
 
 Resource records appear on `/resources/` but do not generate separate detail pages.
