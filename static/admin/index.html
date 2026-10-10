@@ -269,6 +269,14 @@
           <div class="page-heading"><div><p class="eyebrow">Core content</p><h1 id="pages-title">Key-page inventory</h1><p>Approved pages planned for future editing. Layouts and navigation remain protected.</p></div></div>
           <div class="page-grid" data-page-grid><p class="loading-row">Loading key pages...</p></div>
         </section>
+        <section class="view-panel" data-panel="page-editor" aria-labelledby="page-editor-title" hidden>
+          <div class="editor-heading"><button class="back-button" type="button" data-cancel-page aria-label="Return to pages">&larr;</button><div><p class="eyebrow">Key-page editor</p><h1 id="page-editor-title" data-page-editor-title>Edit page</h1><p data-page-editor-description>Only approved content fields can be changed.</p></div></div>
+          <form class="post-editor surface-card" data-page-form novalidate><input type="hidden" name="id"><input type="hidden" name="sha"><input type="hidden" name="hasBody">
+            <div class="editor-status" data-page-status hidden role="status"><div><strong data-page-status-title></strong><p data-page-status-message></p></div><a href="#" data-page-commit-link target="_blank" rel="noopener" hidden>View Git commit</a></div>
+            <div class="form-grid"><label class="form-field form-field-wide"><span>Page title <b>*</b></span><input name="title" maxlength="140" required><small data-page-error="title"></small></label><label class="form-field form-field-wide" data-page-description-field hidden><span>Search description <b>*</b></span><textarea name="description" rows="3" maxlength="300"></textarea><small data-page-error="description"></small></label><label class="form-field form-field-wide" data-page-body-field><span>Page content <b>*</b></span><textarea class="body-editor" name="body" rows="18"></textarea><small data-page-error="body">Markdown formatting is supported.</small></label></div>
+            <div class="editor-actions"><p>Publishing creates a Git commit and starts a Pages rebuild.</p><div><button class="cancel-button" type="button" data-cancel-page>Cancel</button><button class="publish-button" type="submit" data-publish-page disabled>Publish changes</button></div></div>
+          </form>
+        </section>
 
         <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
           <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div><div class="media-upload-actions"><button class="secondary-button" type="button" data-cancel-media hidden>Cancel and return to post</button><button class="primary-button" type="button" data-upload-media-image>Upload image</button><input type="file" data-media-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden></div></div>

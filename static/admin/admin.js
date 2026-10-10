@@ -46,6 +46,7 @@
     media: "Media library",
     "post-editor": "Post editor",
     "resource-editor": "Resource editor"
+    , "page-editor": "Key-page editor"
   };
 
   function setMenu(open) {
@@ -542,8 +543,16 @@
       var sourceType = document.createElement("small");
       sourceType.textContent = typeof item.sourceType === "string" ? item.sourceType : "Website content";
       card.append(number, title, description, sourceType);
+      if (item.id !== "homepage") { card.tabIndex = 0; card.setAttribute("role", "button"); card.addEventListener("click", function () { openExistingPage(item.id); }); }
       grid.append(card);
     });
+  }
+
+  async function openExistingPage(id) {
+    var form = document.querySelector("[data-page-form]"); if (!form) return;
+    showView("page-editor");
+    var status = document.querySelector("[data-page-status]"); status.hidden = false; document.querySelector("[data-page-status-title]").textContent = "Loading page"; document.querySelector("[data-page-status-message]").textContent = "Checking the latest repository version.";
+    try { var response = await fetch("/api/admin/pages/" + encodeURIComponent(id), { credentials: "same-origin" }); var result = await response.json(); if (!response.ok || !result.page) throw new Error(result.error || "The page could not be loaded."); var page = result.page; ["id", "sha", "title", "description", "body"].forEach(function (name) { form.elements.namedItem(name).value = page[name] || ""; }); form.elements.namedItem("hasBody").value = page.body ? "true" : ""; document.querySelector("[data-page-editor-title]").textContent = "Edit " + page.title; document.querySelector("[data-page-description-field]").hidden = page.id !== "contact"; document.querySelector("[data-page-body-field]").hidden = !page.body; status.hidden = true; form.dataset.snapshot = JSON.stringify({ title: page.title, description: page.description, body: page.body, sha: page.sha }); document.querySelector("[data-publish-page]").disabled = !canPublish; } catch (error) { document.querySelector("[data-page-status-title]").textContent = "Page could not be loaded"; document.querySelector("[data-page-status-message]").textContent = error.message; }
   }
 
   function displayContent(manifest) {
@@ -662,6 +671,16 @@
   document.querySelectorAll("[data-cancel-post]").forEach(function (button) { button.addEventListener("click", function () { showView("posts"); }); });
   document.querySelectorAll("[data-new-resource]").forEach(function (button) { button.addEventListener("click", openNewResource); });
   document.querySelectorAll("[data-cancel-resource]").forEach(function (button) { button.addEventListener("click", function () { showView("resources"); }); });
+  document.querySelectorAll("[data-cancel-page]").forEach(function (button) { button.addEventListener("click", function () { showView("pages"); }); });
+
+  var pageForm = document.querySelector("[data-page-form]");
+  if (pageForm) pageForm.addEventListener("submit", async function (event) {
+    event.preventDefault(); if (!canPublish) return;
+    var status = document.querySelector("[data-page-status]"); var title = document.querySelector("[data-page-status-title]"); var message = document.querySelector("[data-page-status-message]");
+    var payload = { title: pageForm.elements.namedItem("title").value, description: pageForm.elements.namedItem("description").value, body: pageForm.elements.namedItem("body").value, sha: pageForm.elements.namedItem("sha").value };
+    title.textContent = "Publishing page"; message.textContent = "Creating a Git commit and starting the Pages rebuild."; status.hidden = false;
+    try { var response = await fetch("/api/admin/pages/" + encodeURIComponent(pageForm.elements.namedItem("id").value), { method: "PUT", credentials: "same-origin", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) }); var result = await response.json(); if (!response.ok) throw new Error(result.error || "The page could not be published."); pageForm.elements.namedItem("sha").value = result.page.sha; title.textContent = "Page committed successfully"; message.textContent = result.message; } catch (error) { title.textContent = "Page was not published"; message.textContent = error.message; }
+  });
 
   if (postForm) {
     postForm.querySelectorAll("[data-error]").forEach(function (element) { element.dataset.defaultText = element.textContent; });
