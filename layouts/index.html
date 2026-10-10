@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $home := site.Data.homepage }}
+{{ $home := hugo.Data.homepage }}
 <section class="relative isolate min-h-[calc(100vh-5rem)] overflow-hidden bg-primary-900 text-white">
   <img class="absolute inset-0 -z-20 h-full w-full object-cover" src="{{ $home.hero.image | relURL }}" alt="{{ $home.hero.image_alt }}">
   <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary-900 via-primary-900/85 to-primary-900/25"></div>

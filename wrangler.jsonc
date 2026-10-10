@@ -8,6 +8,7 @@
     "GITHUB_REPOSITORY": "ss-ar/action4equality",
     "GITHUB_CONTENT_BRANCH": "main",
     "PUBLISHING_HOST": "action4equality.org",
+    "HUGO_VERSION": "0.161.1",
     "CLOUDFLARE_ACCESS_TEAM_DOMAIN": "https://ssewanyana.cloudflareaccess.com",
     "CLOUDFLARE_ACCESS_AUD": "6d0dd9bd3fb6f3123b882c30f2527f7ea0019a172fdfa058cf7f15e515672f49"
   },
@@ -17,6 +18,7 @@
         "GITHUB_REPOSITORY": "ss-ar/action4equality",
         "GITHUB_CONTENT_BRANCH": "main",
         "PUBLISHING_HOST": "action4equality.org",
+        "HUGO_VERSION": "0.161.1",
         "CLOUDFLARE_ACCESS_TEAM_DOMAIN": "https://ssewanyana.cloudflareaccess.com",
         "CLOUDFLARE_ACCESS_AUD": "e20da38a6b13e2b3b93d7d526f016ba7fe6477fa2a13c6f89ea765ccc0707eb8"
       }

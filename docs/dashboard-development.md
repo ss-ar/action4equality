@@ -11,6 +11,10 @@ application before the dashboard is enabled for staff.
 - `npm run cf:types` regenerates `functions/types.d.ts` from `wrangler.jsonc`.
 - `npm run typecheck` checks the Pages Functions TypeScript.
 
+Cloudflare Pages uses the `HUGO_VERSION` value in `wrangler.jsonc`; it is pinned
+to the locally tested Hugo version so Git builds do not rely on the Pages image
+default.
+
 `npm run dev` provides a local UI preview at `http://localhost:1313/admin/`.
 On localhost only, the browser reads the generated manifest directly so the
 content lists can be reviewed without an Access token. This does not enable any
