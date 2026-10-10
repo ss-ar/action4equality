@@ -10,7 +10,7 @@ function error(message: string, status: number, errors?: Record<string, string>)
 export const onRequestPost: PagesFunction<Env, string, AdminData> = async (context) => {
   if (!canPublishPosts(context.request, context.data.user, context.env)) return error("You do not have permission to publish resources", 403);
   try {
-    const validation = validateResourceInput(await readJsonBody(context.request));
+    const validation = validateResourceInput(await readJsonBody(context.request), { isNew: true });
     if (!validation.ok) return error("Check the highlighted fields", 422, validation.errors);
     const path = `content/resources/${validation.data.slug}.md`;
     try {

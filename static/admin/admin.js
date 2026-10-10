@@ -33,6 +33,9 @@
   var uploadDocumentButton = document.querySelector("[data-upload-document]");
   var documentFile = document.querySelector("[data-document-file]");
   var documentStatus = document.querySelector("[data-document-status]");
+  var resourceSavedSnapshot = null;
+  var isPublishingResource = false;
+  var sessionRetryAttempted = false;
   var viewNames = {
     overview: "Overview",
     posts: "Posts",
@@ -222,6 +225,18 @@
 
   function resourceControl(name) { return resourceForm ? resourceForm.elements.namedItem(name) : null; }
 
+  function resourcePayload() {
+    return { title: resourceControl("title").value, slug: resourceControl("slug").value, description: resourceControl("description").value, resourceType: resourceControl("resourceType").value, publicationDate: resourceControl("publicationDate").value, file: resourceControl("file").value, weight: Number(resourceControl("weight").value), sha: resourceControl("sha").value || null };
+  }
+
+  function updateResourceButton() {
+    var button = document.querySelector("[data-publish-resource]");
+    if (!button || !resourceForm) return;
+    var changed = resourceSavedSnapshot !== null && resourceSavedSnapshot !== JSON.stringify(resourcePayload());
+    button.disabled = !canPublish || isPublishingResource || !changed;
+    button.textContent = isPublishingResource ? "Publishing..." : !canPublish ? "Publishing unavailable" : !changed ? "No changes to publish" : resourceControl("id").value ? "Publish changes" : "Publish resource";
+  }
+
   function setResourceStatus(state, title, message, commitUrl) {
     var box = document.querySelector("[data-resource-status]");
     var heading = document.querySelector("[data-resource-status-title]");
@@ -240,12 +255,32 @@
   function openNewResource() {
     if (!resourceForm) return;
     resourceForm.reset();
+    resourceControl("id").value = ""; resourceControl("sha").value = "";
+    resourceControl("slug").disabled = false;
     resourceControl("weight").value = "100";
     document.querySelectorAll("[data-resource-error]").forEach(function (item) { item.textContent = item.dataset.defaultText || ""; });
     var status = document.querySelector("[data-resource-status]");
     if (status) status.hidden = true;
     if (documentStatus) documentStatus.textContent = "PDF only, up to 8 MB.";
+    resourceSavedSnapshot = JSON.stringify(resourcePayload());
     showView("resource-editor");
+    updateResourceButton();
+  }
+
+  async function openExistingResource(id) {
+    showView("resource-editor");
+    setResourceStatus("pending", "Loading the repository version", "Checking the latest file before editing.");
+    try {
+      var response = await fetch("/api/admin/resources/" + encodeURIComponent(id), { credentials: "same-origin", headers: { Accept: "application/json" } });
+      var result = await response.json(); if (!response.ok || !result.resource) throw new Error(result.error || "The resource could not be loaded.");
+      var resource = result.resource;
+      ["id", "sha", "title", "slug", "description", "resourceType", "publicationDate", "file", "weight"].forEach(function (name) { if (resourceControl(name)) resourceControl(name).value = resource[name] || ""; });
+      resourceControl("slug").disabled = true;
+      resourceSavedSnapshot = JSON.stringify(resourcePayload());
+      var status = document.querySelector("[data-resource-status]"); if (status) status.hidden = true;
+      if (documentStatus) documentStatus.textContent = "Upload a new PDF only if you are replacing this document.";
+      updateResourceButton();
+    } catch (error) { setResourceStatus("error", "Resource could not be loaded", error instanceof Error ? error.message : "Try again later."); }
   }
 
   function setPublishPermission(allowed) {
@@ -432,6 +467,12 @@
       edit.addEventListener("click", function () { openExistingPost(item.id); });
       row.append(edit);
     }
+    if (kind === "resources" && typeof item.id === "string") {
+      var resourceEdit = document.createElement("button");
+      resourceEdit.className = "record-action"; resourceEdit.type = "button"; resourceEdit.textContent = "Edit";
+      resourceEdit.addEventListener("click", function () { openExistingResource(item.id); });
+      row.append(resourceEdit);
+    }
     return row;
   }
 
@@ -547,6 +588,10 @@
         accessTitle.textContent = "Dashboard connection unavailable";
         accessMessage.textContent = error instanceof Error ? error.message : "The secure session API could not be reached.";
         accessNotice.hidden = false;
+      }
+      if (!sessionRetryAttempted) {
+        sessionRetryAttempted = true;
+        window.setTimeout(loadSession, 3000);
       }
     }
   }
@@ -685,21 +730,27 @@
       if (!slug.value || slug.value === slugify(resourceControl("title").dataset.lastTitle || "")) slug.value = slugify(event.target.value);
       resourceControl("title").dataset.lastTitle = event.target.value;
     });
+    resourceForm.addEventListener("input", updateResourceButton);
+    resourceForm.addEventListener("change", updateResourceButton);
     resourceForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       if (!canPublish || localUiPreview) return setResourceStatus("error", "Publishing is unavailable", "Use the Access-protected production dashboard.");
+      if (isPublishingResource || resourceSavedSnapshot === JSON.stringify(resourcePayload())) return;
       resourceForm.querySelectorAll(".form-field").forEach(function (field) { field.classList.remove("has-error"); });
+      isPublishingResource = true; updateResourceButton();
       setResourceStatus("pending", "Publishing resource", "Creating a Git commit and starting the Pages rebuild.");
-      var payload = { title: resourceControl("title").value, slug: resourceControl("slug").value, description: resourceControl("description").value, resourceType: resourceControl("resourceType").value, publicationDate: resourceControl("publicationDate").value, file: resourceControl("file").value, weight: Number(resourceControl("weight").value) };
+      var payload = resourcePayload(); var resourceId = resourceControl("id").value;
       try {
-        var response = await fetch("/api/admin/resources", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        var response = await fetch(resourceId ? "/api/admin/resources/" + encodeURIComponent(resourceId) : "/api/admin/resources", { method: resourceId ? "PUT" : "POST", credentials: "same-origin", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(payload) });
         var result = await response.json();
         if (!response.ok) {
           Object.keys(result.errors || {}).forEach(function (name) { var control = resourceControl(name); var message = resourceForm.querySelector('[data-resource-error="' + name + '"]'); if (control && control.closest) control.closest(".form-field").classList.add("has-error"); if (message) message.textContent = result.errors[name]; });
           throw new Error(result.error || "The resource could not be published.");
         }
+        resourceControl("id").value = result.resource.id; resourceControl("sha").value = result.resource.sha; resourceControl("slug").disabled = true; resourceSavedSnapshot = JSON.stringify(resourcePayload());
         setResourceStatus("success", "Resource committed successfully", result.message, result.commit && result.commit.url);
       } catch (error) { setResourceStatus("error", "Resource was not published", error instanceof Error ? error.message : "Try again later."); }
+      finally { isPublishingResource = false; updateResourceButton(); }
     });
   }
 
@@ -708,7 +759,7 @@
     documentFile.addEventListener("change", async function () {
       var file = documentFile.files && documentFile.files[0]; if (!file) return;
       uploadDocumentButton.disabled = true; if (documentStatus) documentStatus.textContent = "Uploading PDF...";
-      try { var data = new FormData(); data.append("file", file); var response = await fetch("/api/admin/documents", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json" }, body: data }); var result = await response.json(); if (!response.ok || !result.document) throw new Error(result.error || "The PDF could not be uploaded."); resourceControl("file").value = result.document.url; if (documentStatus) documentStatus.textContent = "PDF uploaded. It is ready to publish."; }
+      try { var data = new FormData(); data.append("file", file); var response = await fetch("/api/admin/documents", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json" }, body: data }); var result = await response.json(); if (!response.ok || !result.document) throw new Error(result.error || "The PDF could not be uploaded."); resourceControl("file").value = result.document.url; resourceControl("file").dispatchEvent(new Event("input", { bubbles: true })); if (documentStatus) documentStatus.textContent = "PDF uploaded. It is ready to publish."; }
       catch (error) { if (documentStatus) documentStatus.textContent = error instanceof Error ? error.message : "The PDF could not be uploaded."; }
       finally { documentFile.value = ""; uploadDocumentButton.disabled = false; }
     });

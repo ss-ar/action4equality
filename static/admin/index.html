@@ -271,6 +271,7 @@
         <section class="view-panel" data-panel="resource-editor" aria-labelledby="resource-editor-title" hidden>
           <div class="editor-heading"><button class="back-button" type="button" data-cancel-resource aria-label="Return to resources">&larr;</button><div><p class="eyebrow">Publication editor</p><h1 id="resource-editor-title">Upload a PDF resource</h1><p>Only PDF files up to 8 MB can be published for public download.</p></div></div>
           <form class="post-editor surface-card" data-resource-form novalidate>
+            <input type="hidden" name="id"><input type="hidden" name="sha">
             <div class="editor-status" data-resource-status hidden role="status"><div><strong data-resource-status-title></strong><p data-resource-status-message></p></div><a href="#" data-resource-commit-link target="_blank" rel="noopener" hidden>View Git commit <span aria-hidden="true">&nearr;</span></a></div>
             <div class="form-grid">
               <label class="form-field form-field-wide"><span>Resource title <b aria-hidden="true">*</b></span><input type="text" name="title" maxlength="140" required><small data-resource-error="title">Use a clear title between 3 and 140 characters.</small></label>

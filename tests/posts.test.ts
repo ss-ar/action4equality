@@ -67,11 +67,11 @@ async function main(): Promise<void> {
     publicationDate: "2026-10-11",
     file: "/media/documents/2026/10/00000000-0000-0000-0000-000000000000.pdf",
     weight: 20,
-  });
+  }, { isNew: true });
   assert.equal(resource.ok, true);
   if (resource.ok) assert.match(serializeResource(resource.data), /build:\n  render: never/);
 
-  const invalidResource = validateResourceInput({ file: "/media/documents/not-a-pdf.docx" });
+  const invalidResource = validateResourceInput({ file: "/media/documents/not-a-pdf.docx" }, { isNew: true });
   assert.equal(invalidResource.ok, false);
   if (!invalidResource.ok) assert.ok(invalidResource.errors.file);
 
