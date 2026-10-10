@@ -4,6 +4,12 @@
   "pages_build_output_dir": "./public",
   "compatibility_date": "2026-10-10",
   "compatibility_flags": ["nodejs_compat"],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "action4equality-media"
+    }
+  ],
   "vars": {
     "GITHUB_REPOSITORY": "ss-ar/action4equality",
     "GITHUB_CONTENT_BRANCH": "main",
@@ -14,6 +20,12 @@
   },
   "env": {
     "preview": {
+      "r2_buckets": [
+        {
+          "binding": "MEDIA",
+          "bucket_name": "action4equality-media"
+        }
+      ],
       "vars": {
         "GITHUB_REPOSITORY": "ss-ar/action4equality",
         "GITHUB_CONTENT_BRANCH": "main",

@@ -67,8 +67,12 @@ unprotected Pages hostname fail closed instead of exposing the dashboard.
 - Posts, resources, and key-page lists are loaded from the deployed manifest.
 - Authorized editors can create and update posts through validated GitHub
   commits once `GITHUB_TOKEN` is configured.
-- Resource editing, key-page editing, deletion, and uploads remain disabled.
-- No R2 bucket exists yet.
+- Resource editing, key-page editing, deletion, and document uploads remain disabled.
+- Featured images can be uploaded from the post editor. The private
+  `action4equality-media` R2 bucket is delivered publicly through versioned
+  `/media/images/...` URLs on the website domain.
+- Uploads accept JPEG, PNG, GIF, WebP, and AVIF images up to 8 MB. A full media
+  browser, gallery picker, and document uploads remain future work.
 
 The generated manifest remains the read model for each deployment. A successful
 post commit becomes visible there after Cloudflare Pages finishes rebuilding.

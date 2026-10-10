@@ -11,6 +11,9 @@
   var viewTitle = document.querySelector("[data-current-view]");
   var postForm = document.querySelector("[data-post-form]");
   var publishButton = document.querySelector("[data-publish-post]");
+  var uploadFeaturedImageButton = document.querySelector("[data-upload-featured-image]");
+  var featuredImageFile = document.querySelector("[data-featured-image-file]");
+  var featuredImageStatus = document.querySelector("[data-featured-image-status]");
   var localUiPreview = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   var canPublish = false;
   var lastAutoSlug = "";
@@ -106,6 +109,10 @@
     else publishButton.textContent = formControl("id").value ? "Publish changes" : "Publish post";
   }
 
+  function setFeaturedImageStatus(message) {
+    if (featuredImageStatus) featuredImageStatus.textContent = message;
+  }
+
   function setPublishPermission(allowed) {
     canPublish = Boolean(allowed);
     updatePublishButton();
@@ -166,6 +173,7 @@
     formControl("slug").disabled = false;
     formControl("date").value = new Date().toISOString().slice(0, 10);
     lastAutoSlug = "";
+    setFeaturedImageStatus("JPEG, PNG, GIF, WebP, or AVIF up to 8 MB.");
     savedPostSnapshot = JSON.stringify(postPayload());
     updatePublishButton();
     var count = document.querySelector("[data-description-count]");
@@ -477,6 +485,46 @@
       } finally {
         isPublishing = false;
         updatePublishButton();
+      }
+    });
+  }
+
+  if (uploadFeaturedImageButton && featuredImageFile) {
+    uploadFeaturedImageButton.addEventListener("click", function () {
+      if (!canPublish || localUiPreview) {
+        setFeaturedImageStatus("Image uploads are available on the production dashboard.");
+        return;
+      }
+      featuredImageFile.click();
+    });
+    featuredImageFile.addEventListener("change", async function () {
+      var file = featuredImageFile.files && featuredImageFile.files[0];
+      if (!file) return;
+
+      uploadFeaturedImageButton.disabled = true;
+      setFeaturedImageStatus("Uploading image...");
+      try {
+        var data = new FormData();
+        data.append("file", file);
+        var response = await fetch("/api/admin/media", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { Accept: "application/json" },
+          body: data
+        });
+        var result = await response.json();
+        if (!response.ok || !result.media || typeof result.media.url !== "string") {
+          throw new Error(result.error || "The image could not be uploaded.");
+        }
+
+        formControl("featuredImage").value = result.media.url;
+        formControl("featuredImage").dispatchEvent(new Event("input", { bubbles: true }));
+        setFeaturedImageStatus("Image uploaded. It is ready to use in this post.");
+      } catch (error) {
+        setFeaturedImageStatus(error instanceof Error ? error.message : "The image could not be uploaded.");
+      } finally {
+        featuredImageFile.value = "";
+        uploadFeaturedImageButton.disabled = false;
       }
     });
   }

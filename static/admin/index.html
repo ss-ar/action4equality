@@ -48,7 +48,6 @@
         <button class="nav-item" type="button" data-view="media">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm2 2v8.2l3.5-3.5 2.5 2.5 2.5-2.5 3.5 3.5V7H6Zm2.5 3A1.5 1.5 0 1 0 8.5 7a1.5 1.5 0 0 0 0 3Z"/></svg>
           Media
-          <span class="nav-badge">Soon</span>
         </button>
       </nav>
 
@@ -216,7 +215,12 @@
               <label class="form-field form-field-wide">
                 <span>Featured image <b aria-hidden="true">*</b></span>
                 <input type="text" name="featuredImage" placeholder="https://example.org/photo.webp" required>
-                <small data-error="featuredImage">Use a secure image link or an existing website image. Computer uploads arrive with the media library.</small>
+                <div class="media-upload-actions">
+                  <button class="media-upload-button" type="button" data-upload-featured-image>Upload image from computer</button>
+                  <input type="file" data-featured-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden>
+                  <small data-featured-image-status aria-live="polite">JPEG, PNG, GIF, WebP, or AVIF up to 8 MB.</small>
+                </div>
+                <small data-error="featuredImage">Use a secure image link or upload an image from your computer.</small>
               </label>
 
               <label class="form-field">
@@ -268,12 +272,12 @@
         </section>
 
         <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p>Images and documents will be stored in Cloudflare R2.</p></div></div>
+          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p>Upload images directly from a post's featured image field.</p></div></div>
           <div class="empty-state surface-card">
             <div class="empty-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm2 2v8.2l3.5-3.5 2.5 2.5 2.5-2.5 3.5 3.5V7H6Z"/></svg></div>
-            <p class="eyebrow">Planned for phase 4</p>
-            <h2>R2 media storage is not connected yet.</h2>
-            <p>The upload interface will appear only after file validation, safe naming, size limits, and reference checks are implemented.</p>
+            <p class="eyebrow">Image uploads</p>
+            <h2>Image uploads are ready in the post editor.</h2>
+            <p>Choose a file from your computer under Featured image. A full media browser and document uploads are the next additions.</p>
           </div>
         </section>
       </main>
