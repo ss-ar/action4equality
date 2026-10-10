@@ -13,3 +13,13 @@ enableRobotsTXT = true
   blog = "/blog/:slug/"
   about = "/:slug/"
   activities = "/:slug/"
+
+[outputFormats.AdminManifest]
+  mediaType = "application/json"
+  baseName = "content"
+  path = "admin"
+  isPlainText = true
+  notAlternative = true
+
+[outputs]
+  home = ["HTML", "AdminManifest"]
