@@ -123,11 +123,12 @@
   function updatePublishButton() {
     if (!publishButton || !postForm) return;
     var hasChanges = hasUnsavedPostChanges();
-    publishButton.disabled = !canPublish || !hasChanges || isPublishing;
+    var publishingDraft = formControl("draft").value === "true";
+    publishButton.disabled = !canPublish || (!hasChanges && !publishingDraft) || isPublishing;
     if (isPublishing) publishButton.textContent = "Publishing...";
     else if (!canPublish) publishButton.textContent = "Publishing unavailable";
-    else if (!hasChanges) publishButton.textContent = "No changes to publish";
-    else publishButton.textContent = formControl("draft").value === "true" ? "Publish post" : (formControl("id").value ? "Publish changes" : "Publish post");
+    else if (!hasChanges && !publishingDraft) publishButton.textContent = "No changes to publish";
+    else publishButton.textContent = publishingDraft ? "Publish post" : (formControl("id").value ? "Publish changes" : "Publish post");
     if (saveDraftButton) { saveDraftButton.disabled = !canPublish || !hasChanges || isPublishing; saveDraftButton.hidden = false; }
   }
 

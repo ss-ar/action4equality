@@ -284,6 +284,7 @@ button:focus-visible, a:focus-visible {
 .back-button { display: grid; width: 2.7rem; height: 2.7rem; flex: 0 0 auto; place-items: center; margin-top: 0.15rem; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--purple-800); cursor: pointer; font-size: 1.2rem; }
 .post-editor { padding: clamp(1.2rem, 3vw, 2rem); }
 .editor-status { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; border: 1px solid #b8dfce; border-radius: 0.85rem; background: #f2fbf7; padding: 0.85rem 1rem; color: var(--green-700); }
+.editor-status[hidden] { display: none; }
 .editor-status.is-error { border-color: #efc9cc; background: #fff7f7; color: #792f37; }
 .editor-status.is-pending { border-color: #e8d6a9; background: #fffbf1; color: #765815; }
 .editor-status strong, .editor-status p { display: block; margin: 0; }
