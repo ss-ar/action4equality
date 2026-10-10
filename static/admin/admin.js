@@ -12,13 +12,19 @@
   var postForm = document.querySelector("[data-post-form]");
   var publishButton = document.querySelector("[data-publish-post]");
   var uploadFeaturedImageButton = document.querySelector("[data-upload-featured-image]");
+  var selectFeaturedImageButton = document.querySelector("[data-select-featured-image]");
+  var selectGalleryImageButton = document.querySelector("[data-select-gallery-image]");
   var featuredImageFile = document.querySelector("[data-featured-image-file]");
   var featuredImageStatus = document.querySelector("[data-featured-image-status]");
+  var mediaLibraryGrid = document.querySelector("[data-media-library-grid]");
+  var mediaLibraryStatus = document.querySelector("[data-media-library-status]");
+  var mediaLibraryDescription = document.querySelector("[data-media-library-description]");
   var localUiPreview = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   var canPublish = false;
   var lastAutoSlug = "";
   var savedPostSnapshot = null;
   var isPublishing = false;
+  var mediaTarget = null;
   var viewNames = {
     overview: "Overview",
     posts: "Posts",
@@ -111,6 +117,86 @@
 
   function setFeaturedImageStatus(message) {
     if (featuredImageStatus) featuredImageStatus.textContent = message;
+  }
+
+  function formatFileSize(bytes) {
+    if (typeof bytes !== "number" || bytes < 1024) return "Image";
+    return (bytes / (1024 * 1024)).toFixed(bytes >= 10 * 1024 * 1024 ? 0 : 1) + " MB";
+  }
+
+  function selectMedia(url) {
+    if (!mediaTarget || !postForm) return;
+    var control = formControl(mediaTarget);
+    if (mediaTarget === "gallery") {
+      var items = control.value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean);
+      if (!items.includes(url)) items.push(url);
+      control.value = items.join("\n");
+    } else {
+      control.value = url;
+    }
+    control.dispatchEvent(new Event("input", { bubbles: true }));
+    showView("post-editor");
+    setEditorStatus("success", "Image selected", "The image is ready to publish with this post.");
+  }
+
+  function renderMedia(items) {
+    if (!mediaLibraryGrid || !mediaLibraryStatus) return;
+    mediaLibraryGrid.replaceChildren();
+    if (!items.length) {
+      mediaLibraryStatus.hidden = false;
+      mediaLibraryStatus.textContent = "No uploaded images yet. Upload one from a post's Featured image field.";
+      return;
+    }
+
+    mediaLibraryStatus.hidden = true;
+    items.forEach(function (item) {
+      var card = document.createElement("article");
+      card.className = "media-card";
+      var image = document.createElement("img");
+      image.src = item.url;
+      image.alt = "Uploaded website image";
+      image.loading = "lazy";
+      var copy = document.createElement("div");
+      copy.className = "media-card-copy";
+      var detail = document.createElement("small");
+      detail.textContent = formatFileSize(item.size);
+      copy.append(detail);
+      if (mediaTarget) {
+        var use = document.createElement("button");
+        use.type = "button";
+        use.textContent = mediaTarget === "gallery" ? "Add to gallery" : "Use as featured image";
+        use.addEventListener("click", function () { selectMedia(item.url); });
+        copy.append(use);
+      }
+      card.append(image, copy);
+      mediaLibraryGrid.append(card);
+    });
+  }
+
+  async function openMediaLibrary(target) {
+    mediaTarget = target;
+    showView("media");
+    if (mediaLibraryDescription) {
+      mediaLibraryDescription.textContent = target === "gallery"
+        ? "Choose an uploaded image to add to this post's gallery."
+        : target === "featuredImage"
+          ? "Choose an uploaded image for this post's featured image."
+          : "Images uploaded from the post editor.";
+    }
+    if (!mediaLibraryStatus || !mediaLibraryGrid) return;
+    mediaLibraryGrid.replaceChildren();
+    mediaLibraryStatus.hidden = false;
+    mediaLibraryStatus.textContent = "Loading uploaded images...";
+
+    try {
+      var response = await fetch("/api/admin/media", { credentials: "same-origin", headers: { Accept: "application/json" } });
+      var result = await response.json();
+      if (!response.ok || !Array.isArray(result.items)) throw new Error(result.error || "The media library could not be loaded.");
+      renderMedia(result.items);
+    } catch (error) {
+      mediaLibraryStatus.hidden = false;
+      mediaLibraryStatus.textContent = error instanceof Error ? error.message : "The media library could not be loaded.";
+    }
   }
 
   function setPublishPermission(allowed) {
@@ -418,7 +504,9 @@
 
   document.querySelectorAll("[data-view]").forEach(function (control) {
     control.addEventListener("click", function () {
-      showView(control.getAttribute("data-view") || "overview");
+      var view = control.getAttribute("data-view") || "overview";
+      if (view === "media") openMediaLibrary(null);
+      else showView(view);
     });
   });
 
@@ -528,6 +616,9 @@
       }
     });
   }
+
+  if (selectFeaturedImageButton) selectFeaturedImageButton.addEventListener("click", function () { openMediaLibrary("featuredImage"); });
+  if (selectGalleryImageButton) selectGalleryImageButton.addEventListener("click", function () { openMediaLibrary("gallery"); });
 
   if (menuToggle) menuToggle.addEventListener("click", function () { setMenu(!sidebar.classList.contains("is-open")); });
   if (menuBackdrop) menuBackdrop.addEventListener("click", function () { setMenu(false); });

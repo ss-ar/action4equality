@@ -95,3 +95,24 @@ export const onRequestPost: PagesFunction<Env, string, AdminData> = async (conte
     { status: 201, headers: responseHeaders() },
   );
 };
+
+export const onRequestGet: PagesFunction<Env, string, AdminData> = async (context) => {
+  const listed = await context.env.MEDIA.list({ prefix: "images/", limit: 100, include: ["httpMetadata"] });
+
+  return Response.json(
+    {
+      items: listed.objects
+        .filter((object) => /^images\/\d{4}\/\d{2}\/[a-f0-9-]+\.(?:avif|gif|jpe?g|png|webp)$/.test(object.key))
+        .sort((first, second) => second.uploaded.getTime() - first.uploaded.getTime())
+        .map((object) => ({
+          key: object.key,
+          url: `/media/${object.key}`,
+          contentType: object.httpMetadata?.contentType ?? "image/*",
+          size: object.size,
+          uploaded: object.uploaded.toISOString(),
+        })),
+      truncated: listed.truncated,
+    },
+    { headers: responseHeaders() },
+  );
+};

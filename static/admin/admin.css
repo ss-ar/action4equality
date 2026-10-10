@@ -304,6 +304,13 @@ button:focus-visible, a:focus-visible {
 .media-upload-actions small { min-height: 0; }
 .media-upload-button { min-height: 2.3rem; border: 1px solid var(--purple-700); border-radius: 0.6rem; background: var(--purple-50); padding: 0.45rem 0.7rem; color: var(--purple-800); cursor: pointer; font-size: 0.72rem; font-weight: 800; }
 .media-upload-button:disabled { cursor: wait; opacity: 0.65; }
+.media-library-card { min-height: 18rem; }
+.media-library-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.media-card { overflow: hidden; border: 1px solid var(--line); border-radius: 0.9rem; background: var(--purple-50); }
+.media-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--purple-100); }
+.media-card-copy { padding: 0.7rem; }
+.media-card-copy small { display: block; color: var(--muted); font-size: 0.68rem; }
+.media-card-copy button { width: 100%; min-height: 2.25rem; margin-top: 0.6rem; border: 1px solid var(--purple-700); border-radius: 0.55rem; background: white; color: var(--purple-800); cursor: pointer; font-size: 0.72rem; font-weight: 800; }
 .form-field.has-error input, .form-field.has-error textarea, .form-field.has-error .slug-input { border-color: #c55a64; box-shadow: 0 0 0 3px rgba(197, 90, 100, 0.1); }
 .form-field.has-error small[data-error] { color: #9b3b45; font-weight: 700; }
 .slug-input { display: flex; align-items: center; overflow: hidden; border: 1px solid #dcd6e2; border-radius: 0.7rem; background: #f8f6f9; }
@@ -322,6 +329,7 @@ button:focus-visible, a:focus-visible {
   .content-cards { grid-template-columns: 1fr; }
   .overview-grid { grid-template-columns: 1fr; }
   .page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .media-library-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 820px) {
@@ -348,6 +356,7 @@ button:focus-visible, a:focus-visible {
   .published-label { grid-column: 2; justify-self: start; }
   .record-action { grid-column: 2; justify-self: start; }
   .page-grid { grid-template-columns: 1fr; }
+  .media-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .access-notice { align-items: flex-start; flex-direction: column; }
   .form-grid { grid-template-columns: 1fr; }
   .form-field-wide { grid-column: auto; }

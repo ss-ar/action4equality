@@ -71,8 +71,9 @@ unprotected Pages hostname fail closed instead of exposing the dashboard.
 - Featured images can be uploaded from the post editor. The private
   `action4equality-media` R2 bucket is delivered publicly through versioned
   `/media/images/...` URLs on the website domain.
-- Uploads accept JPEG, PNG, GIF, WebP, and AVIF images up to 8 MB. A full media
-  browser, gallery picker, and document uploads remain future work.
+- Uploads accept JPEG, PNG, GIF, WebP, and AVIF images up to 8 MB. The media
+  library lets editors reuse uploaded images for featured images and galleries.
+  Document uploads remain future work.
 
 The generated manifest remains the read model for each deployment. A successful
 post commit becomes visible there after Cloudflare Pages finishes rebuilding.

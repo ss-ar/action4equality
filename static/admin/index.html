@@ -217,6 +217,7 @@
                 <input type="text" name="featuredImage" placeholder="https://example.org/photo.webp" required>
                 <div class="media-upload-actions">
                   <button class="media-upload-button" type="button" data-upload-featured-image>Upload image from computer</button>
+                  <button class="media-upload-button" type="button" data-select-featured-image>Choose uploaded image</button>
                   <input type="file" data-featured-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden>
                   <small data-featured-image-status aria-live="polite">JPEG, PNG, GIF, WebP, or AVIF up to 8 MB.</small>
                 </div>
@@ -238,6 +239,7 @@
               <label class="form-field form-field-wide">
                 <span>Gallery images</span>
                 <textarea name="gallery" rows="4" placeholder="One secure image link per line"></textarea>
+                <div class="media-upload-actions"><button class="media-upload-button" type="button" data-select-gallery-image>Choose uploaded image</button></div>
                 <small data-error="gallery">Optional. Add no more than 20 secure image links or existing website images.</small>
               </label>
 
@@ -272,12 +274,10 @@
         </section>
 
         <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p>Upload images directly from a post's featured image field.</p></div></div>
-          <div class="empty-state surface-card">
-            <div class="empty-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm2 2v8.2l3.5-3.5 2.5 2.5 2.5-2.5 3.5 3.5V7H6Z"/></svg></div>
-            <p class="eyebrow">Image uploads</p>
-            <h2>Image uploads are ready in the post editor.</h2>
-            <p>Choose a file from your computer under Featured image. A full media browser and document uploads are the next additions.</p>
+          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div></div>
+          <div class="surface-card media-library-card">
+            <p class="loading-row" data-media-library-status>Loading uploaded images...</p>
+            <div class="media-library-grid" data-media-library-grid></div>
           </div>
         </section>
       </main>
