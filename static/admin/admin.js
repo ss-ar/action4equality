@@ -197,6 +197,20 @@
         use.addEventListener("click", function () { selectMedia(item.url); });
         copy.append(use);
       }
+      var remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "Delete image";
+      remove.addEventListener("click", async function () {
+        if (!window.confirm("Delete this image permanently? If a post uses it, replace the image in that post first.")) return;
+        try {
+          var response = await fetch("/api/admin/media?key=" + encodeURIComponent(item.key), { method: "DELETE", credentials: "same-origin", headers: { Accept: "application/json" } });
+          var result = await response.json();
+          if (!response.ok) throw new Error(result.error || "The image could not be deleted.");
+          card.remove();
+          if (!mediaLibraryGrid.children.length) renderMedia([]);
+        } catch (error) { setMediaUploadStatus(error instanceof Error ? error.message : "The image could not be deleted."); }
+      });
+      copy.append(remove);
       card.append(image, copy);
       mediaLibraryGrid.append(card);
     });

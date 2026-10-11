@@ -116,3 +116,17 @@ export const onRequestGet: PagesFunction<Env, string, AdminData> = async (contex
     { headers: responseHeaders() },
   );
 };
+
+export const onRequestDelete: PagesFunction<Env, string, AdminData> = async (context) => {
+  if (!canPublishPosts(context.request, context.data.user, context.env)) {
+    return errorResponse("You do not have permission to delete images", 403);
+  }
+
+  const key = new URL(context.request.url).searchParams.get("key") ?? "";
+  if (!/^images\/\d{4}\/\d{2}\/[a-f0-9-]+\.(?:avif|gif|jpe?g|png|webp)$/.test(key)) {
+    return errorResponse("Invalid image identifier", 400);
+  }
+
+  await context.env.MEDIA.delete(key);
+  return Response.json({ message: "Image deleted" }, { headers: responseHeaders() });
+};
