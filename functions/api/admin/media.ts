@@ -83,6 +83,7 @@ export const onRequestPost: PagesFunction<Env, string, AdminData> = async (conte
       cacheControl: "public, max-age=31536000, immutable",
     },
   });
+  console.log(JSON.stringify({ message: "image uploaded", editor: context.data.user.email, key }));
 
   return Response.json(
     {
@@ -151,5 +152,6 @@ export const onRequestDelete: PagesFunction<Env, string, AdminData> = async (con
   }
 
   await context.env.MEDIA.delete(key);
+  console.log(JSON.stringify({ message: "image deleted", editor: context.data.user.email, key }));
   return Response.json({ message: "Image deleted" }, { headers: responseHeaders() });
 };

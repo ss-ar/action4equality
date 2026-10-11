@@ -30,6 +30,8 @@
   var savedPostSnapshot = null;
   var isPublishing = false;
   var mediaTarget = null;
+  var mediaPickerApply = null;
+  var mediaReturnView = "post-editor";
   var resourceForm = document.querySelector("[data-resource-form]");
   var uploadDocumentButton = document.querySelector("[data-upload-document]");
   var documentFile = document.querySelector("[data-document-file]");
@@ -154,6 +156,13 @@
   }
 
   function selectMedia(url) {
+    if (mediaPickerApply) {
+      mediaPickerApply(url);
+      mediaPickerApply = null;
+      mediaTarget = null;
+      showView(mediaReturnView);
+      return;
+    }
     if (!mediaTarget || !postForm) return;
     var control = formControl(mediaTarget);
     if (mediaTarget === "gallery") {
@@ -218,6 +227,7 @@
 
   async function openMediaLibrary(target) {
     mediaTarget = target;
+    mediaReturnView = target === "homepage" ? "homepage-editor" : target === "page" ? "page-editor" : "post-editor";
     showView("media");
     if (cancelMediaButton) cancelMediaButton.hidden = !target;
     if (mediaLibraryDescription) {
@@ -562,7 +572,7 @@
     });
   }
 
-  async function openHomepage() { var form = document.querySelector("[data-homepage-form]"); var fields = document.querySelector("[data-homepage-fields]"); showView("homepage-editor"); fields.textContent = "Loading homepage..."; try { var response = await fetch("/api/admin/homepage", { credentials: "same-origin" }); var result = await response.json(); if (!response.ok) throw new Error(result.error); form.dataset.homepage = JSON.stringify(result.homepage); form.dataset.sha = result.sha; fields.replaceChildren(); ["hero", "introduction", "support"].forEach(function (section) { Object.keys(result.homepage[section]).forEach(function (key) { if (typeof result.homepage[section][key] !== "string") return; var label = document.createElement("label"); label.className = "form-field"; var name = document.createElement("span"); name.textContent = section + " - " + key.replace(/_/g, " "); var input = document.createElement(key.includes("description") || key === "title" ? "textarea" : "input"); input.value = result.homepage[section][key]; input.dataset.section = section; input.dataset.key = key; input.addEventListener("input", function () { document.querySelector("[data-publish-homepage]").disabled = !canPublish; }); label.append(name, input); fields.append(label); }); }); document.querySelector("[data-publish-homepage]").disabled = true; } catch (error) { fields.textContent = error.message || "Homepage could not be loaded."; } }
+  async function openHomepage() { var form = document.querySelector("[data-homepage-form]"); var fields = document.querySelector("[data-homepage-fields]"); showView("homepage-editor"); fields.textContent = "Loading homepage..."; try { var response = await fetch("/api/admin/homepage", { credentials: "same-origin" }); var result = await response.json(); if (!response.ok) throw new Error(result.error); form.dataset.homepage = JSON.stringify(result.homepage); form.dataset.sha = result.sha; fields.replaceChildren(); ["hero", "introduction", "support"].forEach(function (section) { Object.keys(result.homepage[section]).forEach(function (key) { if (typeof result.homepage[section][key] !== "string") return; var label = document.createElement("label"); label.className = "form-field"; var name = document.createElement("span"); name.textContent = section + " - " + key.replace(/_/g, " "); var input = document.createElement(key.includes("description") || key === "title" ? "textarea" : "input"); input.value = result.homepage[section][key]; input.dataset.section = section; input.dataset.key = key; input.addEventListener("input", function () { document.querySelector("[data-publish-homepage]").disabled = !canPublish; }); label.append(name, input); if (key === "image") { var choose = document.createElement("button"); choose.className = "media-upload-button"; choose.type = "button"; choose.textContent = "Choose uploaded image"; choose.addEventListener("click", function () { mediaPickerApply = function (url) { input.value = url; input.dispatchEvent(new Event("input", { bubbles: true })); }; openMediaLibrary("homepage"); }); label.append(choose); } fields.append(label); }); }); document.querySelector("[data-publish-homepage]").disabled = true; } catch (error) { fields.textContent = error.message || "Homepage could not be loaded."; } }
 
   async function openExistingPage(id) {
     var form = document.querySelector("[data-page-form]"); if (!form) return;
@@ -693,6 +703,16 @@
 
   var pageForm = document.querySelector("[data-page-form]");
   if (pageForm) pageForm.addEventListener("input", function () { document.querySelector("[data-publish-page]").disabled = !canPublish; });
+  var insertPageImageButton = document.querySelector("[data-insert-page-image]");
+  if (insertPageImageButton && pageForm) insertPageImageButton.addEventListener("click", function () {
+    var body = pageForm.elements.namedItem("body");
+    mediaPickerApply = function (url) {
+      var start = body.selectionStart || 0; var end = body.selectionEnd || 0;
+      body.value = body.value.slice(0, start) + "![Describe this image](" + url + ")" + body.value.slice(end);
+      body.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+    openMediaLibrary("page");
+  });
   if (pageForm) pageForm.addEventListener("submit", async function (event) {
     event.preventDefault(); if (!canPublish) return;
     var status = document.querySelector("[data-page-status]"); var title = document.querySelector("[data-page-status-title]"); var message = document.querySelector("[data-page-status-message]");
@@ -797,7 +817,7 @@
 
   if (selectFeaturedImageButton) selectFeaturedImageButton.addEventListener("click", function () { openMediaLibrary("featuredImage"); });
   if (selectGalleryImageButton) selectGalleryImageButton.addEventListener("click", function () { openMediaLibrary("gallery"); });
-  if (cancelMediaButton) cancelMediaButton.addEventListener("click", function () { mediaTarget = null; showView("post-editor"); });
+  if (cancelMediaButton) cancelMediaButton.addEventListener("click", function () { mediaTarget = null; mediaPickerApply = null; showView(mediaReturnView); });
   if (uploadMediaImageButton && mediaImageFile) {
     uploadMediaImageButton.addEventListener("click", function () {
       if (!canPublish || localUiPreview) return setMediaUploadStatus("Image uploads are available on the production dashboard.");
