@@ -24,6 +24,10 @@
   var mediaLibraryGrid = document.querySelector("[data-media-library-grid]");
   var mediaLibraryStatus = document.querySelector("[data-media-library-status]");
   var mediaLibraryDescription = document.querySelector("[data-media-library-description]");
+  var uploadMediaDocumentButton = document.querySelector("[data-upload-media-document]");
+  var mediaDocumentFile = document.querySelector("[data-media-document-file]");
+  var documentLibraryGrid = document.querySelector("[data-document-library-grid]");
+  var documentLibraryStatus = document.querySelector("[data-document-library-status]");
   var localUiPreview = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   var canPublish = false;
   var lastAutoSlug = "";
@@ -151,7 +155,7 @@
   }
 
   function formatFileSize(bytes) {
-    if (typeof bytes !== "number" || bytes < 1024) return "Image";
+    if (typeof bytes !== "number" || bytes < 1024) return "File";
     return (bytes / (1024 * 1024)).toFixed(bytes >= 10 * 1024 * 1024 ? 0 : 1) + " MB";
   }
 
@@ -225,6 +229,25 @@
     });
   }
 
+  function renderDocuments(items) {
+    if (!documentLibraryGrid || !documentLibraryStatus) return;
+    documentLibraryGrid.replaceChildren();
+    if (!items.length) { documentLibraryStatus.hidden = false; documentLibraryStatus.textContent = "No uploaded PDFs yet."; return; }
+    documentLibraryStatus.hidden = true;
+    items.forEach(function (item) {
+      var card = document.createElement("article"); card.className = "media-card document-card";
+      var copy = document.createElement("div"); copy.className = "media-card-copy";
+      var detail = document.createElement("small"); detail.textContent = "PDF - " + formatFileSize(item.size); copy.append(detail);
+      var open = document.createElement("button"); open.type = "button"; open.textContent = "Open PDF"; open.addEventListener("click", function () { window.open(item.url, "_blank", "noopener"); }); copy.append(open);
+      var remove = document.createElement("button"); remove.type = "button"; remove.textContent = "Delete PDF";
+      remove.addEventListener("click", async function () {
+        if (!window.confirm("Delete this PDF permanently? If a resource or page uses it, replace the PDF first.")) return;
+        try { var response = await fetch("/api/admin/documents?key=" + encodeURIComponent(item.key), { method: "DELETE", credentials: "same-origin", headers: { Accept: "application/json" } }); var result = await response.json(); if (!response.ok) throw new Error(result.error || "The PDF could not be deleted."); card.remove(); if (!documentLibraryGrid.children.length) renderDocuments([]); } catch (error) { setMediaUploadStatus(error instanceof Error ? error.message : "The PDF could not be deleted."); }
+      });
+      copy.append(remove); card.append(copy); documentLibraryGrid.append(card);
+    });
+  }
+
   async function openMediaLibrary(target) {
     mediaTarget = target;
     mediaReturnView = target === "homepage" ? "homepage-editor" : target === "page" ? "page-editor" : "post-editor";
@@ -237,16 +260,20 @@
           ? "Choose an uploaded image for this post's featured image."
           : "Images uploaded from the post editor.";
     }
-    if (!mediaLibraryStatus || !mediaLibraryGrid) return;
+    if (!mediaLibraryStatus || !mediaLibraryGrid || !documentLibraryStatus || !documentLibraryGrid) return;
     mediaLibraryGrid.replaceChildren();
     mediaLibraryStatus.hidden = false;
     mediaLibraryStatus.textContent = "Loading uploaded images...";
+    documentLibraryGrid.replaceChildren();
+    documentLibraryStatus.hidden = false;
+    documentLibraryStatus.textContent = "Loading uploaded PDFs...";
 
     try {
-      var response = await fetch("/api/admin/media", { credentials: "same-origin", headers: { Accept: "application/json" } });
-      var result = await response.json();
-      if (!response.ok || !Array.isArray(result.items)) throw new Error(result.error || "The media library could not be loaded.");
-      renderMedia(result.items);
+      var responses = await Promise.all([fetch("/api/admin/media", { credentials: "same-origin", headers: { Accept: "application/json" } }), fetch("/api/admin/documents", { credentials: "same-origin", headers: { Accept: "application/json" } })]);
+      var results = await Promise.all(responses.map(function (response) { return response.json().then(function (result) { return { response: response, result: result }; }); }));
+      if (!results[0].response.ok || !Array.isArray(results[0].result.items)) throw new Error(results[0].result.error || "The image library could not be loaded.");
+      if (!results[1].response.ok || !Array.isArray(results[1].result.items)) throw new Error(results[1].result.error || "The document library could not be loaded.");
+      renderMedia(results[0].result.items); renderDocuments(results[1].result.items);
     } catch (error) {
       mediaLibraryStatus.hidden = false;
       mediaLibraryStatus.textContent = error instanceof Error ? error.message : "The media library could not be loaded.";
@@ -834,6 +861,27 @@
         await openMediaLibrary(mediaTarget);
       } catch (error) { setMediaUploadStatus(error instanceof Error ? error.message : "The image could not be uploaded."); }
       finally { mediaImageFile.value = ""; uploadMediaImageButton.disabled = false; }
+    });
+  }
+  if (uploadMediaDocumentButton && mediaDocumentFile) {
+    uploadMediaDocumentButton.addEventListener("click", function () {
+      if (!canPublish || localUiPreview) return setMediaUploadStatus("PDF uploads are available on the production dashboard.");
+      mediaDocumentFile.click();
+    });
+    mediaDocumentFile.addEventListener("change", async function () {
+      var file = mediaDocumentFile.files && mediaDocumentFile.files[0];
+      if (!file) return;
+      uploadMediaDocumentButton.disabled = true;
+      setMediaUploadStatus("Uploading PDF...");
+      try {
+        var data = new FormData(); data.append("file", file);
+        var response = await fetch("/api/admin/documents", { method: "POST", credentials: "same-origin", headers: { Accept: "application/json" }, body: data });
+        var result = await response.json();
+        if (!response.ok) throw new Error(result.error || "The PDF could not be uploaded.");
+        setMediaUploadStatus("PDF uploaded. It is available for a resource or secure link.");
+        await openMediaLibrary(mediaTarget);
+      } catch (error) { setMediaUploadStatus(error instanceof Error ? error.message : "The PDF could not be uploaded."); }
+      finally { mediaDocumentFile.value = ""; uploadMediaDocumentButton.disabled = false; }
     });
   }
 

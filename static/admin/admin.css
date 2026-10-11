@@ -318,6 +318,9 @@ button:focus-visible, a:focus-visible {
 .media-card-copy { padding: 0.7rem; }
 .media-card-copy small { display: block; color: var(--muted); font-size: 0.68rem; }
 .media-card-copy button { width: 100%; min-height: 2.25rem; margin-top: 0.6rem; border: 1px solid var(--purple-700); border-radius: 0.55rem; background: white; color: var(--purple-800); cursor: pointer; font-size: 0.72rem; font-weight: 800; }
+.media-section-title { margin: 2rem 0 0.75rem; color: var(--ink); font-size: 1rem; }
+.document-card { display: flex; min-height: 8rem; align-items: center; padding: 1rem; }
+.document-card .media-card-copy { width: 100%; }
 .form-field.has-error input, .form-field.has-error textarea, .form-field.has-error select, .form-field.has-error .slug-input { border-color: #c55a64; box-shadow: 0 0 0 3px rgba(197, 90, 100, 0.1); }
 .form-field.has-error small[data-error] { color: #9b3b45; font-weight: 700; }
 .slug-input { display: flex; align-items: center; overflow: hidden; border: 1px solid #dcd6e2; border-radius: 0.7rem; background: #f8f6f9; }

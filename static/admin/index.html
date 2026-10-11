@@ -280,11 +280,14 @@
         <section class="view-panel" data-panel="homepage-editor" aria-labelledby="homepage-editor-title" hidden><div class="editor-heading"><button class="back-button" type="button" data-cancel-homepage>&larr;</button><div><p class="eyebrow">Homepage editor</p><h1 id="homepage-editor-title">Homepage essentials</h1><p>Hero, introduction, and support callout only.</p></div></div><form class="post-editor surface-card" data-homepage-form><div class="editor-status" data-homepage-status hidden role="status"><div><strong data-homepage-status-title></strong><p data-homepage-status-message></p></div></div><div class="form-grid" data-homepage-fields></div><div class="editor-actions"><p>Programme cards and audience content remain protected.</p><div><button class="cancel-button" type="button" data-cancel-homepage>Cancel</button><button class="publish-button" type="submit" data-publish-homepage disabled>Publish changes</button></div></div></form></section>
 
         <section class="view-panel" data-panel="media" aria-labelledby="media-title" hidden>
-          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div><div class="media-upload-actions"><button class="secondary-button" type="button" data-cancel-media hidden>Cancel and return to post</button><button class="primary-button" type="button" data-upload-media-image>Upload image</button><input type="file" data-media-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden></div></div>
+          <div class="page-heading"><div><p class="eyebrow">Files</p><h1 id="media-title">Media library</h1><p data-media-library-description>Choose an uploaded image from the post editor.</p></div><div class="media-upload-actions"><button class="secondary-button" type="button" data-cancel-media hidden>Cancel and return to post</button><button class="primary-button" type="button" data-upload-media-image>Upload image</button><input type="file" data-media-image-file accept="image/jpeg,image/png,image/gif,image/webp,image/avif" hidden><button class="secondary-button" type="button" data-upload-media-document>Upload PDF</button><input type="file" data-media-document-file accept="application/pdf,.pdf" hidden></div></div>
           <div class="surface-card media-library-card">
             <p class="media-upload-notice" data-media-upload-status aria-live="polite">JPEG, PNG, GIF, WebP, or AVIF up to 8 MB.</p>
             <p class="loading-row" data-media-library-status>Loading uploaded images...</p>
             <div class="media-library-grid" data-media-library-grid></div>
+            <h2 class="media-section-title">PDF documents</h2>
+            <p class="loading-row" data-document-library-status>Loading uploaded PDFs...</p>
+            <div class="media-library-grid" data-document-library-grid></div>
           </div>
         </section>
       </main>
