@@ -46,7 +46,7 @@
     media: "Media library",
     "post-editor": "Post editor",
     "resource-editor": "Resource editor"
-    , "page-editor": "Key-page editor"
+    , "page-editor": "Key-page editor", "homepage-editor": "Homepage editor"
   };
 
   function setMenu(open) {
@@ -543,10 +543,12 @@
       var sourceType = document.createElement("small");
       sourceType.textContent = typeof item.sourceType === "string" ? item.sourceType : "Website content";
       card.append(number, title, description, sourceType);
-      if (item.id !== "homepage") { card.tabIndex = 0; card.setAttribute("role", "button"); card.addEventListener("click", function () { openExistingPage(item.id); }); }
+      card.tabIndex = 0; card.setAttribute("role", "button"); card.addEventListener("click", function () { item.id === "homepage" ? openHomepage() : openExistingPage(item.id); });
       grid.append(card);
     });
   }
+
+  async function openHomepage() { var form = document.querySelector("[data-homepage-form]"); var fields = document.querySelector("[data-homepage-fields]"); showView("homepage-editor"); fields.textContent = "Loading homepage..."; try { var response = await fetch("/api/admin/homepage", { credentials: "same-origin" }); var result = await response.json(); if (!response.ok) throw new Error(result.error); form.dataset.homepage = JSON.stringify(result.homepage); form.dataset.sha = result.sha; fields.replaceChildren(); ["hero", "introduction", "support"].forEach(function (section) { Object.keys(result.homepage[section]).forEach(function (key) { if (typeof result.homepage[section][key] !== "string") return; var label = document.createElement("label"); label.className = "form-field"; var name = document.createElement("span"); name.textContent = section + " - " + key.replace(/_/g, " "); var input = document.createElement(key.includes("description") || key === "title" ? "textarea" : "input"); input.value = result.homepage[section][key]; input.dataset.section = section; input.dataset.key = key; label.append(name, input); fields.append(label); }); }); document.querySelector("[data-publish-homepage]").disabled = !canPublish; } catch (error) { fields.textContent = error.message || "Homepage could not be loaded."; } }
 
   async function openExistingPage(id) {
     var form = document.querySelector("[data-page-form]"); if (!form) return;
@@ -672,6 +674,8 @@
   document.querySelectorAll("[data-new-resource]").forEach(function (button) { button.addEventListener("click", openNewResource); });
   document.querySelectorAll("[data-cancel-resource]").forEach(function (button) { button.addEventListener("click", function () { showView("resources"); }); });
   document.querySelectorAll("[data-cancel-page]").forEach(function (button) { button.addEventListener("click", function () { showView("pages"); }); });
+  document.querySelectorAll("[data-cancel-homepage]").forEach(function (button) { button.addEventListener("click", function () { showView("pages"); }); });
+  var homepageForm = document.querySelector("[data-homepage-form]"); if (homepageForm) homepageForm.addEventListener("submit", async function (event) { event.preventDefault(); var homepage = JSON.parse(homepageForm.dataset.homepage); homepageForm.querySelectorAll("[data-section]").forEach(function (input) { homepage[input.dataset.section][input.dataset.key] = input.value; }); var response = await fetch("/api/admin/homepage", { method: "PUT", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ homepage: homepage, sha: homepageForm.dataset.sha }) }); var result = await response.json(); var status = document.querySelector("[data-homepage-status]"); status.hidden = false; document.querySelector("[data-homepage-status-title]").textContent = response.ok ? "Homepage committed" : "Homepage was not published"; document.querySelector("[data-homepage-status-message]").textContent = result.message || result.error; });
 
   var pageForm = document.querySelector("[data-page-form]");
   if (pageForm) pageForm.addEventListener("submit", async function (event) {
