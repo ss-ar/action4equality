@@ -85,6 +85,22 @@ unprotected Pages hostname fail closed instead of exposing the dashboard.
   commits and image/PDF uploads and deletions. View these in Cloudflare Pages
   Functions logs; Git commits are authored by the publishing service account.
 
+## Editor guide
+
+- Use **Pages** for the homepage and all Markdown-backed organization and
+  programme pages. The dashboard protects site navigation, layouts, and section
+  ordering; edit only the supplied fields.
+- In Homepage content, keep the existing programme cards, highlights, and image
+  entries. Update their text, links, image URLs, and image descriptions rather
+  than removing items. Choose uploaded images from the media library where
+  available, and describe what the image shows for visitors using screen readers.
+- Links that start with `/` point to a page on this website. Use a complete
+  `https://` address for another website.
+- Use **Media** to upload and reuse images or PDFs. A referenced file cannot be
+  deleted until the post, resource, homepage, or page content using it is updated.
+- Every publish action creates a Git commit. If content needs to be restored,
+  use the linked commit from the editor status or the repository history.
+
 The generated manifest remains the read model for each deployment. A successful
 post commit becomes visible there after Cloudflare Pages finishes rebuilding.
 

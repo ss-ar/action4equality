@@ -321,6 +321,11 @@ button:focus-visible, a:focus-visible {
 .media-section-title { margin: 2rem 0 0.75rem; color: var(--ink); font-size: 1rem; }
 .document-card { display: flex; min-height: 8rem; align-items: center; padding: 1rem; }
 .document-card .media-card-copy { width: 100%; }
+.homepage-guide { grid-column: 1 / -1; margin-bottom: 0.5rem; border-left: 4px solid var(--secondary-500); background: var(--secondary-50); padding: 1rem; color: var(--ink); }
+.homepage-guide p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.85rem; }
+.homepage-section { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0.6rem 0; border: 1px solid var(--line); border-radius: 0.9rem; padding: 1rem; }
+.homepage-section > legend { grid-column: 1 / -1; font-family: var(--font-heading); font-weight: 800; text-transform: capitalize; }
+.homepage-section .homepage-section { grid-column: 1 / -1; }
 .form-field.has-error input, .form-field.has-error textarea, .form-field.has-error select, .form-field.has-error .slug-input { border-color: #c55a64; box-shadow: 0 0 0 3px rgba(197, 90, 100, 0.1); }
 .form-field.has-error small[data-error] { color: #9b3b45; font-weight: 700; }
 .slug-input { display: flex; align-items: center; overflow: hidden; border: 1px solid #dcd6e2; border-radius: 0.7rem; background: #f8f6f9; }

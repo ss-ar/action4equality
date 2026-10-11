@@ -5,6 +5,17 @@ const PAGES = {
   missionVision: { path: "content/about/mission-vision.md", url: "/mission-vision/", body: true },
   objectives: { path: "content/about/objectives.md", url: "/objectives/", body: true },
   partnerships: { path: "content/about/partnerships.md", url: "/partnerships/", body: true },
+  keyAchievements: { path: "content/about/key-achievements.md", url: "/key-achievements/", body: true },
+  targetGroup: { path: "content/about/target-group.md", url: "/target-group/", body: true },
+  coreValues: { path: "content/about/core-values.md", url: "/core-values/", body: true },
+  strategies: { path: "content/about/strategies.md", url: "/strategies/", body: true },
+  protection: { path: "content/activities/protection.md", url: "/protection/", body: true },
+  education: { path: "content/activities/education.md", url: "/education/", body: true },
+  foodSecurity: { path: "content/activities/food-security.md", url: "/food-security/", body: true },
+  sanitationHygiene: { path: "content/activities/sanitation-hygiene.md", url: "/sanitation-hygiene/", body: true },
+  communityEngagement: { path: "content/activities/community-engagement.md", url: "/community-engagement/", body: true },
+  youthWomenEnterprises: { path: "content/activities/youth-women-enterprises.md", url: "/youth-women-enterprises/", body: true },
+  antiBias: { path: "content/activities/anti-bias.md", url: "/anti-bias/", body: true },
   contact: { path: "content/contact.md", url: "/contact/", body: false },
 } as const;
 

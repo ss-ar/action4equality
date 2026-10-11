@@ -44,14 +44,26 @@
   (dict "path" "/about/mission-vision" "sourceType" "Markdown page")
   (dict "path" "/about/objectives" "sourceType" "Markdown page")
   (dict "path" "/about/partnerships" "sourceType" "Markdown page")
+  (dict "id" "keyAchievements" "path" "/about/key-achievements" "sourceType" "Markdown page")
+  (dict "id" "targetGroup" "path" "/about/target-group" "sourceType" "Markdown page")
+  (dict "id" "coreValues" "path" "/about/core-values" "sourceType" "Markdown page")
+  (dict "id" "strategies" "path" "/about/strategies" "sourceType" "Markdown page")
+  (dict "id" "protection" "path" "/activities/protection" "sourceType" "Markdown page")
+  (dict "id" "education" "path" "/activities/education" "sourceType" "Markdown page")
+  (dict "id" "foodSecurity" "path" "/activities/food-security" "sourceType" "Markdown page")
+  (dict "id" "sanitationHygiene" "path" "/activities/sanitation-hygiene" "sourceType" "Markdown page")
+  (dict "id" "communityEngagement" "path" "/activities/community-engagement" "sourceType" "Markdown page")
+  (dict "id" "youthWomenEnterprises" "path" "/activities/youth-women-enterprises" "sourceType" "Markdown page")
+  (dict "id" "antiBias" "path" "/activities/anti-bias" "sourceType" "Markdown page")
   (dict "path" "/contact" "sourceType" "Markdown page")
 -}}
 {{- range $pageDefinitions -}}
+  {{- $id := .id -}}
   {{- with site.GetPage .path -}}
     {{- $description := .Description -}}
     {{- if not $description -}}{{- $description = printf "Edit the %s website content." .Title -}}{{- end -}}
     {{- $pages = $pages | append (dict
-      "id" .File.ContentBaseName
+      "id" ($id | default .File.ContentBaseName)
       "title" .Title
       "description" $description
       "sourceType" "Markdown page"
