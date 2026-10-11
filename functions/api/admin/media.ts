@@ -1,4 +1,5 @@
 import type { AdminData } from "../../_lib/admin-auth";
+import { getRepositoryFile, listRepositoryFiles } from "../../_lib/github";
 import { canPublishPosts } from "../../_lib/permissions";
 
 const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
@@ -125,6 +126,28 @@ export const onRequestDelete: PagesFunction<Env, string, AdminData> = async (con
   const key = new URL(context.request.url).searchParams.get("key") ?? "";
   if (!/^images\/\d{4}\/\d{2}\/[a-f0-9-]+\.(?:avif|gif|jpe?g|png|webp)$/.test(key)) {
     return errorResponse("Invalid image identifier", 400);
+  }
+
+  const imageUrl = `/media/${key}`;
+  const entries = await listRepositoryFiles(context.env, "content/blog");
+  const sources = entries
+    .filter((entry) => entry.type === "file" && /^content\/blog\/[a-z0-9-]+\.md$/.test(entry.path))
+    .map((entry) => entry.path)
+    .concat([
+      "data/homepage.yaml",
+      "content/about/background.md",
+      "content/about/mission-vision.md",
+      "content/about/objectives.md",
+      "content/about/partnerships.md",
+      "content/contact.md",
+    ]);
+  const references = await Promise.all(sources.map(async (path) => {
+    const file = await getRepositoryFile(context.env, path);
+    return file.content.includes(imageUrl) ? path : null;
+  }));
+  const usedBy = references.filter((source): source is string => source !== null);
+  if (usedBy.length > 0) {
+    return errorResponse(`This image is used by ${usedBy.length === 1 ? usedBy[0] : usedBy.length + " website content records"}. Replace it before deleting.`, 409);
   }
 
   await context.env.MEDIA.delete(key);
