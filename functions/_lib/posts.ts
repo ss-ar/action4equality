@@ -160,7 +160,7 @@ export function parsePostSource(source: string, sha: string): ParsedPost {
   };
 }
 
-export function serializePost(post: PostInput, existing: Record<string, unknown> = {}): string {
+export function serializePost(post: PostInput, existing: Record<string, unknown> = {}, lastmod?: string): string {
   const frontmatter = { ...existing };
   const editableKeys = [
     "title",
@@ -187,6 +187,7 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
   if (post.socialImageAlt) frontmatter.social_image_alt = post.socialImageAlt;
   if (post.gallery.length > 0) frontmatter.gallery = post.gallery;
   if (post.galleryAlts.length > 0) frontmatter.gallery_alts = post.galleryAlts;
+  if (lastmod) frontmatter.lastmod = lastmod;
   if (post.draft) frontmatter.draft = true;
 
   const yaml = stringifyYaml(frontmatter, { lineWidth: 0 }).trimEnd();

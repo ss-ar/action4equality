@@ -73,7 +73,7 @@ export const onRequestPut: PagesFunction<Env, "id", AdminData> = async (context)
     const currentPost = parsePostSource(currentFile.content, currentFile.sha);
     const result = await putRepositoryFile(context.env, {
       path,
-      content: serializePost(validation.data, currentPost.frontmatter),
+      content: serializePost(validation.data, currentPost.frontmatter, new Date().toISOString().slice(0, 10)),
       message: `Update post: ${validation.data.title}`,
       sha: currentFile.sha,
     });

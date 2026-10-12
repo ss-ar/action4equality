@@ -39,6 +39,9 @@ async function main(): Promise<void> {
     assert.deepEqual(reparsed.frontmatter.aliases, parsed.frontmatter.aliases);
     assert.deepEqual(reparsed.frontmatter.images, parsed.frontmatter.images);
     assert.equal(reparsed.post.body, parsed.post.body);
+
+    const updatedWithLastmod = serializePost(updated, parsed.frontmatter, "2026-10-12");
+    assert.match(updatedWithLastmod, /lastmod: 2026-10-12/);
   }
 
   const invalid = validatePostInput(

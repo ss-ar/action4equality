@@ -11,6 +11,7 @@
           <p class="eyebrow">Field story</p>
           <h1 class="mt-4 text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">{{ .Title }}</h1>
           {{ if not .Date.IsZero }}<time class="mt-6 block text-base font-semibold text-muted" datetime="{{ .Date.Format "2006-01-02" }}">Published {{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+          {{ if and (not .Lastmod.IsZero) (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}<time class="mt-2 block text-sm font-semibold text-muted" datetime="{{ .Lastmod.Format "2006-01-02" }}">Updated {{ .Lastmod.Format "January 2, 2006" }}</time>{{ end }}
         </div>
         {{ with .Params.featured_image }}<img class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $featuredImageAlt }}">{{ end }}
       </div>
