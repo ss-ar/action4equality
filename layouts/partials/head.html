@@ -11,6 +11,50 @@
 {{ with .Params.social_image_alt }}{{ $socialImageAlt = . }}{{ end }}
 {{ $ogType := "website" }}
 {{ if eq .Section "blog" }}{{ $ogType = "article" }}{{ end }}
+{{ $organization := dict
+  "@type" "NGO"
+  "@id" (printf "%s#organization" site.BaseURL)
+  "name" site.Title
+  "url" site.BaseURL
+  "logo" ("assets/images/rsz-logo-color-121x119.png" | absURL)
+  "description" site.Params.description
+  "email" hugo.Data.organization.email
+  "telephone" hugo.Data.organization.telephone
+  "sameAs" (slice hugo.Data.organization.instagram)
+  "address" (dict
+    "@type" "PostalAddress"
+    "streetAddress" hugo.Data.organization.street_address
+    "addressLocality" hugo.Data.organization.address_locality
+    "addressCountry" hugo.Data.organization.address_country)
+  "contactPoint" (slice
+    (dict "@type" "ContactPoint" "telephone" (index hugo.Data.organization.telephone 0) "contactType" "customer support" "areaServed" "SS")
+    (dict "@type" "ContactPoint" "telephone" (index hugo.Data.organization.telephone 1) "contactType" "customer support" "areaServed" "UG"))
+}}
+{{ $website := dict
+  "@type" "WebSite"
+  "@id" (printf "%s#website" site.BaseURL)
+  "name" site.Title
+  "url" site.BaseURL
+  "publisher" (dict "@id" (printf "%s#organization" site.BaseURL))
+  "inLanguage" site.Language.Lang
+}}
+{{ $schemaGraph := slice $organization $website }}
+{{ if and .IsPage (eq .Section "blog") }}
+  {{ $article := dict
+    "@type" "BlogPosting"
+    "headline" .Title
+    "description" $description
+    "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    "author" (dict "@id" (printf "%s#organization" site.BaseURL))
+    "publisher" (dict "@id" (printf "%s#organization" site.BaseURL))
+    "image" ($socialImage | absURL)
+    "inLanguage" site.Language.Lang
+  }}
+  {{ if not .Date.IsZero }}{{ $article = merge $article (dict "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
+  {{ if not .Lastmod.IsZero }}{{ $article = merge $article (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
+  {{ $schemaGraph = $schemaGraph | append $article }}
+{{ end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $schemaGraph | jsonify | safeJS }}</script>
 <meta name="description" content="{{ $description }}">
 <title>{{ $title }}</title>
 <link rel="canonical" href="{{ .Permalink }}">
