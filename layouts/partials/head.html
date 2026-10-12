@@ -9,6 +9,10 @@
 {{ with .Params.social_image }}{{ $socialImage = . }}{{ end }}
 {{ $socialImageAlt := site.Params.default_social_image_alt }}
 {{ with .Params.social_image_alt }}{{ $socialImageAlt = . }}{{ end }}
+{{ $socialImageWidth := site.Params.default_social_image_width }}
+{{ with .Params.social_image_width }}{{ $socialImageWidth = . }}{{ end }}
+{{ $socialImageHeight := site.Params.default_social_image_height }}
+{{ with .Params.social_image_height }}{{ $socialImageHeight = . }}{{ end }}
 {{ $ogType := "website" }}
 {{ if eq .Section "blog" }}{{ $ogType = "article" }}{{ end }}
 {{ $organization := dict
@@ -72,6 +76,8 @@
 <meta property="og:image" content="{{ $socialImage | absURL }}">
 <meta property="og:image:secure_url" content="{{ $socialImage | absURL }}">
 <meta property="og:image:alt" content="{{ $socialImageAlt }}">
+<meta property="og:image:width" content="{{ $socialImageWidth }}">
+<meta property="og:image:height" content="{{ $socialImageHeight }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">

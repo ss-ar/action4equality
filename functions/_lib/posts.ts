@@ -9,6 +9,8 @@ export type PostInput = {
   featuredImageAlt: string;
   socialImage: string;
   socialImageAlt: string;
+  socialImageWidth: string;
+  socialImageHeight: string;
   gallery: string[];
   galleryAlts: string[];
   body: string;
@@ -50,6 +52,10 @@ function isValidMediaReference(value: string): boolean {
   }
 }
 
+function isValidImageDimension(value: string): boolean {
+  return /^[1-9]\d{0,4}$/.test(value);
+}
+
 function frontmatterString(frontmatter: Record<string, unknown>, key: string): string {
   const value = frontmatter[key];
   if (value instanceof Date) return value.toISOString().slice(0, 10);
@@ -82,6 +88,8 @@ export function validatePostInput(
   const featuredImageAlt = stringValue(input.featuredImageAlt);
   const socialImage = stringValue(input.socialImage);
   const socialImageAlt = stringValue(input.socialImageAlt);
+  const socialImageWidth = stringValue(input.socialImageWidth);
+  const socialImageHeight = stringValue(input.socialImageHeight);
   const body = typeof input.body === "string" ? input.body.trim() : "";
   const draft = input.draft === true;
   const sha = input.sha === null || input.sha === undefined ? null : stringValue(input.sha);
@@ -100,6 +108,8 @@ export function validatePostInput(
   if (socialImage && !isValidMediaReference(socialImage)) errors.socialImage = "Use an existing image path or secure URL";
   if (socialImage && socialImageAlt.length < 5) errors.socialImageAlt = "Describe the social sharing image";
   if (socialImageAlt.length > 200) errors.socialImageAlt = "Use no more than 200 characters";
+  if (socialImage && !isValidImageDimension(socialImageWidth)) errors.socialImageWidth = "Enter the social image width in pixels";
+  if (socialImage && !isValidImageDimension(socialImageHeight)) errors.socialImageHeight = "Enter the social image height in pixels";
   if (!gallery) errors.gallery = "Gallery images must be provided as a list";
   if (gallery && gallery.length > 20) errors.gallery = "Use no more than 20 gallery images";
   if (gallery?.some((item) => !isValidMediaReference(item))) errors.gallery = "Every gallery item must be an image path or secure URL";
@@ -121,6 +131,8 @@ export function validatePostInput(
       featuredImageAlt,
       socialImage,
       socialImageAlt,
+      socialImageWidth,
+      socialImageHeight,
       gallery: gallery ?? [],
       galleryAlts: galleryAlts ?? [],
       body,
@@ -151,6 +163,8 @@ export function parsePostSource(source: string, sha: string): ParsedPost {
       featuredImageAlt: frontmatterString(frontmatter, "featured_image_alt"),
       socialImage: frontmatterString(frontmatter, "social_image"),
       socialImageAlt: frontmatterString(frontmatter, "social_image_alt"),
+      socialImageWidth: frontmatterString(frontmatter, "social_image_width"),
+      socialImageHeight: frontmatterString(frontmatter, "social_image_height"),
       gallery: frontmatterStringArray(frontmatter, "gallery"),
       galleryAlts: frontmatterStringArray(frontmatter, "gallery_alts"),
       body: match[2]?.trim() ?? "",
@@ -171,6 +185,8 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
     "featured_image_alt",
     "social_image",
     "social_image_alt",
+    "social_image_width",
+    "social_image_height",
     "gallery",
     "gallery_alts",
     "draft",
@@ -185,6 +201,8 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
   frontmatter.featured_image_alt = post.featuredImageAlt;
   if (post.socialImage) frontmatter.social_image = post.socialImage;
   if (post.socialImageAlt) frontmatter.social_image_alt = post.socialImageAlt;
+  if (post.socialImageWidth) frontmatter.social_image_width = post.socialImageWidth;
+  if (post.socialImageHeight) frontmatter.social_image_height = post.socialImageHeight;
   if (post.gallery.length > 0) frontmatter.gallery = post.gallery;
   if (post.galleryAlts.length > 0) frontmatter.gallery_alts = post.galleryAlts;
   if (lastmod) frontmatter.lastmod = lastmod;

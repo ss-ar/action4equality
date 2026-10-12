@@ -7,6 +7,8 @@ featured_image: assets/images/img-1.webp
 featured_image_alt: Women participating in Action for Equality Foundation gender equality and GBV prevention training in Kapuri
 social_image: assets/images/training-on-gender-equality-and-GBV-prevention-meta.webp
 social_image_alt: "Women participating in Action for Equality Foundation gender equality and GBV prevention training in Kapuri"
+social_image_width: "810"
+social_image_height: "607"
 images:
   - assets/images/img3.webp
   - assets/images/img2.webp

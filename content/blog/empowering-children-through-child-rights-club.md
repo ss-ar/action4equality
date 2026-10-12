@@ -14,6 +14,8 @@ featured_image: /media/images/2026/10/2ac958b7-948c-4a46-b4c6-ce827d4cd684.png
 featured_image_alt: Children participating in Action for Equality Foundation child rights and menstrual hygiene education in Juba County
 social_image: assets/images/empowering-children-through-child-rights-club-meta.png
 social_image_alt: Children participating in Action for Equality Foundation child rights and menstrual hygiene education in Juba County
+social_image_width: "1448"
+social_image_height: "1086"
 gallery:
   - assets/images/5.webp
   - assets/images/4.webp

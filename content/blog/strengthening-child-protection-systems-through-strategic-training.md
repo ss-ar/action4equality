@@ -13,6 +13,8 @@ featured_image: /media/images/2026/10/29f0aad8-9ca7-410b-b816-c4c1e91684da.webp
 featured_image_alt: Action for Equality Foundation staff participating in child protection training
 social_image: assets/images/strengthening-child-protection-systems-through-strategic-training-meta.webp
 social_image_alt: Action for Equality Foundation staff participating in child protection training
+social_image_width: "1600"
+social_image_height: "1066"
 ---
 
 ![Child Protection in Action training](/assets/images/unicef-plan2.webp)

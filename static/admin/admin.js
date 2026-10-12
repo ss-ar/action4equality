@@ -117,6 +117,8 @@
       featuredImageAlt: formControl("featuredImageAlt").value,
       socialImage: formControl("socialImage").value,
       socialImageAlt: formControl("socialImageAlt").value,
+      socialImageWidth: formControl("socialImageWidth").value,
+      socialImageHeight: formControl("socialImageHeight").value,
       gallery: formControl("gallery").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
       galleryAlts: formControl("galleryAlts").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
       body: formControl("body").value,
@@ -427,7 +429,7 @@
 
   function fillPostForm(post) {
     resetPostForm();
-    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "featuredImageAlt", "socialImage", "socialImageAlt", "body", "draft"].forEach(function (name) {
+    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "featuredImageAlt", "socialImage", "socialImageAlt", "socialImageWidth", "socialImageHeight", "body", "draft"].forEach(function (name) {
       var control = formControl(name);
       if (control) control.value = post[name] || "";
     });
