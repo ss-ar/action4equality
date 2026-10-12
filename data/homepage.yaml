@@ -4,6 +4,8 @@ hero:
   description: Action for Equality Foundation advances protection, education, livelihoods, and equal opportunity with women, children, and communities across South Sudan.
   image: assets/images/hero-1448x1086.webp
   image_alt: Action for Equality Foundation working with community members in South Sudan
+  image_width: "1448"
+  image_height: "1086"
   primary_action:
     label: Support our work
     url: /donate/
@@ -22,6 +24,8 @@ introduction:
     - Our work connects immediate protection and essential services with the knowledge, participation, and opportunity communities need to shape their future.
   image: assets/images/img-20220308-133320-997-877x658.webp
   image_alt: Community members participating in an Action for Equality activity
+  image_width: "877"
+  image_height: "658"
   image_note: Local knowledge. Lasting change.
   action:
     label: Learn about AEF
@@ -34,26 +38,44 @@ programmes:
     - title: Protection
       description: GBV prevention and response, child protection, case management, and psychosocial support.
       image: assets/images/chil.webp
+      image_alt: Child affected by limited health services and malnutrition in South Sudan
+      image_width: "675"
+      image_height: "897"
       url: /protection/
     - title: Education
       description: Safe and inclusive learning, school retention, child rights, and support for girls.
       image: assets/images/unicef-plan2.webp
+      image_alt: Education program supported by UNICEF and Plan International
+      image_width: "1600"
+      image_height: "1066"
       url: /education/
     - title: Food security
       description: Livelihoods, farming, income generation, and resilience in flood-affected communities.
       image: assets/images/elder3.webp
+      image_alt: Elderly woman affected by flooding in Leer County
+      image_width: "772"
+      image_height: "1080"
       url: /food-security/
     - title: Water & hygiene
       description: Clean water, sanitation, and practical hygiene action in underserved communities.
       image: assets/images/hut2.webp
+      image_alt: Flooding surrounding homes and contaminating water sources
+      image_width: "765"
+      image_height: "1020"
       url: /sanitation-hygiene/
     - title: Community engagement
       description: Participatory planning, accountability, and local leadership for sustainable development.
       image: assets/images/comm.webp
+      image_alt: Community members working together
+      image_width: "720"
+      image_height: "720"
       url: /community-engagement/
     - title: Youth & women
       description: Business skills, startup support, advocacy, and pathways to economic independence.
       image: assets/images/img-20211026-102647-1504x1128.webp
+      image_alt: Youth and women participating in an enterprise program
+      image_width: "1504"
+      image_height: "1128"
       url: /youth-women-enterprises/
 audience:
   eyebrow: Who we serve
@@ -65,10 +87,16 @@ audience:
   images:
     - src: assets/images/bbw.webp
       alt: AEF field activity
+      width: "1280"
+      height: "720"
     - src: assets/images/uicef1.webp
       alt: AEF staff and partners
+      width: "1600"
+      height: "1066"
     - src: assets/images/whatsapp-image-2026-06-29-at-20.33.59-1.webp
       alt: Children participating in an AEF education activity
+      width: "941"
+      height: "705"
 stories:
   eyebrow: From the field
   title: Recent stories

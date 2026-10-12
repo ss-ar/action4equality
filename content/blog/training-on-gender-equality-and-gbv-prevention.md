@@ -4,6 +4,7 @@ slug: training-on-gender-equality-and-gbv-prevention
 date: 2026-04-22
 description: Our team gathered with women in Kapuri, Luri Payam to foster a deeper understanding of gender equality and gender-based violence.
 featured_image: assets/images/img-1.webp
+featured_image_alt: Women participating in Action for Equality Foundation gender equality and GBV prevention training in Kapuri
 social_image: assets/images/training-on-gender-equality-and-GBV-prevention-meta.webp
 social_image_alt: "Women participating in Action for Equality Foundation gender equality and GBV prevention training in Kapuri"
 images:

@@ -1,6 +1,6 @@
 {{ define "main" }}
 <section class="relative isolate overflow-hidden bg-primary-900 py-24 text-white sm:py-32">
-  <img class="absolute inset-0 -z-20 h-full w-full object-cover opacity-35" src="{{ "assets/images/img3.webp" | relURL }}" alt="Women participating in an AEF training">
+  <img class="absolute inset-0 -z-20 h-full w-full object-cover opacity-35" src="{{ "assets/images/img3.webp" | relURL }}" alt="Women participating in an AEF training" width="960" height="1280">
   <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary-900 via-primary-900/90 to-primary-800/60"></div>
   <div class="site-container"><p class="text-sm font-bold uppercase tracking-[0.2em] text-secondary-300">Give with purpose</p><h1 class="mt-5 max-w-4xl text-5xl font-extrabold leading-tight sm:text-6xl">Your support powers equality.</h1><p class="mt-6 max-w-2xl text-xl leading-8 text-white/80">Your contribution supports training, advocacy, and protection for women and girls in South Sudan.</p><a class="button-accent mt-9" href="#bank-details">View donation details</a></div>
 </section>
@@ -8,8 +8,8 @@
 <section class="py-20 sm:py-28">
   <div class="site-container"><div class="text-center"><p class="eyebrow">Why give</p><h2 class="mt-4 text-4xl font-extrabold sm:text-5xl">Turn support into practical action.</h2></div>
     <div class="mt-12 grid gap-7 md:grid-cols-3">
-      {{ $reasons := slice (dict "title" "Awareness" "text" "We conduct GBV prevention workshops in rural payams." "image" "assets/images/img3.webp") (dict "title" "Support" "text" "We provide resources and guidance for survivors of violence." "image" "assets/images/bbw.webp") (dict "title" "Equality" "text" "We advocate for women's leadership and equal rights." "image" "assets/images/img-1.webp") }}
-      {{ range $reasons }}<article class="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-soft"><img class="aspect-[4/3] w-full object-cover" src="{{ .image | relURL }}" alt="" loading="lazy"><div class="p-7"><h3 class="text-2xl font-extrabold">{{ .title }}</h3><p class="mt-3 leading-7 text-muted">{{ .text }}</p></div></article>{{ end }}
+      {{ $reasons := slice (dict "title" "Awareness" "text" "We conduct GBV prevention workshops in rural payams." "image" "assets/images/img3.webp" "alt" "Women participating in an AEF training" "width" "960" "height" "1280") (dict "title" "Support" "text" "We provide resources and guidance for survivors of violence." "image" "assets/images/bbw.webp" "alt" "AEF field activity" "width" "1280" "height" "720") (dict "title" "Equality" "text" "We advocate for women's leadership and equal rights." "image" "assets/images/img-1.webp" "alt" "Women participating in a gender equality and GBV prevention training" "width" "1080" "height" "810") }}
+      {{ range $reasons }}<article class="overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-soft"><img class="aspect-[4/3] w-full object-cover" src="{{ .image | relURL }}" alt="{{ .alt }}" width="{{ .width }}" height="{{ .height }}" loading="lazy"><div class="p-7"><h3 class="text-2xl font-extrabold">{{ .title }}</h3><p class="mt-3 leading-7 text-muted">{{ .text }}</p></div></article>{{ end }}
     </div>
   </div>
 </section>

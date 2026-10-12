@@ -171,10 +171,22 @@
                 <small data-error="title">Use a clear title between 3 and 140 characters.</small>
               </label>
 
+              <label class="form-field form-field-wide">
+                <span>Featured image description <b aria-hidden="true">*</b></span>
+                <input type="text" name="featuredImageAlt" maxlength="200" required>
+                <small data-error="featuredImageAlt">Describe the featured image in 5 to 200 characters.</small>
+              </label>
+
               <label class="form-field">
                 <span>URL slug <b aria-hidden="true">*</b></span>
                 <div class="slug-input"><span>/blog/</span><input type="text" name="slug" maxlength="100" autocomplete="off" spellcheck="false" required><span>/</span></div>
                 <small data-error="slug">Generated from the title. It is locked after publishing.</small>
+              </label>
+
+              <label class="form-field form-field-wide">
+                <span>Gallery image descriptions</span>
+                <textarea name="galleryAlts" rows="4" placeholder="One description per gallery image, in the same order"></textarea>
+                <small data-error="galleryAlts">Required when gallery images are provided. Use one description for each image.</small>
               </label>
 
               <label class="form-field">

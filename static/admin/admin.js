@@ -114,9 +114,11 @@
       date: formControl("date").value,
       description: formControl("description").value,
       featuredImage: formControl("featuredImage").value,
+      featuredImageAlt: formControl("featuredImageAlt").value,
       socialImage: formControl("socialImage").value,
       socialImageAlt: formControl("socialImageAlt").value,
       gallery: formControl("gallery").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
+      galleryAlts: formControl("galleryAlts").value.split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean),
       body: formControl("body").value,
       draft: formControl("draft").value === "true",
       sha: formControl("sha").value || null
@@ -425,11 +427,12 @@
 
   function fillPostForm(post) {
     resetPostForm();
-    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "socialImage", "socialImageAlt", "body", "draft"].forEach(function (name) {
+    ["id", "sha", "title", "slug", "date", "description", "featuredImage", "featuredImageAlt", "socialImage", "socialImageAlt", "body", "draft"].forEach(function (name) {
       var control = formControl(name);
       if (control) control.value = post[name] || "";
     });
     formControl("gallery").value = Array.isArray(post.gallery) ? post.gallery.join("\n") : "";
+    formControl("galleryAlts").value = Array.isArray(post.galleryAlts) ? post.galleryAlts.join("\n") : "";
     formControl("slug").disabled = true;
     savedPostSnapshot = JSON.stringify(postPayload());
     updatePublishButton();

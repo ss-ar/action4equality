@@ -6,9 +6,11 @@ export type PostInput = {
   date: string;
   description: string;
   featuredImage: string;
+  featuredImageAlt: string;
   socialImage: string;
   socialImageAlt: string;
   gallery: string[];
+  galleryAlts: string[];
   body: string;
   draft: boolean;
   sha: string | null;
@@ -77,12 +79,14 @@ export function validatePostInput(
   const date = stringValue(input.date);
   const description = stringValue(input.description);
   const featuredImage = stringValue(input.featuredImage);
+  const featuredImageAlt = stringValue(input.featuredImageAlt);
   const socialImage = stringValue(input.socialImage);
   const socialImageAlt = stringValue(input.socialImageAlt);
   const body = typeof input.body === "string" ? input.body.trim() : "";
   const draft = input.draft === true;
   const sha = input.sha === null || input.sha === undefined ? null : stringValue(input.sha);
   const gallery = Array.isArray(input.gallery) ? input.gallery.map(stringValue).filter(Boolean) : null;
+  const galleryAlts = Array.isArray(input.galleryAlts) ? input.galleryAlts.map(stringValue).filter(Boolean) : null;
   const errors: Record<string, string> = {};
 
   if (title.length < 3 || title.length > 140) errors.title = "Use between 3 and 140 characters";
@@ -92,12 +96,14 @@ export function validatePostInput(
   if (date && !isValidDate(date)) errors.date = "Use a valid date";
   if (description.length < 20 || description.length > 300) errors.description = "Use between 20 and 300 characters";
   if (!isValidMediaReference(featuredImage)) errors.featuredImage = "Choose an existing image path or secure URL";
+  if (featuredImageAlt.length < 5 || featuredImageAlt.length > 200) errors.featuredImageAlt = "Describe the featured image in 5 to 200 characters";
   if (socialImage && !isValidMediaReference(socialImage)) errors.socialImage = "Use an existing image path or secure URL";
   if (socialImage && socialImageAlt.length < 5) errors.socialImageAlt = "Describe the social sharing image";
   if (socialImageAlt.length > 200) errors.socialImageAlt = "Use no more than 200 characters";
   if (!gallery) errors.gallery = "Gallery images must be provided as a list";
   if (gallery && gallery.length > 20) errors.gallery = "Use no more than 20 gallery images";
   if (gallery?.some((item) => !isValidMediaReference(item))) errors.gallery = "Every gallery item must be an image path or secure URL";
+  if (gallery && gallery.length > 0 && (!galleryAlts || galleryAlts.length !== gallery.length || galleryAlts.some((item) => item.length < 5 || item.length > 200))) errors.galleryAlts = "Provide one 5 to 200 character description for each gallery image";
   if (body.length < 20 || body.length > 200_000) errors.body = "Use between 20 and 200,000 characters";
   if (!options.isNew && (!sha || !SHA_PATTERN.test(sha))) errors.form = "Reload this post before publishing changes";
   if (options.isNew && sha) errors.form = "A new post must not include a file version";
@@ -112,9 +118,11 @@ export function validatePostInput(
       date,
       description,
       featuredImage,
+      featuredImageAlt,
       socialImage,
       socialImageAlt,
       gallery: gallery ?? [],
+      galleryAlts: galleryAlts ?? [],
       body,
       draft,
       sha,
@@ -140,9 +148,11 @@ export function parsePostSource(source: string, sha: string): ParsedPost {
       date: frontmatterString(frontmatter, "date"),
       description: frontmatterString(frontmatter, "description"),
       featuredImage: frontmatterString(frontmatter, "featured_image"),
+      featuredImageAlt: frontmatterString(frontmatter, "featured_image_alt"),
       socialImage: frontmatterString(frontmatter, "social_image"),
       socialImageAlt: frontmatterString(frontmatter, "social_image_alt"),
       gallery: frontmatterStringArray(frontmatter, "gallery"),
+      galleryAlts: frontmatterStringArray(frontmatter, "gallery_alts"),
       body: match[2]?.trim() ?? "",
       draft: frontmatter.draft === true,
       sha,
@@ -158,9 +168,11 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
     "date",
     "description",
     "featured_image",
+    "featured_image_alt",
     "social_image",
     "social_image_alt",
     "gallery",
+    "gallery_alts",
     "draft",
   ];
   for (const key of editableKeys) delete frontmatter[key];
@@ -170,9 +182,11 @@ export function serializePost(post: PostInput, existing: Record<string, unknown>
   if (post.date) frontmatter.date = post.date;
   frontmatter.description = post.description;
   frontmatter.featured_image = post.featuredImage;
+  frontmatter.featured_image_alt = post.featuredImageAlt;
   if (post.socialImage) frontmatter.social_image = post.socialImage;
   if (post.socialImageAlt) frontmatter.social_image_alt = post.socialImageAlt;
   if (post.gallery.length > 0) frontmatter.gallery = post.gallery;
+  if (post.galleryAlts.length > 0) frontmatter.gallery_alts = post.galleryAlts;
   if (post.draft) frontmatter.draft = true;
 
   const yaml = stringifyYaml(frontmatter, { lineWidth: 0 }).trimEnd();

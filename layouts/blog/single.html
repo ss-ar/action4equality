@@ -1,4 +1,7 @@
 {{ define "main" }}
+{{ $featuredImageAlt := .Title }}
+{{ with .Params.social_image_alt }}{{ $featuredImageAlt = . }}{{ end }}
+{{ with .Params.featured_image_alt }}{{ $featuredImageAlt = . }}{{ end }}
 <article>
   <header class="bg-primary-50 py-16 sm:py-24">
     <div class="site-container">
@@ -9,7 +12,7 @@
           <h1 class="mt-4 text-4xl font-extrabold leading-tight text-ink sm:text-5xl lg:text-6xl">{{ .Title }}</h1>
           {{ if not .Date.IsZero }}<time class="mt-6 block text-base font-semibold text-muted" datetime="{{ .Date.Format "2006-01-02" }}">Published {{ .Date.Format "January 2, 2006" }}</time>{{ end }}
         </div>
-        {{ with .Params.featured_image }}<img class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $.Title }}">{{ end }}
+        {{ with .Params.featured_image }}<img class="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $featuredImageAlt }}">{{ end }}
       </div>
     </div>
   </header>
@@ -25,7 +28,7 @@
     <div class="site-container">
       <h2 class="text-3xl font-extrabold sm:text-4xl">Activity gallery</h2>
       <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {{ range . }}<img class="aspect-[4/3] w-full rounded-2xl object-cover shadow-soft" src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">{{ end }}
+        {{ range $index, $image := . }}{{ $alt := $.Title }}{{ if lt $index (len $.Params.gallery_alts) }}{{ $alt = index $.Params.gallery_alts $index }}{{ end }}<img class="aspect-[4/3] w-full rounded-2xl object-cover shadow-soft" src="{{ $image | relURL }}" alt="{{ $alt }}" loading="lazy">{{ end }}
       </div>
     </div>
   </section>
