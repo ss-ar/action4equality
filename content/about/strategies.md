@@ -1,5 +1,6 @@
 ---
 title: "Strategies Used"
+description: "See how Action for Equality Foundation combines capacity building, collaboration, protection, and livelihood support in South Sudan."
 slug: "strategies"
 aliases:
   - "/strategies.html"

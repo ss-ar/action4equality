@@ -1,5 +1,6 @@
 ---
 title: "Mission & Vision"
+description: "Read Action for Equality Foundation's mission and vision for gender equality, human rights, and lasting community development in South Sudan."
 slug: "mission-vision"
 aliases:
   - "/mission_vission.html"

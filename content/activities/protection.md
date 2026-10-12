@@ -1,5 +1,6 @@
 ---
 title: "Protection"
+description: "Action for Equality Foundation delivers child protection, GBV prevention, case management, and psychosocial support in South Sudan."
 slug: "protection"
 aliases:
   - "/protection.html"

@@ -1,5 +1,6 @@
 ---
 title: "Objectives"
+description: "Learn how Action for Equality Foundation strengthens protection, resilience, essential services, and gender equality in South Sudan."
 slug: "objectives"
 aliases:
   - "/objectives.html"

@@ -1,5 +1,6 @@
 ---
 title: "Sanitation and Hygiene"
+description: "Action for Equality Foundation provides water, sanitation, and hygiene support to protect health in flood-affected South Sudanese communities."
 slug: "sanitation-hygiene"
 aliases:
   - "/sanitation_hygiene.html"

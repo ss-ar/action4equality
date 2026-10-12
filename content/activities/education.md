@@ -1,5 +1,6 @@
 ---
 title: "Education"
+description: "Action for Equality Foundation helps children in South Sudan access safe, inclusive education and remain in school."
 slug: "education"
 aliases:
   - "/education.html"

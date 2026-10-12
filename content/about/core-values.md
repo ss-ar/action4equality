@@ -1,5 +1,6 @@
 ---
 title: "Core Values"
+description: "Explore the professionalism, gender equality, integrity, and accountability guiding Action for Equality Foundation's work in South Sudan."
 slug: "core-values"
 aliases:
   - "/corevalues.html"

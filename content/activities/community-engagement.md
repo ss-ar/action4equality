@@ -1,5 +1,6 @@
 ---
 title: "Community Engagement and Participatory Development"
+description: "Action for Equality Foundation supports inclusive community planning, accountability, and local leadership across South Sudan."
 slug: "community-engagement"
 aliases:
   - "/youth_women.html"

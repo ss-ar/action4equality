@@ -1,5 +1,6 @@
 ---
 title: "Collaborative and Partnership"
+description: "Action for Equality Foundation partners with communities, civil society, government, and development actors to advance equality in South Sudan."
 slug: "partnerships"
 aliases:
   - "/collab_part.html"

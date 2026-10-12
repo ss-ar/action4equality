@@ -1,5 +1,6 @@
 ---
 title: "Target Group"
+description: "Action for Equality Foundation serves women, girls, vulnerable children, youth, people with disabilities, and communities in South Sudan."
 slug: "target-group"
 aliases:
   - "/target_group.html"

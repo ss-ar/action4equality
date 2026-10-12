@@ -1,5 +1,6 @@
 ---
 title: "Growth of Small Enterprises Targeting Youth and Women"
+description: "Action for Equality Foundation builds youth and women's economic independence through business skills, startup support, and advocacy in South Sudan."
 slug: "youth-women-enterprises"
 aliases:
   - "/community.html"

@@ -1,5 +1,6 @@
 ---
 title: "Background"
+description: "Discover how Action for Equality Foundation was formed to advance equality, protection, and opportunity in South Sudan."
 slug: "background"
 aliases:
   - "/background.html"

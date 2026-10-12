@@ -1,5 +1,6 @@
 ---
 title: "Anti-Bias"
+description: "Learn how Action for Equality Foundation challenges discrimination and advances intersectional, feminist practice in South Sudanese communities."
 slug: "anti-bias"
 aliases:
   - "/anti_bias.html"

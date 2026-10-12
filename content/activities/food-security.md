@@ -1,5 +1,6 @@
 ---
 title: "Food Security and Livelihood"
+description: "Action for Equality Foundation strengthens food security and livelihoods through farming, income generation, and climate resilience in South Sudan."
 slug: "food-security"
 aliases:
   - "/food_security.html"
