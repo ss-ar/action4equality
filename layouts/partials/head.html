@@ -20,7 +20,7 @@
   "description" site.Params.description
   "email" hugo.Data.organization.email
   "telephone" hugo.Data.organization.telephone
-  "sameAs" (slice hugo.Data.organization.instagram)
+  "sameAs" (slice hugo.Data.organization.facebook hugo.Data.organization.instagram)
   "address" (dict
     "@type" "PostalAddress"
     "streetAddress" hugo.Data.organization.street_address
