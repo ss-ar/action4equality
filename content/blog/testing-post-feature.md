@@ -11,10 +11,11 @@ gallery:
 gallery_alts:
   - Students receiving there kits
   - Students receiving there kits
+lastmod: 2026-11-08
 ---
 
 ## Child Awareness
 In addition to the MHM sessions, pupils were sensitized on key child rights messages, including the rights to education, protection, participation, and development. The discussions encouraged children to speak up against abuse, respect one another, and contribute to creating a safe and supportive learning environment.
 
-##Menstrual Hygiene Management Awareness
+## Menstrual Hygiene Management Awareness
 The activity included menstrual hygiene management sessions for adolescent girls. Participants received practical information on menstrual health, personal hygiene, and the importance of maintaining dignity and confidence during menstruation. The sessions also encouraged girls to remain in school and participate fully in their education.
